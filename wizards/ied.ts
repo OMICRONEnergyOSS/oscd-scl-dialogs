@@ -10,13 +10,10 @@ import {
   WizardInputElement,
 } from '../foundation.js';
 
-function render(
+function renderAdd(
   name: string,
   iedNames: string[],
   desc: string | null,
-  type: string | null,
-  manufacturer: string | null,
-  owner: string | null,
 ): TemplateResult[] {
   return [
     html`<scl-text-field
@@ -31,6 +28,19 @@ function render(
       .value=${desc}
       nullable
     ></scl-text-field>`,
+  ];
+}
+
+function renderEdit(
+  name: string,
+  iedNames: string[],
+  desc: string | null,
+  type: string | null,
+  manufacturer: string | null,
+  owner: string | null,
+): TemplateResult[] {
+  return [
+    ...renderAdd(name, iedNames, desc),
     html`<scl-text-field
       label="type"
       .value=${type}
@@ -68,12 +78,32 @@ export function updateAction(element: Element): WizardActor {
   };
 }
 
-export function editIEDWizard(element: Element): Wizard {
-  const iedNames: string[] = Array.from(
-    element.ownerDocument.querySelectorAll(':root > IED'),
-  )
+export function createAction(element: Element): WizardActor {
+  return (inputs: WizardInputElement[]): EditV2[] => {
+    const name = inputs.find(i => i.label === 'name')!.value!;
+    const desc = getValue(inputs.find(i => i.label === 'desc')!);
+
+    if (
+      name === element.getAttribute('name') &&
+      desc === element.getAttribute('desc')
+    ) {
+      return [];
+    }
+
+    return createIED({
+      element,
+      attributes: { name, desc },
+    });
+  };
+}
+function getAllOtherIEDNames(parent: Element): string[] {
+  return Array.from(parent.ownerDocument.querySelectorAll(':root > IED'))
     .map(ied => ied.getAttribute('name')!)
-    .filter(ied => ied !== element.getAttribute('name'));
+    .filter(ied => ied !== parent.getAttribute('name'));
+}
+
+export function editIEDWizard(element: Element): Wizard {
+  const iedNames = getAllOtherIEDNames(element.parentElement!);
 
   return {
     title: 'Edit IED',
@@ -82,13 +112,31 @@ export function editIEDWizard(element: Element): Wizard {
       label: 'save',
       action: updateAction(element),
     },
-    content: render(
+    content: renderEdit(
       element.getAttribute('name') ?? '',
       iedNames,
       element.getAttribute('desc'),
       element.getAttribute('type'),
       element.getAttribute('manufacturer'),
       element.getAttribute('owner'),
+    ),
+  };
+}
+
+export function createIEDWizard(parent: Element): Wizard {
+  const iedNames = getAllOtherIEDNames(parent);
+
+  return {
+    title: 'Add Virtial IED',
+    primary: {
+      icon: 'add',
+      label: 'Create',
+      action: updateAction(parent),
+    },
+    content: renderAdd(
+      parent.getAttribute('name') ?? '',
+      iedNames,
+      parent.getAttribute('desc'),
     ),
   };
 }

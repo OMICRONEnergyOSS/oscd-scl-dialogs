@@ -51,7 +51,7 @@ import {
 } from './voltagelevel.js';
 
 import { editGseWizard } from './gse.js';
-import { editIEDWizard } from './ied.js';
+import { createIEDWizard, editIEDWizard } from './ied.js';
 import { editLDeviceWizard } from './ldevice.js';
 import { editSMvWizard } from './smv.js';
 
@@ -292,7 +292,7 @@ export const wizards: Record<
   },
   IED: {
     edit: editIEDWizard,
-    create: emptyWizard,
+    create: createIEDWizard,
   },
   IEDName: {
     edit: emptyWizard,

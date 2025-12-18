@@ -43,6 +43,7 @@
     "analyze": "cem analyze",
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
     "build": "rimraf dist && tsc && npm run analyze -- --exclude dist",
+    "build:watch": "rimraf dist && npm run analyze -- --exclude dist && tsc --watch --preserveWatchOutput",
     "bundle": "rimraf dist && rollup -c rollup.config.js",
     "update-readme": "node dist/scripts/update-readme.js",
     "test": "npm run build && wtr --coverage",
