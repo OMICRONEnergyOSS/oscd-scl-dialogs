@@ -90,10 +90,7 @@ export function createAction(element: Element): WizardActor {
       return [];
     }
 
-    return createIED({
-      element,
-      attributes: { name, desc },
-    });
+    return [];
   };
 }
 function getAllOtherIEDNames(parent: Element): string[] {

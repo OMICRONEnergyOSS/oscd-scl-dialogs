@@ -41,7 +41,7 @@
                 "text": "object"
               },
               "static": true,
-              "default": "{ 'md-dialog': MdDialog, 'md-text-button': MdTextButton, 'scl-checkbox': SclCheckbox, 'scl-text-field': SclTextField, 'scl-select': SclSelect, 'md-filled-textfield': MdFilledTextField, 'md-filled-select': MdFilledSelect, 'md-select-option': MdSelectOption, 'md-icon-button': MdIconButton, 'md-icon': MdIcon, 'selection-list': SelectionList, 'action-list': ActionList, 'md-list': MdList, 'md-list-item': MdListItem, }"
+              "default": "{ 'md-dialog': MdDialog, 'md-text-button': MdTextButton, 'md-filled-button': MdFilledButton, 'scl-checkbox': SclCheckbox, 'scl-text-field': SclTextField, 'scl-select': SclSelect, 'md-filled-textfield': MdFilledTextField, 'md-filled-select': MdFilledSelect, 'md-select-option': MdSelectOption, 'md-icon-button': MdIconButton, 'md-icon': MdIcon, 'selection-list': SelectionList, 'action-list': ActionList, 'md-list': MdList, 'md-list-item': MdListItem, }"
             },
             {
               "kind": "field",
@@ -152,7 +152,7 @@
               "kind": "field",
               "name": "styles",
               "static": true,
-              "default": "css` * { --md-dialog-container-color: var( --wizard-dialog-background-color, #fdf6e3 ); --md-dialog-headline-color: var(--wizard-dialog-text-color, #657b83); --md-dialog-headline-font: var(--wizard-dialog-text-font, 'Roboto'); --md-dialog-supporting-text-color: var( --wizard-dialog-text-color, #657b83 ); --md-dialog-supporting-text-font: var( --wizard-dialog-text-font, 'Roboto' ); --md-sys-color-primary: var(--wizard-dialog-primary, #2aa198); --md-sys-color-secondary: var(--wizard-dialog-secondary, #6c71c4); --md-sys-typescale-body-large-font: var( --wizard-dialog-text-font, 'Roboto' ); --md-sys-color-surface-container-highest: var( --wizard-dailog-input-background-color, #eee8d5 ); --md-outlined-text-field-input-text-color: var( --wizard-dialog-text-color, #657b83 ); --md-sys-color-on-surface: var(--wizard-dialog-text-color, #657b83); --md-sys-color-on-primary: var(--wizard-dialog-background-color, #eee8d5); --md-sys-color-surface: var(--wizard-dialog-surface, #fdf6e3) --md-sys-color-on-surface: var(--wizard-dialog-text-color, #fdf6e3); --md-sys-color-on-surface-variant: var( --wizard-dialog-text-color, #657b83 ); --md-menu-container-color: var(--wizard-dialog-background-color, #fdf6e3); --md-menu-item-selected-container-color: rgb( from var(--wizard-dialog-primary, #2aa198) r g b / 0.38 ); } md-dialog { --md-dialog-container-max-height: 100%; height: 100%; --md-dialog-container-max-width: 100%; } #close-button { --md-sys-color-primary: var(--wizard-dialog-close-button-color, #dc322f); } #wizard-content { display: flex; flex-direction: column; } #wizard-content > * { display: block; margin-top: 16px; } `"
+              "default": "css` *, md-filled-button * { --md-dialog-container-color: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-dialog-headline-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-dialog-headline-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-dialog-supporting-text-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-dialog-supporting-text-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-sys-color-primary: var(--wizard-dialog-primary, var(--oscd-primary)); --md-sys-color-secondary: var( --wizard-dialog-secondary, var(--oscd-secondary) ); --md-sys-typescale-body-large-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-sys-color-surface-container-highest: var( --wizard-dailog-input-background-color, var(--oscd-base3) ); --md-outlined-text-field-input-text-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-sys-color-on-surface: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-sys-color-on-primary: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-sys-color-surface: var(--wizard-dialog-surface, var(--oscd-base3)); --md-sys-color-on-surface-variant: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-menu-container-color: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-menu-item-selected-container-color: rgb( from var(--wizard-dialog-primary, var(--oscd-primary)) r g b / 0.38 ); } md-dialog { --md-dialog-container-max-height: 100%; --md-dialog-container-max-width: 100%; } #wizard-content { display: flex; flex-direction: column; } #wizard-content > * { display: block; margin-top: 16px; } `"
             }
           ],
           "mixins": [
@@ -1992,6 +1992,23 @@
         },
         {
           "kind": "function",
+          "name": "createAction",
+          "return": {
+            "type": {
+              "text": "WizardActor"
+            }
+          },
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "Element"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
           "name": "editIEDWizard",
           "return": {
             "type": {
@@ -2036,6 +2053,14 @@
         },
         {
           "kind": "js",
+          "name": "createAction",
+          "declaration": {
+            "name": "createAction",
+            "module": "wizards/ied.ts"
+          }
+        },
+        {
+          "kind": "js",
           "name": "editIEDWizard",
           "declaration": {
             "name": "editIEDWizard",
@@ -2054,8 +2079,40 @@
     },
     {
       "kind": "javascript-module",
+      "path": "wizards/ldevice.spec.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
       "path": "wizards/ldevice.ts",
       "declarations": [
+        {
+          "kind": "function",
+          "name": "lDeviceNamePattern",
+          "return": {
+            "type": {
+              "text": "string"
+            }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "createAction",
+          "return": {
+            "type": {
+              "text": "WizardActor"
+            }
+          },
+          "parameters": [
+            {
+              "name": "parent",
+              "type": {
+                "text": "Element"
+              }
+            }
+          ]
+        },
         {
           "kind": "function",
           "name": "updateAction",
@@ -2067,6 +2124,23 @@
           "parameters": [
             {
               "name": "element",
+              "type": {
+                "text": "Element"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "createLDeviceWizard",
+          "return": {
+            "type": {
+              "text": "Wizard"
+            }
+          },
+          "parameters": [
+            {
+              "name": "parent",
               "type": {
                 "text": "Element"
               }
@@ -2094,9 +2168,33 @@
       "exports": [
         {
           "kind": "js",
+          "name": "lDeviceNamePattern",
+          "declaration": {
+            "name": "lDeviceNamePattern",
+            "module": "wizards/ldevice.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "createAction",
+          "declaration": {
+            "name": "createAction",
+            "module": "wizards/ldevice.ts"
+          }
+        },
+        {
+          "kind": "js",
           "name": "updateAction",
           "declaration": {
             "name": "updateAction",
+            "module": "wizards/ldevice.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "createLDeviceWizard",
+          "declaration": {
+            "name": "createLDeviceWizard",
             "module": "wizards/ldevice.ts"
           }
         },
