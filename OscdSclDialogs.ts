@@ -136,29 +136,50 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
 
   async create(wizardType: CreateWizard): Promise<EditV2[]> {
     this.wizardType = wizardType;
-    const edits = await new Promise<EditV2[]>((resolve, reject) => {
-      this.dialogClosePromise = { resolve, reject };
+    let edits: EditV2[] = [];
+    try {
+      edits = await new Promise<EditV2[]>((resolve, reject) => {
+        this.dialogClosePromise = { resolve, reject };
 
-      this.dialog.show();
-    });
+        this.dialog.show();
+      });
+    } catch {
+      // ignore
+    }
     this.close();
     return edits;
   }
 
   async edit(wizardType: EditWizard): Promise<EditV2[]> {
     this.wizardType = wizardType;
-    const edits = await new Promise<EditV2[]>((resolve, reject) => {
-      this.dialogClosePromise = { resolve, reject };
+    let edits: EditV2[] = [];
+    try {
+      edits = await new Promise<EditV2[]>((resolve, reject) => {
+        this.dialogClosePromise = { resolve, reject };
 
-      this.dialog.show();
-    });
-    this.close();
+        this.dialog.show();
+      });
+      this.close();
+    } catch {
+      // ignore
+    }
     return edits;
   }
 
   close(): void {
-    this.wizardType = null;
     this.dialog.close();
+  }
+
+  reset(): void {
+    console.log('Resetting inputs');
+    this.wizardType = null;
+    this.inputs.forEach(input => {
+      input.value = '';
+      if ('setCustomValidity' in input) {
+        input.setCustomValidity('');
+      }
+      input.reportValidity();
+    });
   }
 
   private async act(action?: WizardActor): Promise<boolean> {
@@ -178,7 +199,15 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
 
   render(): TemplateResult {
     return html`<div>
-      <md-dialog>
+      <md-dialog
+        @closed="${() => {
+          this.reset();
+        }}"
+        @cancel="${() => {
+          console.log('Dialog canceled');
+          this.dialogClosePromise?.reject();
+        }}"
+      >
         <div slot="headline">${wizardTitle(this.wizardType)}</div>
         <form slot="content" method="dialog">
           <div id="wizard-content">${wizardContent(this.wizardType)}</div>
@@ -187,7 +216,10 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
           <md-text-button
             id="close-button"
             form="add-data-object"
-            @click="${() => this.close()}"
+            @click="${(event: Event) => {
+              event.stopImmediatePropagation();
+              this.close();
+            }}"
             >Cancel</md-text-button
           >
           <md-filled-button

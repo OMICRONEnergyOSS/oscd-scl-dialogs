@@ -52,7 +52,7 @@ import {
 
 import { editGseWizard } from './gse.js';
 import { createIEDWizard, editIEDWizard } from './ied.js';
-import { editLDeviceWizard } from './ldevice.js';
+import { editLDeviceWizard, createLDeviceWizard } from './ldevice.js';
 import { editSMvWizard } from './smv.js';
 
 import { createDOTypeWizard } from './dotype.js';
@@ -312,7 +312,7 @@ export const wizards: Record<
   },
   LDevice: {
     edit: editLDeviceWizard,
-    create: emptyWizard,
+    create: createLDeviceWizard,
   },
   LN: {
     edit: emptyWizard,
