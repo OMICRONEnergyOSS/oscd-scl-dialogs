@@ -59,6 +59,8 @@ import { createDOTypeWizard } from './dotype.js';
 import { createEnumTypeWizard } from './enumtype.js';
 import { createLNodeTypeWizard } from './lnodetype.js';
 import { createLNodeWizard } from './lnode.js';
+import { createLNWizard, updateLNWizard } from './ln.js';
+import { updateLN0Wizard } from './ln0.js';
 import { editBDaWizard } from './bda.js';
 
 type SclElementWizard = (
@@ -315,11 +317,11 @@ export const wizards: Record<
     create: createLDeviceWizard,
   },
   LN: {
-    edit: emptyWizard,
-    create: emptyWizard,
+    edit: updateLNWizard,
+    create: createLNWizard,
   },
   LN0: {
-    edit: emptyWizard,
+    edit: updateLN0Wizard,
     create: emptyWizard,
   },
   LNode: {

@@ -90,7 +90,6 @@ function render(
         if (reservedInsts.includes(currentValue)) {
           customValidityMsg = `"${currentValue}" is already in use`;
         }
-        console.log('@input:', currentValue, reservedInsts, customValidityMsg);
         input.setCustomValidity(customValidityMsg);
         input.reportValidity();
       }}

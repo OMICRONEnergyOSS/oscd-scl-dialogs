@@ -171,7 +171,6 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
   }
 
   reset(): void {
-    console.log('Resetting inputs');
     this.wizardType = null;
     this.inputs.forEach(input => {
       input.value = '';
@@ -204,7 +203,6 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
           this.reset();
         }}"
         @cancel="${() => {
-          console.log('Dialog canceled');
           this.dialogClosePromise?.reject();
         }}"
       >

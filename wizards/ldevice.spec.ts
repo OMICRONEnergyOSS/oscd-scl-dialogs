@@ -83,11 +83,10 @@ describe('LDevice wizard', () => {
   }) {
     const parent = scl.querySelector(parentSelector)!;
     const wizard = createLDeviceWizard(parent);
-    const { instField, ldNameField, desc, content } =
-      await renderContent(wizard);
-    renderedContainer = content;
+    const contentAndFields = await renderContent(wizard);
+    renderedContainer = contentAndFields.content;
 
-    return { parent, wizard, instField, ldNameField, desc };
+    return { parent, wizard, ...contentAndFields };
   }
 
   async function editLDeviceTestSetup({
@@ -99,12 +98,11 @@ describe('LDevice wizard', () => {
   }) {
     const ldevice = scl.querySelector(elementSelector)!;
     const wizard = editLDeviceWizard(ldevice);
-    const { instField, ldNameField, desc, content } =
-      await renderContent(wizard);
+    const contentAndFields = await renderContent(wizard);
 
-    renderedContainer = content;
+    renderedContainer = contentAndFields.content;
 
-    return { ldevice, wizard, instField, ldNameField, desc };
+    return { ldevice, wizard, ...contentAndFields };
   }
 
   beforeEach(() => {
@@ -119,7 +117,7 @@ describe('LDevice wizard', () => {
 
   it('creates an LDevice with ldName when ConfLdName is allowed', async () => {
     const scl = createSclDoc(true);
-    const { parent, wizard, instField, ldNameField, desc } =
+    const { wizard, instField, ldNameField, desc } =
       await createLDeviceTestSetup({
         scl,
         parentSelector: 'Server',
@@ -138,7 +136,7 @@ describe('LDevice wizard', () => {
 
     const edits = wizard.primary!.action(
       [instField, ldNameField, desc],
-      parent,
+      renderedContainer!,
     ) as EditV2[];
 
     xmlEditor.commit(edits);
@@ -151,7 +149,7 @@ describe('LDevice wizard', () => {
 
   it('creates an LDevice without ldName when ConfLdName is missing', async () => {
     const scl = createSclDoc(false);
-    const { parent, wizard, instField, ldNameField, desc } =
+    const { wizard, instField, ldNameField, desc } =
       await createLDeviceTestSetup({
         scl,
         parentSelector: 'Server',
@@ -169,7 +167,7 @@ describe('LDevice wizard', () => {
 
     const edits = wizard.primary!.action(
       [instField, ldNameField, desc],
-      parent,
+      renderedContainer!,
     ) as EditV2[];
 
     xmlEditor.commit(edits);
@@ -192,7 +190,7 @@ describe('LDevice wizard', () => {
 
     const edits = wizard.primary!.action(
       [instField, ldNameField, desc],
-      ldevice,
+      renderedContainer!,
     ) as EditV2[];
 
     xmlEditor.commit(edits);
@@ -213,7 +211,7 @@ describe('LDevice wizard', () => {
 
     const edits = wizard.primary!.action(
       [instField, ldNameField, desc],
-      ldevice,
+      renderedContainer!,
     ) as EditV2[];
 
     xmlEditor.commit(edits);
