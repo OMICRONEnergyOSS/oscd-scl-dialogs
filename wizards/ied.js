@@ -11,7 +11,7 @@ import '../node_modules/@openscd/scl-lib/dist/tDataTypeTemplates/nsdToJson.js';
 import '../node_modules/@openscd/scl-lib/dist/tBaseElement/find.js';
 import { getValue } from '../foundation.js';
 
-function render(name, iedNames, desc, type, manufacturer, owner) {
+function renderAdd(name, iedNames, desc) {
     return [
         x `<scl-text-field
       label="name"
@@ -25,6 +25,11 @@ function render(name, iedNames, desc, type, manufacturer, owner) {
       .value=${desc}
       nullable
     ></scl-text-field>`,
+    ];
+}
+function renderEdit(name, iedNames, desc, type, manufacturer, owner) {
+    return [
+        ...renderAdd(name, iedNames, desc),
         x `<scl-text-field
       label="type"
       .value=${type}
@@ -56,10 +61,13 @@ function updateAction(element) {
         });
     };
 }
-function editIEDWizard(element) {
-    const iedNames = Array.from(element.ownerDocument.querySelectorAll(':root > IED'))
+function getAllOtherIEDNames(parent) {
+    return Array.from(parent.ownerDocument.querySelectorAll(':root > IED'))
         .map(ied => ied.getAttribute('name'))
-        .filter(ied => ied !== element.getAttribute('name'));
+        .filter(ied => ied !== parent.getAttribute('name'));
+}
+function editIEDWizard(element) {
+    const iedNames = getAllOtherIEDNames(element.parentElement);
     return {
         title: 'Edit IED',
         primary: {
@@ -67,9 +75,21 @@ function editIEDWizard(element) {
             label: 'save',
             action: updateAction(element),
         },
-        content: render(element.getAttribute('name') ?? '', iedNames, element.getAttribute('desc'), element.getAttribute('type'), element.getAttribute('manufacturer'), element.getAttribute('owner')),
+        content: renderEdit(element.getAttribute('name') ?? '', iedNames, element.getAttribute('desc'), element.getAttribute('type'), element.getAttribute('manufacturer'), element.getAttribute('owner')),
+    };
+}
+function createIEDWizard(parent) {
+    const iedNames = getAllOtherIEDNames(parent);
+    return {
+        title: 'Add Virtial IED',
+        primary: {
+            icon: 'add',
+            label: 'Create',
+            action: updateAction(parent),
+        },
+        content: renderAdd(parent.getAttribute('name') ?? '', iedNames, parent.getAttribute('desc')),
     };
 }
 
-export { editIEDWizard, updateAction };
+export { createIEDWizard, editIEDWizard, updateAction };
 //# sourceMappingURL=ied.js.map

@@ -52,6 +52,7 @@ export default class OscdSclDialogs extends OscdSclDialogs_base {
     create(wizardType: CreateWizard): Promise<EditV2[]>;
     edit(wizardType: EditWizard): Promise<EditV2[]>;
     close(): void;
+    reset(): void;
     private act;
     render(): TemplateResult;
     static styles: import("lit").CSSResult;

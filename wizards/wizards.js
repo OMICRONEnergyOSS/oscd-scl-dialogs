@@ -21,13 +21,15 @@ import { createTextWizard, editTextWizard } from './text.js';
 import { createTransformerWindingWizard, editTransformerWindingWizard } from './transformerWinding.js';
 import { createVoltageLevelWizard, editVoltageLevelWizard } from './voltagelevel.js';
 import { editGseWizard } from './gse.js';
-import { editIEDWizard } from './ied.js';
-import { editLDeviceWizard } from './ldevice.js';
+import { createIEDWizard, editIEDWizard } from './ied.js';
+import { createLDeviceWizard, editLDeviceWizard } from './ldevice.js';
 import { editSMvWizard } from './smv.js';
 import { createDOTypeWizard } from './dotype.js';
 import { createEnumTypeWizard } from './enumtype.js';
 import { createLNodeTypeWizard } from './lnodetype.js';
 import { createLNodeWizard } from './lnode.js';
+import { createLNWizard, updateLNWizard } from './ln.js';
+import { updateLN0Wizard } from './ln0.js';
 import { editBDaWizard } from './bda.js';
 
 function emptyWizard() {
@@ -248,7 +250,7 @@ const wizards = {
     },
     IED: {
         edit: editIEDWizard,
-        create: emptyWizard,
+        create: createIEDWizard,
     },
     IEDName: {
         edit: emptyWizard,
@@ -268,14 +270,14 @@ const wizards = {
     },
     LDevice: {
         edit: editLDeviceWizard,
-        create: emptyWizard,
+        create: createLDeviceWizard,
     },
     LN: {
-        edit: emptyWizard,
-        create: emptyWizard,
+        edit: updateLNWizard,
+        create: createLNWizard,
     },
     LN0: {
-        edit: emptyWizard,
+        edit: updateLN0Wizard,
         create: emptyWizard,
     },
     LNode: {

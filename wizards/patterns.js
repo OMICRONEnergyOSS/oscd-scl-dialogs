@@ -10,14 +10,17 @@ const patterns = {
     unsigned: '[+]?[0-9]+(([.][0-9]*)?|([.][0-9]+))',
     alphanumericFirstUpperCase: '[A-Z][0-9,A-Z,a-z]*',
     alphanumericFirstLowerCase: '[a-z][0-9,A-Z,a-z]*',
+    prefix: '[A-Za-z][0-9A-Za-z_]*',
     lnClass: '(LLN0)|[A-Z]{4,4}',
+    lnInst: '[0-9]{1,12}',
     abstractDataAttributeName: '((T)|(Test)|(Check)|(SIUnit)|(Oper)|(SBO)|(SBOw)|(Cancel)|[a-z][0-9A-Za-z]*)',
     cdc: '(SPS)|(DPS)|(INS)|(ENS)|(ACT)|(ACD)|(SEC)|(BCR)|(HST)|(VSS)|(MV)|(CMV)|(SAV)|' +
         '(WYE)|(DEL)|(SEQ)|(HMV)|(HWYE)|(HDEL)|(SPC)|(DPC)|(INC)|(ENC)|(BSC)|(ISC)|(APC)|(BAC)|' +
         '(SPG)|(ING)|(ENG)|(ORG)|(TSG)|(CUG)|(VSG)|(ASG)|(CURVE)|(CSG)|(DPL)|(LPL)|(CSD)|(CST)|' +
         '(BTS)|(UTS)|(LTS)|(GTS)|(MTS)|(NTS)|(STS)|(CTS)|(OTS)|(VSD)'};
 const maxLength = {
-    abstracDaName: 60};
+    abstracDaName: 60,
+    prefix: 11};
 const predefinedBasicTypeEnum = [
     'BOOLEAN',
     'INT8',
