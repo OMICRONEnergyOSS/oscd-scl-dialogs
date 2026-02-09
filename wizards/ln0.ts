@@ -62,8 +62,8 @@ function render(element: Element, lnodeTypeIds: string[]): TemplateResult[] {
 function updateAction(element: Element): WizardActor {
   return (inputs: WizardInputElement[]): EditV2[] => {
     const attributes: Record<string, string | null> = {};
-    //TODO current implementation would potentially update lnClass and inst too. Is that desired?
-    const keys = ['lnType', 'desc', 'lnClass', 'inst'];
+    // Key attributes omitted from update are: 'lnClass', 'inst'.
+    const keys = ['lnType', 'desc'];
     keys.forEach(key => {
       attributes[key] = getValue(inputs.find(i => i.label === key)!);
     });
