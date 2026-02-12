@@ -1,5 +1,5 @@
 import '../node_modules/@lit/reactive-element/reactive-element.js';
-import { html as x } from '../node_modules/lit-html/lit-html.js';
+import { html as b } from '../node_modules/lit-html/lit-html.js';
 import '../node_modules/lit-element/lit-element.js';
 import { updateVoltageLevel } from '../node_modules/@openscd/scl-lib/dist/tVoltageLevel/updateVoltageLevel.js';
 import { getReference } from '../node_modules/@openscd/scl-lib/dist/tBaseElement/getReference.js';
@@ -20,7 +20,7 @@ const initial = {
 };
 function render(option) {
     return [
-        x `<scl-text-field
+        b `<scl-text-field
       label="name"
       .value=${option.name}
       helper="VoltageLevel name attribute"
@@ -29,13 +29,13 @@ function render(option) {
       .reservedValues="${option.reservedValues}"
       dialogInitialFocus
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="desc"
       .value=${option.desc}
       nullable
       helper="VoltageLevel name attribute"
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="nomFreq"
       .value=${option.nomFreq}
       nullable
@@ -44,7 +44,7 @@ function render(option) {
       required
       validationMessage="Number bigger than 0"
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="numPhases"
       .value=${option.numPhases}
       nullable
@@ -56,7 +56,7 @@ function render(option) {
       min="1"
       max="255"
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="Voltage"
       .value=${option.Voltage}
       nullable

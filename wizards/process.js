@@ -1,5 +1,5 @@
 import '../node_modules/@lit/reactive-element/reactive-element.js';
-import { html as x } from '../node_modules/lit-html/lit-html.js';
+import { html as b } from '../node_modules/lit-html/lit-html.js';
 import '../node_modules/lit-element/lit-element.js';
 import { getReference } from '../node_modules/@openscd/scl-lib/dist/tBaseElement/getReference.js';
 import '../node_modules/@openscd/scl-lib/dist/generator/lnInstGenerator.js';
@@ -13,19 +13,19 @@ import { getChildElementsByTagName, getValue, createElement } from '../foundatio
 
 function contentProcessWizard(content) {
     return [
-        x `<scl-text-field
+        b `<scl-text-field
       label="name"
       .value=${content.name}
       required
       .reservedValues=${content.reservedNames}
       dialogInitialFocus
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="desc"
       .value=${content.desc}
       nullable
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="type"
       .value=${content.type}
       nullable

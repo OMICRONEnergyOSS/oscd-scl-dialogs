@@ -1,5 +1,5 @@
 import '../node_modules/@lit/reactive-element/reactive-element.js';
-import { html as x } from '../node_modules/lit-html/lit-html.js';
+import { html as b } from '../node_modules/lit-html/lit-html.js';
 import '../node_modules/lit-element/lit-element.js';
 import '../node_modules/@openscd/scl-lib/dist/tBaseElement/tags.js';
 import { updateIED } from '../node_modules/@openscd/scl-lib/dist/tIED/updateIED.js';
@@ -13,14 +13,14 @@ import { getValue } from '../foundation.js';
 
 function renderAdd(name, iedNames, desc) {
     return [
-        x `<scl-text-field
+        b `<scl-text-field
       label="name"
       .value=${name}
       .reservedValues=${iedNames}
       required
       dialogInitialFocus
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="desc"
       .value=${desc}
       nullable
@@ -30,17 +30,17 @@ function renderAdd(name, iedNames, desc) {
 function renderEdit(name, iedNames, desc, type, manufacturer, owner) {
     return [
         ...renderAdd(name, iedNames, desc),
-        x `<scl-text-field
+        b `<scl-text-field
       label="type"
       .value=${type}
       disabled
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="manufacturer"
       .value=${manufacturer}
       disabled
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="owner"
       .value=${owner}
       disabled

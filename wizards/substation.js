@@ -1,5 +1,5 @@
 import '../node_modules/@lit/reactive-element/reactive-element.js';
-import { html as x } from '../node_modules/lit-html/lit-html.js';
+import { html as b } from '../node_modules/lit-html/lit-html.js';
 import '../node_modules/lit-element/lit-element.js';
 import { updateSubstation } from '../node_modules/@openscd/scl-lib/dist/tSubstation/updateSubstation.js';
 import { getReference } from '../node_modules/@openscd/scl-lib/dist/tBaseElement/getReference.js';
@@ -14,14 +14,14 @@ import { reservedNames, getValue, createElement } from '../foundation.js';
 
 function render(options) {
     return [
-        x `<scl-text-field
+        b `<scl-text-field
       label="name"
       .value=${options.name}
       required
       .reservedValues="${options.reservedValues}"
       dialogInitialFocus
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="desc"
       .value=${options.desc}
       nullable

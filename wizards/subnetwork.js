@@ -1,5 +1,5 @@
 import '../node_modules/@lit/reactive-element/reactive-element.js';
-import { html as x } from '../node_modules/lit-html/lit-html.js';
+import { html as b } from '../node_modules/lit-html/lit-html.js';
 import '../node_modules/lit-element/lit-element.js';
 import { getReference } from '../node_modules/@openscd/scl-lib/dist/tBaseElement/getReference.js';
 import '../node_modules/@openscd/scl-lib/dist/generator/lnInstGenerator.js';
@@ -20,24 +20,24 @@ const initial = {
 };
 function renderContent(options) {
     return [
-        x `<scl-text-field
+        b `<scl-text-field
       label="name"
       .value=${options.name}
       required
       dialogInitialFocus
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="desc"
       .value=${options.desc}
       nullable
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="type"
       .value=${options.type}
       nullable
       pattern="${patterns.normalizedString}"
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="BitRate"
       .value=${options.BitRate}
       nullable

@@ -1,5 +1,5 @@
 import '../node_modules/@lit/reactive-element/reactive-element.js';
-import { html as x } from '../node_modules/lit-html/lit-html.js';
+import { html as b } from '../node_modules/lit-html/lit-html.js';
 import '../node_modules/lit-element/lit-element.js';
 import { getReference } from '../node_modules/@openscd/scl-lib/dist/tBaseElement/getReference.js';
 import '../node_modules/@openscd/scl-lib/dist/generator/lnInstGenerator.js';
@@ -106,65 +106,65 @@ function filterType(bType, tag) {
 }
 function renderAbstractDataAttributeContent(name, desc, bType, types, type, sAddr, valKind, valImport, Val, data) {
     return [
-        x `<scl-text-field
+        b `<scl-text-field
       label="name"
       .value=${name}
       required
       pattern="${patterns.abstractDataAttributeName}"
       maxLength="${maxLength.abstracDaName}"
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="desc"
       .value=${desc}
       nullable
       pattern="${patterns.normalizedString}"
     ></scl-text-field>`,
-        x `<scl-select
+        b `<scl-select
       label="bType"
       .selectOptions=${predefinedBasicTypeEnum}
       .value=${bType}
       required
       @input=${(e) => changeBType(e, bType, type, data)}
     ></scl-select>`,
-        x `<md-filled-select
+        b `<md-filled-select
       label="type"
       .value=${type}
       .disabled=${bType !== 'Enum' && bType !== 'Struct'}
       @change=${(e) => changeType(e, data, Val)}
-      >${types.map(dataType => x `<md-select-option
+      >${types.map(dataType => b `<md-select-option
             class="${dataType.tagName === 'EnumType' ? 'Enum' : 'Struct'}"
             style="display: ${filterType(bType, dataType.tagName)}"
             value=${dataType.id}
             >${dataType.id}</md-select-option
           >`)}</md-filled-select
     >`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="sAddr"
       .value=${sAddr}
       nullable
       pattern="${patterns.normalizedString}"
     ></scl-text-field>`,
-        x `<scl-select
+        b `<scl-select
       label="valKind"
       .selectOptions=${valKindEnum}
       .value=${valKind}
       nullable
       required
     ></scl-select>`,
-        x `<scl-checkbox
+        b `<scl-checkbox
       label="valImport"
       .value=${valImport}
       nullable
       required
     ></scl-checkbox>`,
-        x `<scl-select
+        b `<scl-select
       label="Val"
       .selectOptions=${Array.from(data.querySelectorAll(`:root > DataTypeTemplates > EnumType > EnumVal[id="${type}"]`)).map(enumVal => enumVal.textContent?.trim() ?? '')}
       .value=${Val}
       nullable
       style="display: ${bType === 'Enum' ? '' : 'none'}"
     ></scl-select>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="Val"
       .value=${Val}
       nullable

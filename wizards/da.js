@@ -1,5 +1,5 @@
 import '../node_modules/@lit/reactive-element/reactive-element.js';
-import { html as x } from '../node_modules/lit-html/lit-html.js';
+import { html as b } from '../node_modules/lit-html/lit-html.js';
 import '../node_modules/lit-element/lit-element.js';
 import { getReference } from '../node_modules/@openscd/scl-lib/dist/tBaseElement/getReference.js';
 import '../node_modules/@openscd/scl-lib/dist/generator/lnInstGenerator.js';
@@ -15,15 +15,15 @@ import { functionalConstraintEnum } from './patterns.js';
 
 function renderAdditionalDaContent(fc, dchg, qchg, dupd) {
     return [
-        x `<scl-select
+        b `<scl-select
       label="fc"
       .selectOptions=${functionalConstraintEnum}
       .value=${fc}
       required
     ></scl-select>`,
-        x `<scl-checkbox label="dchg" .value=${dchg} nullable></scl-checkbox>`,
-        x `<scl-checkbox label="qchg" .value=${qchg} nullable></scl-checkbox>`,
-        x `<scl-checkbox label="dupd" .value=${dupd} nullable></scl-checkbox>`,
+        b `<scl-checkbox label="dchg" .value=${dchg} nullable></scl-checkbox>`,
+        b `<scl-checkbox label="qchg" .value=${qchg} nullable></scl-checkbox>`,
+        b `<scl-checkbox label="dupd" .value=${dupd} nullable></scl-checkbox>`,
     ];
 }
 function createDaAction(parent) {

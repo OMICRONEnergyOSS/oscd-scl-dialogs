@@ -1,5 +1,5 @@
 import '../node_modules/@lit/reactive-element/reactive-element.js';
-import { html as x } from '../node_modules/lit-html/lit-html.js';
+import { html as b } from '../node_modules/lit-html/lit-html.js';
 import '../node_modules/lit-element/lit-element.js';
 import { getValue } from '../foundation.js';
 import { patterns } from './patterns.js';
@@ -17,20 +17,20 @@ function render(element, lnodeTypeIds) {
     const lnClass = element.getAttribute('lnClass');
     const inst = element.getAttribute('inst');
     return [
-        x `<scl-select
+        b `<scl-select
       label="lnType"
       .value=${lnType}
       required
       .selectOptions=${lnodeTypeIds}
     ></scl-select>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="desc"
       .value=${desc}
       nullable
       supportingText="Logical node zero description"
       pattern="${patterns.normalizedString}"
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="lnClass"
       .value=${lnClass}
       readOnly
@@ -39,7 +39,7 @@ function render(element, lnodeTypeIds) {
       supportingText="Logical node class"
       pattern="${patterns.lnClass}"
     ></scl-text-field>`,
-        x `<scl-text-field
+        b `<scl-text-field
       label="inst"
       .value=${inst}
       readOnly

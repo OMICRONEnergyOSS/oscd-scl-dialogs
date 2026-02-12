@@ -1,5 +1,5 @@
 import '../node_modules/@lit/reactive-element/reactive-element.js';
-import { html as x } from '../node_modules/lit-html/lit-html.js';
+import { html as b } from '../node_modules/lit-html/lit-html.js';
 import '../node_modules/lit-element/lit-element.js';
 import { getReference } from '../node_modules/@openscd/scl-lib/dist/tBaseElement/getReference.js';
 import '../node_modules/@openscd/scl-lib/dist/generator/lnInstGenerator.js';
@@ -34,7 +34,7 @@ function createDOTypeWizard(parent) {
             action: createDOTypeAction(parent),
         },
         content: [
-            x `<scl-text-field
+            b `<scl-text-field
         label="id"
         .value=${''}
         required
@@ -42,13 +42,13 @@ function createDOTypeWizard(parent) {
         minlength="1"
         pattern="${patterns.nmToken}"
       ></scl-text-field>`,
-            x `<scl-text-field
+            b `<scl-text-field
         label="desc"
         .maybeValue=${null}
         nullable
         pattern="${patterns.normalizedString}"
       ></scl-text-field>`,
-            x `<scl-text-field
+            b `<scl-text-field
         label="cdc"
         .value=${'ENS'}
         pattern="${patterns.cdc}"
