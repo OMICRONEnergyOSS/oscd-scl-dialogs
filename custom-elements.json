@@ -2290,6 +2290,14 @@
             "name": "SelectionList",
             "package": "@openenergytools/filterable-lists/dist/SelectionList.js"
           }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "scl-text-field",
+          "declaration": {
+            "name": "SclTextField",
+            "package": "@openenergytools/scl-text-field"
+          }
         }
       ]
     },
@@ -2355,7 +2363,24 @@
       "kind": "javascript-module",
       "path": "wizards/ln0.spec.ts",
       "declarations": [],
-      "exports": []
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "scl-select",
+          "declaration": {
+            "name": "SclSelect",
+            "package": "@openenergytools/scl-select"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "scl-text-field",
+          "declaration": {
+            "name": "SclTextField",
+            "package": "@openenergytools/scl-text-field"
+          }
+        }
+      ]
     },
     {
       "kind": "javascript-module",

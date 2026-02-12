@@ -1,5 +1,5 @@
 import { css, html, LitElement, TemplateResult } from 'lit';
-import { property, query, queryAll } from 'lit/decorators.js';
+import { property, query, queryAll, state } from 'lit/decorators.js';
 
 import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 
@@ -25,6 +25,12 @@ import { MdTextButton } from '@scopedelement/material-web/button/MdTextButton.js
 import { wizards } from './wizards/wizards.js';
 
 import { Wizard, WizardActor, WizardInputElement } from './foundation.js';
+import OscdTextEditor, {
+  formatXml,
+  newOscdTextEditV2,
+  serializeXml,
+} from './OscdTextEditor.js';
+import { classMap } from 'lit/directives/class-map.js';
 
 export type EditWizard = {
   element: Element;
@@ -46,6 +52,7 @@ function isCreateWizard(wizardType: unknown): wizardType is CreateWizard {
 
 function isEditWizard(wizardType: unknown): wizardType is EditWizard {
   return (
+    !!wizardType &&
     'element' in (wizardType as EditWizard) &&
     (wizardType as EditWizard).element instanceof Element
   );
@@ -90,7 +97,9 @@ function wizardAction(wizardType: WizardType): WizardActor | undefined {
   return getWizard(wizardType)?.primary?.action;
 }
 
-export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
+class BaseElement extends ScopedElementsMixin(LitElement) {}
+
+export default class OscdSclDialogs extends BaseElement {
   @property({ type: Object })
   wizardType: EditWizard | CreateWizard | null = null;
 
@@ -115,14 +124,28 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
     'action-list': ActionList,
     'md-list': MdList,
     'md-list-item': MdListItem,
+    'oscd-text-editor': OscdTextEditor,
   };
 
-  @query('md-dialog') dialog!: MdDialog;
+  @state()
+  private editorMode: boolean = false;
+
+  @query('md-dialog')
+  dialog!: MdDialog;
+
+  @query('oscd-text-editor')
+  textEditor!: OscdTextEditor;
 
   @queryAll(
     'scl-text-field, scl-select, scl-checkbox, md-filled-textfield, md-filled-select',
   )
   inputs!: WizardInputElement[];
+
+  @state()
+  private initialEditorText: string | undefined;
+
+  @state()
+  private currentEditorText: string | undefined;
 
   private checkValidity(): boolean {
     return Array.from(this.inputs).every(input => input.checkValidity());
@@ -153,6 +176,7 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
   async edit(wizardType: EditWizard): Promise<EditV2[]> {
     this.wizardType = wizardType;
     let edits: EditV2[] = [];
+    this.initialEditorText = formatXml(serializeXml(this.wizardType.element));
     try {
       edits = await new Promise<EditV2[]>((resolve, reject) => {
         this.dialogClosePromise = { resolve, reject };
@@ -166,11 +190,22 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
     return edits;
   }
 
+  /**
+   * Close triggers the dialog to close, which in turn triggers the `closed` event that resets the state of the dialog.
+   * Why? Because click-away will also close the dialog - no matter how it closes, we want to reset.
+   */
   close(): void {
     this.dialog.close();
   }
 
+  /**
+   * No need to call this directly as the `closed` event will trigger a reset of the dialog's state, but this can be
+   * used to manually reset the dialog if needed.
+   */
   reset(): void {
+    this.editorMode = false;
+    this.initialEditorText = undefined;
+    this.currentEditorText = undefined;
     this.wizardType = null;
     this.inputs.forEach(input => {
       input.value = '';
@@ -181,7 +216,29 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
     });
   }
 
-  private async act(action?: WizardActor): Promise<boolean> {
+  private async applyTextEdits(): Promise<void> {
+    if (
+      !this.wizardType ||
+      !isEditWizard(this.wizardType) ||
+      !this.currentEditorText ||
+      this.currentEditorText === this.initialEditorText
+    ) {
+      return;
+    }
+
+    const element = this.wizardType.element;
+    const edits = newOscdTextEditV2({
+      element,
+      newText: this.currentEditorText,
+    });
+    if (edits) {
+      this.dialogClosePromise?.resolve(edits);
+    }
+
+    this.close();
+  }
+
+  private async applyFormValues(action?: WizardActor): Promise<boolean> {
     if (action === undefined) {
       return false;
     }
@@ -196,9 +253,30 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
     return true;
   }
 
+  private handleToggleEditorMode(): void {
+    if (this.editorMode && this.currentEditorText !== this.initialEditorText) {
+      const confirmLeave = window.confirm(
+        'You have unsaved changes. Are you sure you want to switch to form view? Your changes will be lost.',
+      );
+      if (!confirmLeave) {
+        return;
+      }
+    }
+    this.editorMode = !this.editorMode;
+    // Until we can safely sync edits between the Form and the Editor, we will need to
+    // reset the editor text. If the user navigated away from the Editor mode with changes
+    // they were already warned those changes would be lost.
+    if (this.editorMode && isEditWizard(this.wizardType)) {
+      this.currentEditorText = this.initialEditorText;
+    }
+  }
+
   render(): TemplateResult {
     return html`<div>
       <md-dialog
+        class="${classMap({
+          'editor-mode': this.editorMode,
+        })}"
         @closed="${() => {
           this.reset();
         }}"
@@ -206,9 +284,32 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
           this.dialogClosePromise?.reject();
         }}"
       >
-        <div slot="headline">${wizardTitle(this.wizardType)}</div>
+        <div slot="headline" class="dialog-header">
+          <span class="title">${wizardTitle(this.wizardType)}</span>
+
+          <span class="header-actions">
+            <md-icon-button
+              ?disabled="${!isEditWizard(this.wizardType)}"
+              aria-label="Code"
+              @click="${() => this.handleToggleEditorMode()}"
+            >
+              <md-icon>code</md-icon>
+            </md-icon-button>
+          </span>
+        </div>
         <form slot="content" method="dialog">
-          <div id="wizard-content">${wizardContent(this.wizardType)}</div>
+          ${this.editorMode
+            ? html`<div class="editor-content">
+                <oscd-text-editor
+                  .value=${this.initialEditorText}
+                  @change=${(e: CustomEvent<string>) => {
+                    this.currentEditorText = e.detail;
+                  }}
+                ></oscd-text-editor>
+              </div>`
+            : html`<div class="wizard-content">
+                ${wizardContent(this.wizardType)}
+              </div>`}
         </form>
         <div slot="actions">
           <md-text-button
@@ -222,7 +323,10 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
           >
           <md-filled-button
             form="add-data-object"
-            @click=${() => this.act(wizardAction(this.wizardType!))}
+            @click=${() =>
+              this.editorMode
+                ? this.applyTextEdits()
+                : this.applyFormValues(wizardAction(this.wizardType!))}
             >Save</md-filled-button
           >
         </div>
@@ -302,12 +406,41 @@ export default class OscdSclDialogs extends ScopedElementsMixin(LitElement) {
       --md-dialog-container-max-width: 100%;
     }
 
-    #wizard-content {
+    md-dialog.editor-mode {
+      width: 80%;
+      height: 80%;
+    }
+
+    .dialog-header {
+      display: flex;
+      align-items: center;
+    }
+
+    .dialog-header .title {
+      flex: 1;
+    }
+
+    .editor-mode form,
+    .editor-content,
+    .editor-content oscd-text-editor {
+      height: 100%;
+    }
+
+    .editor-mode form {
+      padding-inline: 0px;
+    }
+
+    .editor-mode form .editor-content {
+      border-top: 1px solid var(--oscd-base0);
+      border-bottom: 1px solid var(--oscd-base0);
+    }
+
+    .wizard-content {
       display: flex;
       flex-direction: column;
     }
 
-    #wizard-content > * {
+    .wizard-content > * {
       display: block;
       margin-top: 16px;
     }
