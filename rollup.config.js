@@ -1,5 +1,7 @@
 /* eslint-disable import-x/no-extraneous-dependencies */
 import copy from 'rollup-plugin-copy';
+
+import { rollupPluginHTML as html } from '@web/rollup-plugin-html';
 import { importMetaAssets } from '@web/rollup-plugin-import-meta-assets';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
@@ -21,7 +23,14 @@ export default [
       typescript(),
       importMetaAssets(),
       copy({
-        targets: [{ src: 'ace', dest: 'dist' }],
+        targets: [
+          {
+            src: 'node_modules/ace-builds/src-noconflict/*.js',
+            dest: 'dist/ace',
+          },
+        ],
+        verbose: true,
+        flatten: true,
       }),
     ],
   },
@@ -41,5 +50,46 @@ export default [
       typescript(),
       importMetaAssets(),
     ],
+  },
+  {
+    input: 'demo/index.html',
+    plugins: [
+      html({
+        input: 'demo/index.html',
+        minify: true,
+      }),
+      /** Resolve bare module imports */
+      nodeResolve(),
+
+      typescript({ tsconfig: './tsconfig.demo.json' }),
+
+      /** Bundle assets references via import.meta.url */
+      importMetaAssets(),
+
+      copy({
+        targets: [
+          { src: 'demo/sample.scd', dest: 'dist/demo' },
+          { src: 'demo/*.js', dest: 'dist/demo' },
+        ],
+        verbose: true,
+        flatten: false,
+      }),
+
+      copy({
+        targets: [
+          {
+            src: 'node_modules/ace-builds/src-noconflict/*.js',
+            dest: 'dist/demo/ace',
+          },
+        ],
+        verbose: true,
+        flatten: true,
+      }),
+    ],
+    output: {
+      dir: 'dist/demo',
+      format: 'es',
+      sourcemap: true,
+    },
   },
 ];

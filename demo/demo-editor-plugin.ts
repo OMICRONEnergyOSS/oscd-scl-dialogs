@@ -1,37 +1,18 @@
-import { css, html, LitElement } from 'lit';
-import { property, query } from 'lit/decorators.js';
-import type WizardDialog from '../OscdSclDialogs.js';
+import { css, html, LitElement, PropertyValueMap } from 'lit';
+import { property, query, state } from 'lit/decorators.js';
+import type WizardDialog from '../OscdSclDialogs.ts';
 
-import '../oscd-scl-dialogs.js';
+import '../oscd-scl-dialogs.ts';
 import { XMLEditor } from '@openscd/oscd-editor';
 import { convertEdit } from '@openscd/oscd-api/utils.js';
 import { Edit } from '@openscd/oscd-api';
 import { emptyWizard, wizards } from '../wizards/wizards.js';
-
-function prettyPrintXml(xml: XMLDocument | Element): string {
-  const serializer = new XMLSerializer();
-  const xmlStr = serializer.serializeToString(xml);
-
-  // Insert line breaks between tags
-  const xmlString = xmlStr.replace(/>(\s*)</g, '>\n<');
-  let formatted = '';
-  let pad = 0;
-
-  xmlString.split('\n').forEach(node => {
-    if (node.match(/^<\/[^>]+>/)) {
-      pad -= 2;
-    } // Closing tag
-    if (pad < 0) {
-      pad = 0;
-    }
-    formatted += ' '.repeat(pad) + node + '\n';
-    if (node.match(/^<[^!?/][^>]*[^/]>$/)) {
-      pad += 2;
-    } // Opening tag (not self-closing, not comment/doctype)
-  });
-
-  return formatted.trim();
-}
+import OscdTextEditor, {
+  newOscdTextEditV2,
+  serializeXml,
+} from '../OscdTextEditor.js';
+import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
+import OscdSclDialogs from '../OscdSclDialogs.js';
 
 const supportedCreateTagNames = Object.entries(wizards)
   .filter(([, value]) => value.create !== emptyWizard)
@@ -41,15 +22,29 @@ const supportedEditTagNames = Object.entries(wizards)
   .filter(([, value]) => value.edit !== emptyWizard)
   .map(([key]) => key);
 
-export default class TriggerWizard extends LitElement {
+export default class DemoEditorPlugin extends ScopedElementsMixin(LitElement) {
+  static scopedElements = {
+    'oscd-text-editor': OscdTextEditor,
+    'oscd-scl-dialogs': OscdSclDialogs,
+  };
+
   @property()
   doc!: XMLDocument;
+
+  @property()
+  docVersion = -1;
 
   @property()
   editor!: XMLEditor;
 
   @property()
   docsState!: unknown;
+
+  @state()
+  editedText = '';
+
+  @state()
+  editorDirty = false;
 
   @query('#newTagName') newTagName!: HTMLSelectElement;
 
@@ -60,6 +55,14 @@ export default class TriggerWizard extends LitElement {
   @query('#tagSelector') tagSelector!: HTMLInputElement;
 
   @query('oscd-scl-dialogs') editDialog!: WizardDialog;
+
+  @query('oscd-text-editor') textEditor!: OscdTextEditor;
+
+  protected updated(changedProps: PropertyValueMap<DemoEditorPlugin>): void {
+    if (changedProps.has('doc') || changedProps.has('docVersion')) {
+      this.textEditor.value = serializeXml(this.doc);
+    }
+  }
 
   async triggerWizardCreate(): Promise<void> {
     const parent = this.doc.querySelector(this.parentSelector.value);
@@ -74,7 +77,6 @@ export default class TriggerWizard extends LitElement {
     };
     const edits = await this.editDialog.create(wizardType);
     this.editor.commit(convertEdit(edits as Edit[]));
-    this.requestUpdate();
   }
 
   async triggerWizardEdit(): Promise<void> {
@@ -99,18 +101,17 @@ export default class TriggerWizard extends LitElement {
     };
     const edits = await this.editDialog.edit(wizardType);
     this.editor.commit(edits);
-    this.requestUpdate();
   }
 
   render() {
     return html` <div class="card">
         <h2>Add Element</h2>
         <p>
-          Use this section to trigger the oscd-scl-dialogs to Add/Inert the
+          Use this section to trigger the oscd-scl-dialogs to Add/Insert the
           specified Element to the specified Parent
         </p>
         <label>Parent Selector:</label
-        ><input id="parentSelector" value="Substation" />
+        ><input id="parentSelector" value="LDevice[inst='LD1']" />
         <label for="newTagName">Tag Name:</label
         ><select id="newTagName">
           ${supportedCreateTagNames.map(
@@ -130,7 +131,7 @@ export default class TriggerWizard extends LitElement {
         <div>
           <input
             id="tagSelector"
-            value="Substation"
+            value="LDevice[inst='LD1']"
             aria-describedby="supportedEditElements"
           />
           <div
@@ -147,9 +148,34 @@ export default class TriggerWizard extends LitElement {
         <button @click="${this.triggerWizardEdit}">Edit</button>
       </div>
 
-      <div class="card">
-        <h2>Document Content</h2>
-        <pre style="white-space: break-spaces">${prettyPrintXml(this.doc)}</pre>
+      <div class="card editor">
+        <div class="editor-toolbar">
+          <button @click="${() => this.textEditor.format()}">Format XML</button>
+          <button
+            ?disabled="${!this.editorDirty}"
+            @click="${() => {
+              const value = this.editedText;
+              if (value === undefined) {
+                return;
+              }
+              const edits = newOscdTextEditV2({
+                element: this.doc.documentElement,
+                newText: value,
+              });
+              if (edits) {
+                this.editor.commit(edits);
+              }
+            }}"
+          >
+            Apply Edit
+          </button>
+        </div>
+        <oscd-text-editor
+          @change=${(e: CustomEvent<string>) => {
+            this.editedText = e.detail;
+            this.editorDirty = true;
+          }}
+        ></oscd-text-editor>
       </div>
 
       <oscd-scl-dialogs></oscd-scl-dialogs>`;
@@ -187,6 +213,23 @@ export default class TriggerWizard extends LitElement {
 
     .card button {
       text-align: center;
+    }
+
+    .card.editor {
+      padding: 0;
+      margin: 0 auto;
+      max-width: 560px;
+    }
+
+    .editor-toolbar {
+      display: flex;
+      gap: 8px;
+      padding: 8px;
+    }
+    .card oscd-text-editor {
+      grid-column: 1 / -1;
+      width: 100%;
+      height: 400px;
     }
 
     [role='tooltip'],
