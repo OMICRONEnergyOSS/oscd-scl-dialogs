@@ -38153,16 +38153,18 @@ function createAction$2(parent) {
 function updateAction$3(element) {
     return (inputs) => {
         const ldNameAllowed = ldNameIsAllowed(element);
+        const desc = getValue(inputs.find(i => i.label === 'desc'));
         const ldName = ldNameAllowed
             ? getValue(inputs.find(i => i.label === 'ldName'))
             : null;
-        if (!ldNameAllowed || ldName === element.getAttribute('ldName')) {
+        if (ldName === element.getAttribute('ldName') &&
+            desc === element.getAttribute('desc')) {
             return [];
         }
         return [
             {
                 element,
-                attributes: { ldName },
+                attributes: { ldName, desc },
             },
         ];
     };
@@ -39815,10 +39817,19 @@ OscdSclDialogs.styles = i$4 `
       flex: 1;
     }
 
-    .editor-mode .form,
+    .editor-mode form,
     .editor-content,
     .editor-content oscd-text-editor {
       height: 100%;
+    }
+
+    .editor-mode form {
+      padding-inline: 0px;
+    }
+
+    .editor-mode form .editor-content {
+      border-top: 1px solid var(--oscd-base0);
+      border-bottom: 1px solid var(--oscd-base0);
     }
 
     .wizard-content {

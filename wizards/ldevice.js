@@ -106,16 +106,18 @@ function createAction(parent) {
 function updateAction(element) {
     return (inputs) => {
         const ldNameAllowed = ldNameIsAllowed(element);
+        const desc = getValue(inputs.find(i => i.label === 'desc'));
         const ldName = ldNameAllowed
             ? getValue(inputs.find(i => i.label === 'ldName'))
             : null;
-        if (!ldNameAllowed || ldName === element.getAttribute('ldName')) {
+        if (ldName === element.getAttribute('ldName') &&
+            desc === element.getAttribute('desc')) {
             return [];
         }
         return [
             {
                 element,
-                attributes: { ldName },
+                attributes: { ldName, desc },
             },
         ];
     };

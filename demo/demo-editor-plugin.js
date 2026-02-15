@@ -150,6 +150,7 @@ export default class DemoEditorPlugin extends ScopedElementsMixin(LitElement) {
             aria-describedby="supportedEditElements"
           />
           <div
+            style="z-index: 2;"
             role="tooltip"
             id="supportedEditElements"
             aria-label="Supported Elements for Editing"
