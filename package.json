@@ -2,7 +2,7 @@
   "name": "@omicronenergy/oscd-scl-dialogs",
   "description": "Provides a resuable dialog for adding and editing SCL elements in OpenSCD.",
   "displayName": "OpenSCD Edit Dialog",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs.git"

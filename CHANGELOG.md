@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.8](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.7...oscd-scl-dialogs-v0.0.8) (2026-02-15)
+
+
+### Features
+
+* add "show as SCL Snippet" feature to dialog ([9b7b8b4](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/commit/9b7b8b4ec2d7dd1c7ea9e864062fe124e2da53cd))
+
 ## [0.0.7](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.6...oscd-scl-dialogs-v0.0.7) (2026-02-09)
 
 
