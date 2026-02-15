@@ -1,1 +1,35 @@
-<html><head><title>oscd-scl-dialogs Demo</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&amp;family=Roboto:wght@300;400;500&amp;display=swap"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons&amp;display=block"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"></head><body><oscd-shell></oscd-shell><style>*{--oscd-theme-text-font:'Roboto';--oscd-theme-icon-font:'Material Symbols Outlined';--oscd-theme-base3:white;--oscd-theme-base2:#f3f5f6;background-color:#1460ac;margin:0;padding:0}div#ace_settingsmenu *{background-color:var(--oscd-theme-base2)}</style><script type="module" src="./inline-module-d5304f1eb2a99d2789a5fd48eec41161.js"></script></body></html>
+<!DOCTYPE html><html lang="en"><head>
+    <title>oscd-scl-dialogs Demo</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&amp;family=Roboto:wght@300;400;500&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons&amp;display=block">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    
+    <style>
+      * {
+        --oscd-theme-text-font: 'Roboto';
+        --oscd-theme-icon-font: 'Material Symbols Outlined';
+        --oscd-theme-base3: white;
+        --oscd-theme-base2: #f3f5f6;
+        background-color: #1460ac;
+
+        margin: 0px;
+        padding: 0px;
+      }
+
+      /* workaround for ace-editor settings panel which is hoisted outside of the dialog and thus not affected by the dialog's styles */
+      div#ace_settingsmenu * {
+        background-color: var(--oscd-theme-base2);
+      }
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <oscd-shell></oscd-shell>
+  
+
+<script type="module" src="./inline-module-4eee19d6694dd8f338e480ba79447bac.js"></script></body></html>
