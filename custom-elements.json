@@ -328,7 +328,7 @@
                 "text": "object"
               },
               "static": true,
-              "default": "{ // Left here for clarity sake. We need to dyn-import this so we have a chance of overriding the customElements.define to prevent // ace-editor from being registered globally and causing issues with other instances of ace-editor in the same document. //'ace-editor': AceEditor, }"
+              "default": "{ // Left here for clarity sake. We need to dyn-import this so we have a chance of overriding the customElements.define to prevent // ace-editor from being registered globally and causing issues with other instances of ace-editor in the same document. // 'ace-editor': AceEditor, }"
             },
             {
               "kind": "field",
@@ -366,6 +366,29 @@
                   }
                 }
               ]
+            },
+            {
+              "kind": "method",
+              "name": "firstUpdated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "_changedProperties",
+                  "type": {
+                    "text": "PropertyValues"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "clearSelection",
+              "privacy": "private"
             },
             {
               "kind": "method",
@@ -1058,6 +1081,12 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "demo/index.js",
+      "declarations": [],
+      "exports": []
     },
     {
       "kind": "javascript-module",

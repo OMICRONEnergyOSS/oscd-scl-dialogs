@@ -12,7 +12,8 @@ import 'ace-builds/src-noconflict/ace.js';
 import 'ace-builds/src-noconflict/theme-sqlserver.js';
 import 'ace-builds/src-noconflict/mode-xml.js';
 import 'ace-builds/src-noconflict/ext-searchbox.js';
-import type AceEditor from 'ace-custom-element';
+
+import AceEditor from './ace-editor/AceEditor.js';
 
 import { EditV2 } from '@openscd/oscd-api';
 
@@ -182,26 +183,26 @@ export default class OscdTextEditor extends BaseElement {
   static scopedElements = {
     // Left here for clarity sake. We need to dyn-import this so we have a chance of overriding the customElements.define to prevent
     // ace-editor from being registered globally and causing issues with other instances of ace-editor in the same document.
-    // 'ace-editor': AceEditor,
+    'ace-editor': AceEditor,
   };
 
-  constructor() {
-    super();
-    // Special handling to prevent ace-editor from being registered globally, which would cause issues with multiple instances in the same document.
-    // This will all go away once the oscd-ui version is implemented and this project is migrated to oscd-ui
-    const customElementsDefineFn = window.customElements.define;
-    window.customElements.define = (name, constructor) => {
-      if (name !== 'ace-editor') {
-        return customElementsDefineFn(name, constructor);
-      }
-    };
-    import('ace-custom-element').then(AceEditor => {
-      if (!this.registry?.get('ace-editor')) {
-        this.registry?.define('ace-editor', AceEditor.default);
-        this.requestUpdate();
-      }
-    });
-  }
+  // constructor() {
+  //   super();
+  //   // Special handling to prevent ace-editor from being registered globally, which would cause issues with multiple instances in the same document.
+  //   // This will all go away once the oscd-ui version is implemented and this project is migrated to oscd-ui
+  //   const customElementsDefineFn = window.customElements.define;
+  //   window.customElements.define = (name, constructor) => {
+  //     if (name !== 'ace-editor') {
+  //       return customElementsDefineFn(name, constructor);
+  //     }
+  //   };
+  //   import('ace-custom-element').then(AceEditor => {
+  //     if (!this.registry?.get('ace-editor')) {
+  //       this.registry?.define('ace-editor', AceEditor.default);
+  //       this.requestUpdate();
+  //     }
+  //   });
+  // }
 
   @property()
   value: string | undefined;
@@ -287,11 +288,12 @@ export default class OscdTextEditor extends BaseElement {
       }
 
       // Only update if content actually changed (prevents cursor jump)
-      if (editor.getValue() !== this.value) {
-        editor.setValue(this.value ?? '');
-      }
+      // if (editor.getValue() !== this.value) {
+      //   editor.setValue(this.value ?? '');
+      // }
 
-      this.clearSelection();
+      editor.selection.clearSelection();
+      editor.moveCursorTo(0, 0);
     }
   }
 
