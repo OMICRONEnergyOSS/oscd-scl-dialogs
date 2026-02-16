@@ -97,7 +97,6 @@
     "@web/test-runner-commands": "0.9.0",
     "@web/test-runner-playwright": "0.11.1",
     "@web/test-runner-visual-regression": "0.10.0",
-    "@webcomponents/scoped-custom-element-registry": "0.0.10",
     "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
@@ -116,6 +115,9 @@
     "sinon": "^21.0.1",
     "typedoc": "^0.28.16",
     "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "playwright": "1.54.1"
   },
   "customElements": "custom-elements.json",
   "prettier": {
