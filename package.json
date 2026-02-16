@@ -44,7 +44,6 @@
     "analyze": "cem analyze",
     "start": "rimraf dist && tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds --watch --node-resolve\"",
     "start:bundle": "npm run bundle && concurrently -k -r \"rollup -c rollup.config.js --watch\" \"wds --watch --root-dir ./dist\"",
-    "start:vite": "vite",
     "build": "rimraf dist && tsc && npm run analyze -- --exclude dist",
     "build:watch": "rimraf dist && npm run analyze -- --exclude dist && tsc --watch --preserveWatchOutput",
     "bundle": "rimraf dist && rollup -c rollup.config.js",
@@ -115,8 +114,7 @@
     "rollup-plugin-copy": "^3.5.0",
     "sinon": "^21.0.1",
     "typedoc": "^0.28.16",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.1"
+    "typescript": "^5.9.3"
   },
   "customElements": "custom-elements.json",
   "prettier": {

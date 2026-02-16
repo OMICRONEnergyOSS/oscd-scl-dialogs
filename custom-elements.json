@@ -41,7 +41,16 @@
                 "text": "object"
               },
               "static": true,
-              "default": "{ 'md-dialog': MdDialog, 'md-text-button': MdTextButton, 'md-filled-button': MdFilledButton, 'scl-checkbox': SclCheckbox, 'scl-text-field': SclTextField, 'scl-select': SclSelect, 'md-filled-textfield': MdFilledTextField, 'md-filled-select': MdFilledSelect, 'md-select-option': MdSelectOption, 'md-icon-button': MdIconButton, 'md-icon': MdIcon, 'selection-list': SelectionList, 'action-list': ActionList, 'md-list': MdList, 'md-list-item': MdListItem, }"
+              "default": "{ 'md-dialog': MdDialog, 'md-text-button': MdTextButton, 'md-filled-button': MdFilledButton, 'scl-checkbox': SclCheckbox, 'scl-text-field': SclTextField, 'scl-select': SclSelect, 'md-filled-textfield': MdFilledTextField, 'md-filled-select': MdFilledSelect, 'md-select-option': MdSelectOption, 'md-icon-button': MdIconButton, 'md-icon': MdIcon, 'selection-list': SelectionList, 'action-list': ActionList, 'md-list': MdList, 'md-list-item': MdListItem, 'oscd-text-editor': OscdTextEditor, }"
+            },
+            {
+              "kind": "field",
+              "name": "editorMode",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "false"
             },
             {
               "kind": "field",
@@ -52,10 +61,33 @@
             },
             {
               "kind": "field",
+              "name": "textEditor",
+              "type": {
+                "text": "OscdTextEditor"
+              }
+            },
+            {
+              "kind": "field",
               "name": "inputs",
               "type": {
                 "text": "WizardInputElement[]"
               }
+            },
+            {
+              "kind": "field",
+              "name": "initialEditorText",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "currentEditorText",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "private"
             },
             {
               "kind": "method",
@@ -118,7 +150,8 @@
                 "type": {
                   "text": "void"
                 }
-              }
+              },
+              "description": "Close triggers the dialog to close, which in turn triggers the `closed` event that resets the state of the dialog.\nWhy? Because click-away will also close the dialog - no matter how it closes, we want to reset."
             },
             {
               "kind": "method",
@@ -127,11 +160,22 @@
                 "type": {
                   "text": "void"
                 }
+              },
+              "description": "No need to call this directly as the `closed` event will trigger a reset of the dialog's state, but this can be\nused to manually reset the dialog if needed."
+            },
+            {
+              "kind": "method",
+              "name": "applyTextEdits",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "Promise<void>"
+                }
               }
             },
             {
               "kind": "method",
-              "name": "act",
+              "name": "applyFormValues",
               "privacy": "private",
               "return": {
                 "type": {
@@ -150,6 +194,16 @@
             },
             {
               "kind": "method",
+              "name": "handleToggleEditorMode",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
               "name": "render",
               "return": {
                 "type": {
@@ -161,18 +215,12 @@
               "kind": "field",
               "name": "styles",
               "static": true,
-              "default": "css` *, md-filled-button * { --md-dialog-container-color: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-dialog-headline-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-dialog-headline-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-dialog-supporting-text-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-dialog-supporting-text-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-sys-color-primary: var(--wizard-dialog-primary, var(--oscd-primary)); --md-sys-color-secondary: var( --wizard-dialog-secondary, var(--oscd-secondary) ); --md-sys-typescale-body-large-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-sys-color-surface-container-highest: var( --wizard-dailog-input-background-color, var(--oscd-base3) ); --md-outlined-text-field-input-text-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-sys-color-on-surface: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-sys-color-on-primary: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-sys-color-surface: var(--wizard-dialog-surface, var(--oscd-base3)); --md-sys-color-on-surface-variant: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-menu-container-color: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-menu-item-selected-container-color: rgb( from var(--wizard-dialog-primary, var(--oscd-primary)) r g b / 0.38 ); } md-dialog { --md-dialog-container-max-height: 100%; --md-dialog-container-max-width: 100%; } #wizard-content { display: flex; flex-direction: column; } #wizard-content > * { display: block; margin-top: 16px; } `"
-            }
-          ],
-          "mixins": [
-            {
-              "name": "ScopedElementsMixin",
-              "package": "@open-wc/scoped-elements/lit-element.js"
+              "default": "css` *, md-filled-button * { --md-dialog-container-color: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-dialog-headline-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-dialog-headline-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-dialog-supporting-text-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-dialog-supporting-text-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-sys-color-primary: var(--wizard-dialog-primary, var(--oscd-primary)); --md-sys-color-secondary: var( --wizard-dialog-secondary, var(--oscd-secondary) ); --md-sys-typescale-body-large-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-sys-color-surface-container-highest: var( --wizard-dailog-input-background-color, var(--oscd-base3) ); --md-outlined-text-field-input-text-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-sys-color-on-surface: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-sys-color-on-primary: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-sys-color-surface: var(--wizard-dialog-surface, var(--oscd-base3)); --md-sys-color-on-surface-variant: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-menu-container-color: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-menu-item-selected-container-color: rgb( from var(--wizard-dialog-primary, var(--oscd-primary)) r g b / 0.38 ); } md-dialog { --md-dialog-container-max-height: 100%; --md-dialog-container-max-width: 100%; } md-dialog.editor-mode { width: 80%; height: 80%; } .dialog-header { display: flex; align-items: center; } .dialog-header .title { flex: 1; } .editor-mode form, .editor-content, .editor-content oscd-text-editor { height: 100%; } .editor-mode form { padding-inline: 0px; } .editor-mode form .editor-content { border-top: 1px solid var(--oscd-base0); border-bottom: 1px solid var(--oscd-base0); } .wizard-content { display: flex; flex-direction: column; } .wizard-content > * { display: block; margin-top: 16px; } `"
             }
           ],
           "superclass": {
-            "name": "LitElement",
-            "package": "lit"
+            "name": "BaseElement",
+            "module": "OscdSclDialogs.ts"
           },
           "tagName": "oscd-scl-dialogs",
           "customElement": true
@@ -185,6 +233,222 @@
           "declaration": {
             "name": "OscdSclDialogs",
             "module": "OscdSclDialogs.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "OscdTextEditor.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "parseXml",
+          "return": {
+            "type": {
+              "text": "XMLDocument"
+            }
+          },
+          "parameters": [
+            {
+              "name": "xml",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "serializeXml",
+          "return": {
+            "type": {
+              "text": "string"
+            }
+          },
+          "parameters": [
+            {
+              "name": "xml",
+              "type": {
+                "text": "XMLDocument | Element"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "formatXml",
+          "return": {
+            "type": {
+              "text": "string"
+            }
+          },
+          "parameters": [
+            {
+              "name": "rawXml",
+              "type": {
+                "text": "string | undefined"
+              }
+            },
+            {
+              "name": "initialIndent",
+              "default": "''",
+              "type": {
+                "text": "string"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "newOscdTextEditV2",
+          "return": {
+            "type": {
+              "text": "EditV2[] | null"
+            }
+          },
+          "parameters": [
+            {
+              "name": "{\n  element,\n  newText,\n}",
+              "type": {
+                "text": "{\n  element: Element;\n  newText: string;\n}"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "class",
+          "description": "Intent is to keep this generic so it can be migrated to oscd-ui.",
+          "name": "OscdTextEditor",
+          "members": [
+            {
+              "kind": "field",
+              "name": "scopedElements",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ 'ace-editor': AceEditor, }"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "aceEditor",
+              "type": {
+                "text": "AceEditor"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "format",
+              "privacy": "public"
+            },
+            {
+              "kind": "method",
+              "name": "handleAceChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "e",
+                  "type": {
+                    "text": "CustomEvent<string>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "updated",
+              "privacy": "protected",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "changedProps",
+                  "type": {
+                    "text": "PropertyValueMap<OscdTextEditor>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "render"
+            },
+            {
+              "kind": "field",
+              "name": "styles",
+              "static": true,
+              "default": "css` :host { height: 100%; width: 100%; overflow: auto; } ace-editor { height: 100%; width: 100%; } `"
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "BaseElement",
+            "module": "OscdTextEditor.ts"
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "parseXml",
+          "declaration": {
+            "name": "parseXml",
+            "module": "OscdTextEditor.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "serializeXml",
+          "declaration": {
+            "name": "serializeXml",
+            "module": "OscdTextEditor.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "formatXml",
+          "declaration": {
+            "name": "formatXml",
+            "module": "OscdTextEditor.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "newOscdTextEditV2",
+          "declaration": {
+            "name": "newOscdTextEditV2",
+            "module": "OscdTextEditor.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "OscdTextEditor",
+            "module": "OscdTextEditor.ts"
           }
         }
       ]
@@ -637,86 +901,77 @@
     },
     {
       "kind": "javascript-module",
-      "path": "demo/demo-editor-plugin.ts",
+      "path": "demo/demo-editor-plugin.js",
       "declarations": [
         {
           "kind": "class",
           "description": "",
-          "name": "TriggerWizard",
+          "name": "DemoEditorPlugin",
           "members": [
             {
               "kind": "field",
-              "name": "doc",
+              "name": "scopedElements",
               "type": {
-                "text": "XMLDocument"
-              }
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ 'oscd-text-editor': OscdTextEditor, 'oscd-scl-dialogs': OscdSclDialogs, }"
             },
             {
               "kind": "field",
-              "name": "editor",
+              "name": "properties",
               "type": {
-                "text": "XMLEditor"
-              }
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ doc: { type: Object }, docVersion: { type: Number }, editor: { type: Object }, docsState: { type: Object }, editedText: { state: true }, editorDirty: { state: true }, }"
             },
             {
-              "kind": "field",
-              "name": "docsState",
-              "type": {
-                "text": "unknown"
-              }
+              "kind": "method",
+              "name": "updated",
+              "parameters": [
+                {
+                  "name": "changedProps"
+                }
+              ]
             },
             {
               "kind": "field",
               "name": "newTagName",
-              "type": {
-                "text": "HTMLSelectElement"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
               "name": "parentSelector",
-              "type": {
-                "text": "HTMLInputElement"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
               "name": "childinput",
-              "type": {
-                "text": "HTMLInputElement"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
               "name": "tagSelector",
-              "type": {
-                "text": "HTMLInputElement"
-              }
+              "readonly": true
             },
             {
               "kind": "field",
               "name": "editDialog",
-              "type": {
-                "text": "WizardDialog"
-              }
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "textEditor",
+              "readonly": true
             },
             {
               "kind": "method",
-              "name": "triggerWizardCreate",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              }
+              "name": "triggerWizardCreate"
             },
             {
               "kind": "method",
-              "name": "triggerWizardEdit",
-              "return": {
-                "type": {
-                  "text": "Promise<void>"
-                }
-              }
+              "name": "triggerWizardEdit"
             },
             {
               "kind": "method",
@@ -726,7 +981,52 @@
               "kind": "field",
               "name": "styles",
               "static": true,
-              "default": "css` .card { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2rem; align-items: center; justify-items: center; padding: 2rem; background: #fafbfc; border-radius: 8px; max-width: 500px; margin: 2rem auto; } .card h2, .card p, .card button { grid-column: 1 / -1; text-align: center; margin-block: 0; } .card label, .card select, .card input, .card > div, .card button { width: 100%; } .card button { text-align: center; } [role='tooltip'], .hide-tooltip.hide-tooltip.hide-tooltip + [role='tooltip'] { visibility: hidden; position: absolute; background: black; color: white; padding: 1rem; border-radius: 8px; } [aria-describedby]:hover, [aria-describedby]:focus { position: relative; } [aria-describedby]:hover + [role='tooltip'], [aria-describedby]:focus + [role='tooltip'] { visibility: visible; } `"
+              "default": "css` .card { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem 2rem; align-items: center; justify-items: center; padding: 2rem; background: #fafbfc; border-radius: 8px; max-width: 500px; margin: 2rem auto; } .card h2, .card p, .card button { grid-column: 1 / -1; text-align: center; margin-block: 0; } .card label, .card select, .card input, .card > div, .card button { width: 100%; } .card.editor { padding: 0; margin: 0 auto; max-width: 560px; } .editor-toolbar { display: flex; gap: 8px; padding: 8px; } .card oscd-text-editor { grid-column: 1 / -1; width: 100%; height: 400px; } [role='tooltip'] { visibility: hidden; position: absolute; background: black; color: white; padding: 1rem; border-radius: 8px; } [aria-describedby]:hover + [role='tooltip'], [aria-describedby]:focus + [role='tooltip'] { visibility: visible; } `"
+            },
+            {
+              "kind": "field",
+              "name": "doc",
+              "default": "undefined"
+            },
+            {
+              "kind": "field",
+              "name": "docVersion",
+              "type": {
+                "text": "number"
+              },
+              "default": "-1"
+            },
+            {
+              "kind": "field",
+              "name": "editor",
+              "default": "undefined"
+            },
+            {
+              "kind": "field",
+              "name": "docsState",
+              "default": "undefined"
+            },
+            {
+              "kind": "field",
+              "name": "editedText",
+              "type": {
+                "text": "string"
+              },
+              "default": "''"
+            },
+            {
+              "kind": "field",
+              "name": "editorDirty",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "ScopedElementsMixin",
+              "package": "@open-wc/scoped-elements/lit-element.js"
             }
           ],
           "superclass": {
@@ -734,6 +1034,14 @@
             "package": "lit"
           },
           "customElement": true
+        },
+        {
+          "kind": "variable",
+          "name": "parent"
+        },
+        {
+          "kind": "variable",
+          "name": "tagName"
         }
       ],
       "exports": [
@@ -741,11 +1049,17 @@
           "kind": "js",
           "name": "default",
           "declaration": {
-            "name": "TriggerWizard",
-            "module": "demo/demo-editor-plugin.ts"
+            "name": "DemoEditorPlugin",
+            "module": "demo/demo-editor-plugin.js"
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "scripts/update-readme.ts",
+      "declarations": [],
+      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -1071,6 +1385,10 @@
               }
             }
           ]
+        },
+        {
+          "kind": "variable",
+          "name": "node"
         },
         {
           "kind": "function",
@@ -2487,6 +2805,16 @@
       "declarations": [
         {
           "kind": "variable",
+          "name": "name",
+          "default": "`${nameStartChar}(${nameChar})*`"
+        },
+        {
+          "kind": "variable",
+          "name": "nmToken",
+          "default": "`(${nameChar})+`"
+        },
+        {
+          "kind": "variable",
           "name": "patterns",
           "type": {
             "text": "object"
@@ -3552,12 +3880,6 @@
           }
         }
       ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "scripts/update-readme.ts",
-      "declarations": [],
-      "exports": []
     },
     {
       "kind": "javascript-module",
