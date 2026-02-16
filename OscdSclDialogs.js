@@ -1,4 +1,4 @@
-import { n as n$3, e as e$3, _ as __decorate, i as i$3, a as i$4, E, b as e$4, c as b, S as ScopedElementsMixin, A, D, O as OscdTextEditor, f as formatXml, s as serializeXml, d as newOscdTextEditV2 } from './OscdTextEditor-CS-z-X4z.js';
+import { n as n$3, e as e$3, _ as __decorate, i as i$3, a as i$4, E, b as e$4, c as b, S as ScopedElementsMixin, A, D, O as OscdTextEditor, f as formatXml, s as serializeXml, d as newOscdTextEditV2 } from './OscdTextEditor-GO-eVLjT.js';
 import { reservedNames, getValue, createElement as createElement$1, crossProduct, typeNullable, compareNames, getTypes, cloneElement, getChildElementsByTagName as getChildElementsByTagName$1, getMultiplier } from './foundation.js';
 
 /**
@@ -38157,14 +38157,16 @@ function updateAction$3(element) {
         const ldName = ldNameAllowed
             ? getValue(inputs.find(i => i.label === 'ldName'))
             : null;
-        if (ldName === element.getAttribute('ldName') &&
-            desc === element.getAttribute('desc')) {
-            return [];
-        }
+        const attributes = {
+            ...(ldNameAllowed && ldName !== element.getAttribute('ldName')
+                ? { ldName }
+                : {}),
+            ...(desc !== element.getAttribute('desc') ? { desc } : {}),
+        };
         return [
             {
                 element,
-                attributes: { ldName, desc },
+                attributes,
             },
         ];
     };
