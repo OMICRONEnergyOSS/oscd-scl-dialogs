@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.9](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.8...oscd-scl-dialogs-v0.0.9) (2026-02-16)
+
+
+### Bug Fixes
+
+* ace-editor should not end up on the global customElement reg ([f8680ff](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/commit/f8680ffb6414c1a3501029712effb7a412ca60c9))
+
 ## [0.0.8](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.7...oscd-scl-dialogs-v0.0.8) (2026-02-15)
 
 
