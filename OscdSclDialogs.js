@@ -1,4 +1,4 @@
-import { n as n$3, e as e$3, _ as __decorate, i as i$3, a as i$4, E, b as e$4, c as b, S as ScopedElementsMixin, A, D, O as OscdTextEditor, f as formatXml, s as serializeXml, d as newOscdTextEditV2 } from './OscdTextEditor-7BoqmzIp.js';
+import { n as n$3, e as e$3, _ as __decorate, i as i$3, a as i$4, E, b as e$4, c as b, S as ScopedElementsMixin, A, D, O as OscdTextEditor, f as formatXml, s as serializeXml, d as newOscdTextEditV2 } from './OscdTextEditor-CS-z-X4z.js';
 import { reservedNames, getValue, createElement as createElement$1, crossProduct, typeNullable, compareNames, getTypes, cloneElement, getChildElementsByTagName as getChildElementsByTagName$1, getMultiplier } from './foundation.js';
 
 /**
