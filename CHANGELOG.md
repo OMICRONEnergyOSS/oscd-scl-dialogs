@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.0.10](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.9...oscd-scl-dialogs-v0.0.10) (2026-02-16)
+
+
+### Features
+
+* copy in ace-custom-element to avoid scoping torture ([5b9b757](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/commit/5b9b7575f7b0db00175f52ce8f5b53adc4691329))
+
+
+### Bug Fixes
+
+* bundling ace-editor should not cause component scope issues ([769def5](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/commit/769def5eac0c75956e3f20bcb4fb06a379349db9))
+* ldevice updates should only update ldName when correctly set ([042ef2f](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/commit/042ef2f3f1da41f5464e0f1ab26da34faf7550bf))
+
 ## [0.0.9](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.8...oscd-scl-dialogs-v0.0.9) (2026-02-16)
 
 
