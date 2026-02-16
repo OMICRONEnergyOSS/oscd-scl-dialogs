@@ -57,6 +57,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@omicronenergy/oscd-editor-source": "^0.0.3",
     "@omicronenergy/oscd-shell": "^0.0.11",
     "@open-wc/scoped-elements": "^3.0.6",
     "@openenergytools/filterable-lists": "^1.2.0",

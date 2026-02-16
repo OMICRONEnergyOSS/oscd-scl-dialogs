@@ -17,6 +17,7 @@
     <script type="module">
       import '@webcomponents/scoped-custom-element-registry';
       import '@omicronenergy/oscd-shell/oscd-shell.js';
+      import OscdEditorSource from '@omicronenergy/oscd-editor-source';
 
       import DemoEditorPlugin from './demo-editor-plugin.js';
 
@@ -38,23 +39,32 @@
             requireDoc: true,
             tagName: 'demo-editor-plugin',
           },
+          {
+            name: 'Source Editor',
+            translations: { de: 'Source Editor' },
+            icon: 'code',
+            requireDoc: true,
+            tagName: 'oscd-editor-source',
+          },
         ],
       };
 
-      const editor = document.querySelector('oscd-shell');
-      editor.registry.define('demo-editor-plugin', DemoEditorPlugin);
+      const oscdShell = document.querySelector('oscd-shell');
+      oscdShell.registry.define('demo-editor-plugin', DemoEditorPlugin);
+      oscdShell.registry.define('oscd-editor-source', OscdEditorSource);
+
       const params = new URL(document.location).searchParams;
       for (const [name, value] of params) {
-        editor.setAttribute(name, value);
+        oscdShell.setAttribute(name, value);
       }
-      editor.plugins = plugins;
+      oscdShell.plugins = plugins;
 
       const filename = 'sample.scd';
       const sample = await fetch(filename).then(r => r.text());
-      editor.docs = {
+      oscdShell.docs = {
         [filename]: new DOMParser().parseFromString(sample, 'application/xml'),
       };
-      editor.docName = filename;
+      oscdShell.docName = filename;
     </script>
     <style>
       * {
