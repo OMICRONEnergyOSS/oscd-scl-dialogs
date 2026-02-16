@@ -1,4 +1,10 @@
-import { LitElement, html, css, type PropertyValueMap } from 'lit';
+import {
+  LitElement,
+  html,
+  css,
+  type PropertyValueMap,
+  PropertyValues,
+} from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
 import type * as AceGlobal from 'ace-builds';
@@ -176,7 +182,7 @@ export default class OscdTextEditor extends BaseElement {
   static scopedElements = {
     // Left here for clarity sake. We need to dyn-import this so we have a chance of overriding the customElements.define to prevent
     // ace-editor from being registered globally and causing issues with other instances of ace-editor in the same document.
-    //'ace-editor': AceEditor,
+    // 'ace-editor': AceEditor,
   };
 
   constructor() {
@@ -192,6 +198,7 @@ export default class OscdTextEditor extends BaseElement {
     import('ace-custom-element').then(AceEditor => {
       if (!this.registry?.get('ace-editor')) {
         this.registry?.define('ace-editor', AceEditor.default);
+        this.requestUpdate();
       }
     });
   }
@@ -204,7 +211,10 @@ export default class OscdTextEditor extends BaseElement {
 
   public format() {
     const rawXml =
-      this.aceEditor?.editor?.getSelectedText() || this.aceEditor.value;
+      this.aceEditor?.editor?.getSelectedText() ||
+      this.aceEditor.editor?.getValue() ||
+      this.value ||
+      '';
 
     let initialIndent = '';
     if (this.aceEditor?.editor?.getSelectedText()) {
@@ -252,16 +262,36 @@ export default class OscdTextEditor extends BaseElement {
     }
   }
 
+  protected firstUpdated(_changedProperties: PropertyValues): void {
+    this.clearSelection();
+  }
+
+  private clearSelection() {
+    // Clear selection when content updates
+    setTimeout(() => {
+      /* For reasons unknown the ace editor initially selects all code, so we need to clear that*/
+      const editor = this.aceEditor.editor;
+      if (editor) {
+        editor.selection.clearSelection();
+        editor.moveCursorTo(0, 0);
+      }
+    }, 100);
+  }
+
   protected updated(changedProps: PropertyValueMap<OscdTextEditor>): void {
     if (changedProps.has('value')) {
-      // Clear selection when content updates
-      setTimeout(() => {
-        if (this.aceEditor?.editor) {
-          /* For reasons unknown the ace editor initially selects all code, so we need to clear that*/
-          this.aceEditor.editor.selection.clearSelection();
-          this.aceEditor.editor.moveCursorTo(0, 0);
-        }
-      }, 10);
+      const editor = this.aceEditor.editor;
+
+      if (!editor) {
+        return;
+      }
+
+      // Only update if content actually changed (prevents cursor jump)
+      if (editor.getValue() !== this.value) {
+        editor.setValue(this.value ?? '');
+      }
+
+      this.clearSelection();
     }
   }
 

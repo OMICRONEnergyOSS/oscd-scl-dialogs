@@ -83,10 +83,7 @@ export default [
       importMetaAssets(),
 
       copy({
-        targets: [
-          { src: 'demo/sample.scd', dest: 'dist/demo' },
-          { src: 'demo/*.js', dest: 'dist/demo' },
-        ],
+        targets: [{ src: 'demo/sample.scd', dest: 'dist/demo' }],
         verbose: true,
         flatten: false,
       }),

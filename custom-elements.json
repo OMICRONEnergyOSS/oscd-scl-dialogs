@@ -328,7 +328,7 @@
                 "text": "object"
               },
               "static": true,
-              "default": "{ 'ace-editor': AceEditor, }"
+              "default": "{ // Left here for clarity sake. We need to dyn-import this so we have a chance of overriding the customElements.define to prevent // ace-editor from being registered globally and causing issues with other instances of ace-editor in the same document. //'ace-editor': AceEditor, }"
             },
             {
               "kind": "field",
@@ -394,6 +394,10 @@
               "name": "styles",
               "static": true,
               "default": "css` :host { height: 100%; width: 100%; overflow: auto; } ace-editor { height: 100%; width: 100%; } `"
+            },
+            {
+              "kind": "field",
+              "name": "define"
             }
           ],
           "events": [
