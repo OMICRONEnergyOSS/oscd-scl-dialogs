@@ -131,17 +131,17 @@ export function updateAction(element: Element): WizardActor {
       ? getValue(inputs.find(i => i.label === 'ldName')!)
       : null;
 
-    if (
-      ldName === element.getAttribute('ldName') &&
-      desc === element.getAttribute('desc')
-    ) {
-      return [];
-    }
+    const attributes = {
+      ...(ldNameAllowed && ldName !== element.getAttribute('ldName')
+        ? { ldName }
+        : {}),
+      ...(desc !== element.getAttribute('desc') ? { desc } : {}),
+    };
 
     return [
       {
         element,
-        attributes: { ldName, desc },
+        attributes,
       },
     ];
   };
