@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.11](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.10...oscd-scl-dialogs-v0.0.11) (2026-03-04)
+
+
+### Bug Fixes
+
+* for nullable fields prefer value over maybeValue ([d6caf79](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/commit/d6caf79197e6936bcce7f07ab826968db9374452))
+
 ## [0.0.10](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.9...oscd-scl-dialogs-v0.0.10) (2026-02-16)
 
 
