@@ -33,7 +33,7 @@ export function contentGeneralEquipmentWizard(
     ></scl-text-field>`,
     html`<scl-text-field
       label="desc"
-      .maybeValue=${options.desc}
+      .value=${options.desc}
       nullable
     ></scl-text-field>`,
     html`<scl-text-field

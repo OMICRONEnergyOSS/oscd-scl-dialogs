@@ -47,7 +47,7 @@ export function createDOTypeWizard(parent: Element): Wizard {
       ></scl-text-field>`,
       html`<scl-text-field
         label="desc"
-        .maybeValue=${null}
+        .value=${null}
         nullable
         pattern="${patterns.normalizedString}"
       ></scl-text-field>`,

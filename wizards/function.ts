@@ -32,12 +32,12 @@ export function contentFunctionWizard(
     ></scl-text-field>`,
     html`<scl-text-field
       label="desc"
-      .maybeValue=${options.desc}
+      .value=${options.desc}
       nullable
     ></scl-text-field>`,
     html`<scl-text-field
       label="type"
-      .maybeValue=${options.type}
+      .value=${options.type}
       nullable
     ></scl-text-field>`,
   ];
