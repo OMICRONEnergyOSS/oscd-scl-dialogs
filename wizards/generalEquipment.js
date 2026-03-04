@@ -22,7 +22,7 @@ function contentGeneralEquipmentWizard(options) {
     ></scl-text-field>`,
         b `<scl-text-field
       label="desc"
-      .maybeValue=${options.desc}
+      .value=${options.desc}
       nullable
     ></scl-text-field>`,
         b `<scl-text-field

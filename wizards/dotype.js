@@ -44,7 +44,7 @@ function createDOTypeWizard(parent) {
       ></scl-text-field>`,
             b `<scl-text-field
         label="desc"
-        .maybeValue=${null}
+        .value=${null}
         nullable
         pattern="${patterns.normalizedString}"
       ></scl-text-field>`,
