@@ -7,21 +7,12 @@ import {
 } from 'lit';
 import { property, query } from 'lit/decorators.js';
 import { ScopedElementsMixin } from '@open-wc/scoped-elements/lit-element.js';
+
 import type * as AceGlobal from 'ace-builds';
-import 'ace-builds/src-noconflict/ace.js';
-import 'ace-builds/src-noconflict/theme-sqlserver.js';
-import 'ace-builds/src-noconflict/mode-xml.js';
-import 'ace-builds/src-noconflict/ext-searchbox.js';
 
 import AceEditor from './ace-editor/AceEditor.js';
 
 import { EditV2 } from '@openscd/oscd-api';
-
-declare global {
-  interface Window {
-    ace: typeof AceGlobal;
-  }
-}
 
 const serializer = new XMLSerializer();
 const parser = new DOMParser();

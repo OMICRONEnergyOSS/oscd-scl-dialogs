@@ -1,6 +1,9 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable @typescript-eslint/no-unsafe-declaration-merging */
 import 'ace-builds/src-noconflict/ace';
+import 'ace-builds/src-noconflict/theme-sqlserver.js';
+import 'ace-builds/src-noconflict/mode-xml.js';
+import 'ace-builds/src-noconflict/ext-searchbox.js';
 
 import {
   NotifyAttribute,
