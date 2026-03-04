@@ -27,6 +27,12 @@ export default class DemoEditorPlugin extends ScopedElementsMixin(LitElement) {
     'oscd-scl-dialogs': OscdSclDialogs,
   };
 
+  static storageKeys = {
+    parentSelector: 'demo-editor-parent-selector',
+    newTagName: 'demo-editor-new-tag-name',
+    tagSelector: 'demo-editor-tag-selector',
+  };
+
   static properties = {
     doc: { type: Object },
     docVersion: { type: Number },
@@ -34,6 +40,9 @@ export default class DemoEditorPlugin extends ScopedElementsMixin(LitElement) {
     docsState: { type: Object },
     editedText: { state: true },
     editorDirty: { state: true },
+    parentSelectorValue: { state: true },
+    newTagNameValue: { state: true },
+    tagSelectorValue: { state: true },
   };
 
   constructor() {
@@ -44,6 +53,17 @@ export default class DemoEditorPlugin extends ScopedElementsMixin(LitElement) {
     this.docsState = undefined;
     this.editedText = '';
     this.editorDirty = false;
+
+    this.parentSelectorValue =
+      localStorage.getItem(DemoEditorPlugin.storageKeys.parentSelector) ??
+      "LDevice[inst='LD1']";
+
+    this.newTagNameValue =
+      localStorage.getItem(DemoEditorPlugin.storageKeys.newTagName) ?? 'Bay';
+
+    this.tagSelectorValue =
+      localStorage.getItem(DemoEditorPlugin.storageKeys.tagSelector) ??
+      "DO[name='Beh']";
   }
 
   updated(changedProps) {
@@ -54,6 +74,28 @@ export default class DemoEditorPlugin extends ScopedElementsMixin(LitElement) {
     ) {
       this.textEditor.value = serializeXml(this.doc);
       this.editorDirty = false;
+    }
+
+    // Persist selector changes
+    if (changedProps.has('parentSelectorValue')) {
+      localStorage.setItem(
+        DemoEditorPlugin.storageKeys.parentSelector,
+        this.parentSelectorValue,
+      );
+    }
+
+    if (changedProps.has('newTagNameValue')) {
+      localStorage.setItem(
+        DemoEditorPlugin.storageKeys.newTagName,
+        this.newTagNameValue,
+      );
+    }
+
+    if (changedProps.has('tagSelectorValue')) {
+      localStorage.setItem(
+        DemoEditorPlugin.storageKeys.tagSelector,
+        this.tagSelectorValue,
+      );
     }
   }
 
@@ -82,8 +124,8 @@ export default class DemoEditorPlugin extends ScopedElementsMixin(LitElement) {
   }
 
   async triggerWizardCreate() {
-    const parent = this.doc?.querySelector(this.parentSelector?.value);
-    const tagName = this.newTagName?.value;
+    const parent = this.doc?.querySelector(this.parentSelectorValue);
+    const tagName = this.newTagNameValue;
     if (!parent || !tagName) return;
 
     const wizardType = { parent, tagName };
@@ -92,7 +134,7 @@ export default class DemoEditorPlugin extends ScopedElementsMixin(LitElement) {
   }
 
   async triggerWizardEdit() {
-    const element = this.doc?.querySelector(this.tagSelector?.value);
+    const element = this.doc?.querySelector(this.tagSelectorValue);
 
     if (!element) {
       this.tagSelector.setCustomValidity('Terrible selector, try again.');
@@ -123,12 +165,25 @@ export default class DemoEditorPlugin extends ScopedElementsMixin(LitElement) {
         </p>
 
         <label>Parent Selector:</label>
-        <input id="parentSelector" value="LDevice[inst='LD1']" />
+        <input
+          id="parentSelector"
+          .value="${this.parentSelectorValue}"
+          @input=${() => (this.parentSelectorValue = this.parentSelector.value)}
+        />
 
         <label for="newTagName">Tag Name:</label>
-        <select id="newTagName">
+        <select
+          id="newTagName"
+          @change=${() => (this.newTagNameValue = this.newTagName.value)}
+        >
           ${supportedCreateTagNames.map(
-            tagName => html`<option value=${tagName}>${tagName}</option>`,
+            tagName =>
+              html`<option
+                value=${tagName}
+                ?selected=${tagName === this.newTagNameValue}
+              >
+                ${tagName}
+              </option>`,
           )}
         </select>
 
@@ -146,7 +201,8 @@ export default class DemoEditorPlugin extends ScopedElementsMixin(LitElement) {
         <div>
           <input
             id="tagSelector"
-            value="LDevice[inst='LD1']"
+            .value="${this.tagSelectorValue}"
+            @input=${() => (this.tagSelectorValue = this.tagSelector.value)}
             aria-describedby="supportedEditElements"
           />
           <div
