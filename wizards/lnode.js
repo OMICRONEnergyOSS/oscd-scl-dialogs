@@ -9,7 +9,8 @@ import '../node_modules/@openscd/scl-lib/dist/tExtRef/extRefTypeRestrictions.js'
 import '../node_modules/@openscd/scl-lib/dist/tDataTypeTemplates/nsdToJson.js';
 import '../node_modules/@openscd/scl-lib/dist/tBaseElement/find.js';
 import '../node_modules/@openscd/scl-lib/dist/tBaseElement/tags.js';
-import { createElement } from '../foundation.js';
+import { getChildElementsByTagName, getValue, cloneElement, createElement } from '../foundation.js';
+import { patterns } from './patterns.js';
 
 // global variables
 const selectedIEDs = [];
@@ -282,6 +283,105 @@ function createLNodeWizard(parent) {
         ],
     };
 }
+function contentLNodeWizard(options) {
+    const isIedRef = options.iedName !== 'None';
+    return [
+        b `<scl-text-field
+      label="iedName"
+      .value=${options.iedName}
+      helper="iedName"
+      disabled
+    ></scl-text-field>`,
+        b `<scl-text-field
+      label="ldInst"
+      .value=${options.ldInst}
+      helper="ldInst"
+      nullable
+      disabled
+    ></scl-text-field>`,
+        b `<scl-text-field
+      label="prefix"
+      .value=${options.prefix}
+      helper="prefix"
+      pattern="${patterns.normalizedString}"
+      maxLength="11"
+      nullable
+      ?disabled=${isIedRef}
+    ></scl-text-field>`,
+        b `<scl-text-field
+      label="lnClass"
+      .value=${options.lnClass}
+      helper="lnClass"
+      disabled
+    ></scl-text-field>`,
+        b `<scl-text-field
+      label="lnInst"
+      .value=${options.lnInst}
+      helper="lnInst"
+      type="number"
+      min="1"
+      max="99"
+      .reservedValues=${options.reservedLnInst}
+      ?disabled=${isIedRef}
+    ></scl-text-field>`,
+    ];
+}
+function updateLNodeAction(element) {
+    return (inputs) => {
+        const attributes = {};
+        const attributeKeys = ['iedName', 'ldInst', 'prefix', 'lnClass', 'lnInst'];
+        attributeKeys.forEach(key => {
+            attributes[key] = getValue(inputs.find(i => i.label === key));
+        });
+        if (attributeKeys.some(key => attributes[key] !== element.getAttribute(key))) {
+            const newElement = cloneElement(element, attributes);
+            const parent = element.parentElement ?? element.ownerDocument;
+            const nextSibling = element.nextSibling ?? null;
+            return [
+                { node: element },
+                ...(newElement
+                    ? [
+                        {
+                            node: newElement,
+                            parent,
+                            reference: nextSibling,
+                        },
+                    ]
+                    : []),
+            ];
+        }
+        return [];
+    };
+}
+function editLNodeWizard(element) {
+    const [iedName, ldInst, prefix, lnClass, lnInst] = [
+        'iedName',
+        'ldInst',
+        'prefix',
+        'lnClass',
+        'lnInst',
+    ].map(attr => element.getAttribute(attr));
+    const reservedLnInst = getChildElementsByTagName(element.parentElement, 'LNode')
+        .filter(sibling => sibling !== element &&
+        sibling.getAttribute('lnClass') === element.getAttribute('lnClass'))
+        .map(sibling => sibling.getAttribute('lnInst'));
+    return {
+        title: 'LNode',
+        primary: {
+            label: 'Save',
+            icon: 'save',
+            action: updateLNodeAction(element),
+        },
+        content: contentLNodeWizard({
+            iedName,
+            ldInst,
+            prefix,
+            lnClass,
+            lnInst,
+            reservedLnInst,
+        }),
+    };
+}
 
-export { createLNodeWizard };
+export { createLNodeWizard, editLNodeWizard };
 //# sourceMappingURL=lnode.js.map
