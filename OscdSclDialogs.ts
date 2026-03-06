@@ -17,6 +17,7 @@ import { MdFilledTextField } from '@scopedelement/material-web/textfield/MdFille
 import { MdIcon } from '@scopedelement/material-web/icon/MdIcon.js';
 import { MdIconButton } from '@scopedelement/material-web/iconbutton/MdIconButton.js';
 import { MdFilledButton } from '@scopedelement/material-web/button/MdFilledButton.js';
+import { MdOutlinedButton } from '@scopedelement/material-web/button/MdOutlinedButton.js';
 import { MdList } from '@scopedelement/material-web/list/MdList.js';
 import { MdListItem } from '@scopedelement/material-web/list/MdListItem.js';
 import { MdSelectOption } from '@scopedelement/material-web/select/MdSelectOption.js';
@@ -76,18 +77,50 @@ function getWizard(wizardType: WizardType): Wizard | undefined {
 }
 
 function wizardContent(wizardType: WizardType | null): TemplateResult[] {
-  return (
-    (wizardType && getWizard(wizardType)?.content) || [
-      html`<div>Invalid wizard type definition</div>`,
-    ]
-  );
+  const wizard = wizardType && getWizard(wizardType);
+
+  if (wizard?.content) {
+    return wizard.content;
+  }
+
+  if (wizardType && isCreateWizard(wizardType)) {
+    return [
+      html`<div>
+        Creating <strong>${wizardType.tagName}</strong> is not yet supported.
+      </div>`,
+    ];
+  }
+
+  if (wizardType && isEditWizard(wizardType)) {
+    return [
+      html`<div class="unsupported-message">
+        <p>
+          Editing <strong>${wizardType.element.tagName}</strong> Elements is not
+          yet supported.
+        </p>
+      </div>`,
+    ];
+  }
+
+  return [html`<div>Invalid wizard type definition</div>`];
 }
 
 function wizardTitle(wizardType: WizardType | null): string {
-  return (
-    (wizardType && getWizard(wizardType)?.title) ||
-    'Invalid wizard type definition'
-  );
+  const wizard = wizardType && getWizard(wizardType);
+
+  if (wizard?.title) {
+    return wizard.title;
+  }
+
+  if (wizardType && isCreateWizard(wizardType)) {
+    return `Add ${wizardType.tagName}`;
+  }
+
+  if (wizardType && isEditWizard(wizardType)) {
+    return `Edit ${wizardType.element.tagName}`;
+  }
+
+  return 'Error';
 }
 
 function wizardAction(wizardType: WizardType): WizardActor | undefined {
@@ -112,6 +145,7 @@ export default class OscdSclDialogs extends BaseElement {
     'md-dialog': MdDialog,
     'md-text-button': MdTextButton,
     'md-filled-button': MdFilledButton,
+    'md-outlined-button': MdOutlinedButton,
     'scl-checkbox': SclCheckbox,
     'scl-text-field': SclTextField,
     'scl-select': SclSelect,
@@ -321,14 +355,23 @@ export default class OscdSclDialogs extends BaseElement {
             }}"
             >Cancel</md-text-button
           >
-          <md-filled-button
-            form="add-data-object"
-            @click=${() =>
-              this.editorMode
-                ? this.applyTextEdits()
-                : this.applyFormValues(wizardAction(this.wizardType!))}
-            >Save</md-filled-button
-          >
+          ${!this.editorMode && !(this.wizardType && getWizard(this.wizardType))
+            ? html`<md-outlined-button
+                @click="${(event: Event) => {
+                  event.stopImmediatePropagation();
+                  event.preventDefault();
+                  this.editorMode = true;
+                }}"
+                >Use Editor</md-outlined-button
+              >`
+            : html`<md-filled-button
+                form="add-data-object"
+                @click=${() =>
+                  this.editorMode
+                    ? this.applyTextEdits()
+                    : this.applyFormValues(wizardAction(this.wizardType!))}
+                >Save</md-filled-button
+              >`}
         </div>
       </md-dialog>
     </div>`;
@@ -443,6 +486,17 @@ export default class OscdSclDialogs extends BaseElement {
     .wizard-content > * {
       display: block;
       margin-top: 16px;
+    }
+
+    .unsupported-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .unsupported-message md-outlined-button {
+      align-self: flex-end;
     }
   `;
 }

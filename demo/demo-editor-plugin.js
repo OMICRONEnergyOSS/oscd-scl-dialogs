@@ -145,7 +145,6 @@ export default class DemoEditorPlugin extends ScopedElementsMixin(LitElement) {
         'This tag name is not currently supported.',
       );
       this.tagSelector.reportValidity();
-      return;
     } else {
       this.tagSelector.setCustomValidity('');
     }
