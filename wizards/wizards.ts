@@ -58,7 +58,7 @@ import { editSMvWizard } from './smv.js';
 import { createDOTypeWizard } from './dotype.js';
 import { createEnumTypeWizard } from './enumtype.js';
 import { createLNodeTypeWizard } from './lnodetype.js';
-import { createLNodeWizard } from './lnode.js';
+import { createLNodeWizard, editLNodeWizard } from './lnode.js';
 import { createLNWizard, updateLNWizard } from './ln.js';
 import { updateLN0Wizard } from './ln0.js';
 import { editBDaWizard } from './bda.js';
@@ -325,7 +325,7 @@ export const wizards: Record<
     create: emptyWizard,
   },
   LNode: {
-    edit: emptyWizard,
+    edit: editLNodeWizard,
     create: createLNodeWizard,
   },
   LNodeType: {

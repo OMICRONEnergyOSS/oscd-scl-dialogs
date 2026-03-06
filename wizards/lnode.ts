@@ -12,11 +12,15 @@ import { EditV2, Insert } from '@openscd/oscd-api';
 import { getReference, lnInstGenerator } from '@openscd/scl-lib';
 
 import {
+  cloneElement,
   createElement,
+  getChildElementsByTagName,
+  getValue,
   Wizard,
   WizardActor,
   WizardInputElement,
 } from '../foundation.js';
+import { patterns } from './patterns.js';
 
 type LNodeCandidate = {
   anyLn: Element;
@@ -355,5 +359,131 @@ export function createLNodeWizard(parent: Element): Wizard {
         </div>
       </div>`,
     ],
+  };
+}
+
+interface ContentOptions {
+  iedName: string | null;
+  ldInst: string | null;
+  prefix: string | null;
+  lnClass: string | null;
+  lnInst: string | null;
+  reservedLnInst: string[];
+}
+
+function contentLNodeWizard(options: ContentOptions): TemplateResult[] {
+  const isIedRef = options.iedName !== 'None';
+
+  return [
+    html`<scl-text-field
+      label="iedName"
+      .value=${options.iedName}
+      helper="iedName"
+      disabled
+    ></scl-text-field>`,
+    html`<scl-text-field
+      label="ldInst"
+      .value=${options.ldInst}
+      helper="ldInst"
+      nullable
+      disabled
+    ></scl-text-field>`,
+    html`<scl-text-field
+      label="prefix"
+      .value=${options.prefix}
+      helper="prefix"
+      pattern="${patterns.normalizedString}"
+      maxLength="11"
+      nullable
+      ?disabled=${isIedRef}
+    ></scl-text-field>`,
+    html`<scl-text-field
+      label="lnClass"
+      .value=${options.lnClass}
+      helper="lnClass"
+      disabled
+    ></scl-text-field>`,
+    html`<scl-text-field
+      label="lnInst"
+      .value=${options.lnInst}
+      helper="lnInst"
+      type="number"
+      min="1"
+      max="99"
+      .reservedValues=${options.reservedLnInst}
+      ?disabled=${isIedRef}
+    ></scl-text-field>`,
+  ];
+}
+
+function updateLNodeAction(element: Element): WizardActor {
+  return (inputs: WizardInputElement[]): EditV2[] => {
+    const attributes: Record<string, string | null> = {};
+    const attributeKeys = ['iedName', 'ldInst', 'prefix', 'lnClass', 'lnInst'];
+
+    attributeKeys.forEach(key => {
+      attributes[key] = getValue(inputs.find(i => i.label === key)!);
+    });
+
+    if (
+      attributeKeys.some(key => attributes[key] !== element.getAttribute(key))
+    ) {
+      const newElement = cloneElement(element, attributes);
+
+      const parent = element.parentElement ?? element.ownerDocument;
+      const nextSibling = element.nextSibling ?? null;
+
+      return [
+        { node: element },
+        ...(newElement
+          ? [
+              {
+                node: newElement,
+                parent,
+                reference: nextSibling,
+              },
+            ]
+          : []),
+      ] as EditV2[];
+    }
+    return [];
+  };
+}
+
+export function editLNodeWizard(element: Element): Wizard {
+  const [iedName, ldInst, prefix, lnClass, lnInst] = [
+    'iedName',
+    'ldInst',
+    'prefix',
+    'lnClass',
+    'lnInst',
+  ].map(attr => element.getAttribute(attr));
+
+  const reservedLnInst = getChildElementsByTagName(
+    element.parentElement,
+    'LNode',
+  )
+    .filter(
+      sibling =>
+        sibling !== element &&
+        sibling.getAttribute('lnClass') === element.getAttribute('lnClass'),
+    )
+    .map(sibling => sibling.getAttribute('lnInst')!);
+
+  return {
+    title: 'LNode',
+    primary: {
+      label: 'Save',
+      icon: 'save',
+      action: updateLNodeAction(element),
+    },
+    content: contentLNodeWizard({
+      iedName,
+      ldInst,
+      prefix,
+      lnClass,
+      lnInst,
+      reservedLnInst,
+    }),
   };
 }
