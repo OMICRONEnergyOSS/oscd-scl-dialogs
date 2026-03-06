@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.12](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.11...oscd-scl-dialogs-v0.0.12) (2026-03-06)
+
+
+### Features
+
+* add support for editing LNodes ([5eb8a09](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/commit/5eb8a09198678923c1ff0c533dc70917adc1f272))
+* be for user friendly when SCL element is not supported ([2c554ea](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/commit/2c554ea80a9ccff897eb22bb026a16b758215fe3))
+
 ## [0.0.11](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.10...oscd-scl-dialogs-v0.0.11) (2026-03-04)
 
 
