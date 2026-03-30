@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.13](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.12...oscd-scl-dialogs-v0.0.13) (2026-03-30)
+
+
+### Features
+
+* "GSEControl" & "SampledValueControl" edit support ([b0f6441](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/commit/b0f644147a76e8399c9b8f91def00c0449d06505))
+
 ## [0.0.12](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.11...oscd-scl-dialogs-v0.0.12) (2026-03-06)
 
 
