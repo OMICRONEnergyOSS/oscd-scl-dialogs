@@ -41,7 +41,7 @@
                 "text": "object"
               },
               "static": true,
-              "default": "{ 'md-dialog': MdDialog, 'md-text-button': MdTextButton, 'md-filled-button': MdFilledButton, 'scl-checkbox': SclCheckbox, 'scl-text-field': SclTextField, 'scl-select': SclSelect, 'md-filled-textfield': MdFilledTextField, 'md-filled-select': MdFilledSelect, 'md-select-option': MdSelectOption, 'md-icon-button': MdIconButton, 'md-icon': MdIcon, 'selection-list': SelectionList, 'action-list': ActionList, 'md-list': MdList, 'md-list-item': MdListItem, 'oscd-text-editor': OscdTextEditor, }"
+              "default": "{ 'md-dialog': MdDialog, 'md-text-button': MdTextButton, 'md-filled-button': MdFilledButton, 'md-outlined-button': MdOutlinedButton, 'scl-checkbox': SclCheckbox, 'scl-text-field': SclTextField, 'scl-select': SclSelect, 'md-filled-textfield': MdFilledTextField, 'md-filled-select': MdFilledSelect, 'md-select-option': MdSelectOption, 'md-icon-button': MdIconButton, 'md-icon': MdIcon, 'selection-list': SelectionList, 'action-list': ActionList, 'md-list': MdList, 'md-list-item': MdListItem, 'oscd-text-editor': OscdTextEditor, }"
             },
             {
               "kind": "field",
@@ -215,7 +215,7 @@
               "kind": "field",
               "name": "styles",
               "static": true,
-              "default": "css` *, md-filled-button * { --md-dialog-container-color: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-dialog-headline-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-dialog-headline-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-dialog-supporting-text-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-dialog-supporting-text-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-sys-color-primary: var(--wizard-dialog-primary, var(--oscd-primary)); --md-sys-color-secondary: var( --wizard-dialog-secondary, var(--oscd-secondary) ); --md-sys-typescale-body-large-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-sys-color-surface-container-highest: var( --wizard-dailog-input-background-color, var(--oscd-base3) ); --md-outlined-text-field-input-text-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-sys-color-on-surface: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-sys-color-on-primary: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-sys-color-surface: var(--wizard-dialog-surface, var(--oscd-base3)); --md-sys-color-on-surface-variant: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-menu-container-color: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-menu-item-selected-container-color: rgb( from var(--wizard-dialog-primary, var(--oscd-primary)) r g b / 0.38 ); } md-dialog { --md-dialog-container-max-height: 100%; --md-dialog-container-max-width: 100%; } md-dialog.editor-mode { width: 80%; height: 80%; } .dialog-header { display: flex; align-items: center; } .dialog-header .title { flex: 1; } .editor-mode form, .editor-content, .editor-content oscd-text-editor { height: 100%; } .editor-mode form { padding-inline: 0px; } .editor-mode form .editor-content { border-top: 1px solid var(--oscd-base0); border-bottom: 1px solid var(--oscd-base0); } .wizard-content { display: flex; flex-direction: column; } .wizard-content > * { display: block; margin-top: 16px; } `"
+              "default": "css` *, md-filled-button * { --md-dialog-container-color: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-dialog-headline-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-dialog-headline-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-dialog-supporting-text-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-dialog-supporting-text-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-sys-color-primary: var(--wizard-dialog-primary, var(--oscd-primary)); --md-sys-color-secondary: var( --wizard-dialog-secondary, var(--oscd-secondary) ); --md-sys-typescale-body-large-font: var( --wizard-dialog-text-font, var(--oscd-text-font) ); --md-sys-color-surface-container-highest: var( --wizard-dailog-input-background-color, var(--oscd-base3) ); --md-outlined-text-field-input-text-color: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-sys-color-on-surface: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-sys-color-on-primary: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-sys-color-surface: var(--wizard-dialog-surface, var(--oscd-base3)); --md-sys-color-on-surface-variant: var( --wizard-dialog-text-color, var(--oscd-base00) ); --md-menu-container-color: var( --wizard-dialog-background-color, var(--oscd-base3) ); --md-menu-item-selected-container-color: rgb( from var(--wizard-dialog-primary, var(--oscd-primary)) r g b / 0.38 ); } md-dialog { --md-dialog-container-max-height: 100%; --md-dialog-container-max-width: 100%; } md-dialog.editor-mode { width: 80%; height: 80%; } .dialog-header { display: flex; align-items: center; } .dialog-header .title { flex: 1; } .editor-mode form, .editor-content, .editor-content oscd-text-editor { height: 100%; } .editor-mode form { padding-inline: 0px; } .editor-mode form .editor-content { border-top: 1px solid var(--oscd-base0); border-bottom: 1px solid var(--oscd-base0); } .wizard-content { display: flex; flex-direction: column; } .wizard-content > * { display: block; margin-top: 16px; } .unsupported-message { display: flex; flex-direction: column; align-items: center; gap: 16px; } .unsupported-message md-outlined-button { align-self: flex-end; } `"
             }
           ],
           "superclass": {
@@ -328,7 +328,7 @@
                 "text": "object"
               },
               "static": true,
-              "default": "{ // Left here for clarity sake. We need to dyn-import this so we have a chance of overriding the customElements.define to prevent // ace-editor from being registered globally and causing issues with other instances of ace-editor in the same document. // 'ace-editor': AceEditor, }"
+              "default": "{ // Left here for clarity sake. We need to dyn-import this so we have a chance of overriding the customElements.define to prevent // ace-editor from being registered globally and causing issues with other instances of ace-editor in the same document. 'ace-editor': AceEditor, }"
             },
             {
               "kind": "field",
@@ -417,10 +417,6 @@
               "name": "styles",
               "static": true,
               "default": "css` :host { height: 100%; width: 100%; overflow: auto; } ace-editor { height: 100%; width: 100%; } `"
-            },
-            {
-              "kind": "field",
-              "name": "define"
             }
           ],
           "events": [
@@ -928,6 +924,403 @@
     },
     {
       "kind": "javascript-module",
+      "path": "ace-editor/AceEditor.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Custom element Ace code editor",
+          "name": "AceEditor",
+          "members": [
+            {
+              "kind": "field",
+              "name": "_observedAttributes",
+              "type": {
+                "text": "string[]"
+              },
+              "privacy": "private",
+              "static": true,
+              "default": "[]"
+            },
+            {
+              "kind": "field",
+              "name": "_editor",
+              "type": {
+                "text": "Ace.Editor | undefined"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "editor",
+              "type": {
+                "text": "Ace.Editor | undefined"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "version",
+              "type": {
+                "text": "{ [key: string]: string }"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "mode",
+              "type": {
+                "text": "string | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "theme",
+              "type": {
+                "text": "string | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "tabSize",
+              "type": {
+                "text": "number | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "readonly",
+              "type": {
+                "text": "boolean | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "softTabs",
+              "type": {
+                "text": "boolean | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "wrap",
+              "type": {
+                "text": "boolean | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "valueUpdateMode",
+              "type": {
+                "text": "ValueUpdateMode | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hideActiveLineHighlight",
+              "type": {
+                "text": "boolean | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hideGutter",
+              "type": {
+                "text": "boolean | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hideGutterLineHighlight",
+              "type": {
+                "text": "boolean | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "hidePrintMargin",
+              "type": {
+                "text": "boolean | undefined"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "basePath",
+              "type": {
+                "text": "string | undefined"
+              }
+            },
+            {
+              "kind": "method",
+              "name": "dispatch",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "type",
+                  "type": {
+                    "text": "string"
+                  }
+                },
+                {
+                  "name": "detail",
+                  "type": {
+                    "text": "T"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "field",
+              "name": "initializeEditor",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "appendStyles",
+              "privacy": "private"
+            },
+            {
+              "kind": "method",
+              "name": "notifyPropertyChanged",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "name",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "resize",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "handleChange",
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "handleBlur",
+              "privacy": "private"
+            }
+          ],
+          "events": [
+            {
+              "name": "type",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "AceEditor",
+            "module": "ace-editor/AceEditor.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "ace-editor/debounce.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "debounce",
+          "return": {
+            "type": {
+              "text": "() => Promise<T>"
+            }
+          },
+          "parameters": [
+            {
+              "name": "func",
+              "type": {
+                "text": "(...params: any[]) => T"
+              },
+              "description": "The function to invoke."
+            },
+            {
+              "name": "wait",
+              "default": "0",
+              "description": "The time in milliseconds to wait for idle invocations."
+            }
+          ],
+          "description": "Returns a new function that delays invocations to the original function\nwithin a specified wait period. The last invocation within this time period\ngets invoked. All earlier invocations are ignore."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "debounce",
+          "declaration": {
+            "name": "debounce",
+            "module": "ace-editor/debounce.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "ace-editor/property-decorators.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "NotifyAttribute",
+          "parameters": [
+            {
+              "name": "attribute",
+              "optional": true,
+              "type": {
+                "text": "string"
+              },
+              "description": "Override the attribute name to use. If ommitted, the\nproperty name is used (coverted from camelCase, to kebab-case)."
+            }
+          ],
+          "description": "Defines that the target property should be exposed as an attribute, and\nthat changes to the attribute should trigger a `notifyPropertyChanged`\ncallback."
+        },
+        {
+          "kind": "function",
+          "name": "NotifyBooleanAttribute",
+          "parameters": [
+            {
+              "name": "attribute",
+              "optional": true,
+              "type": {
+                "text": "string"
+              },
+              "description": "Override the attribute name to use. If ommitted, the\nproperty name is used (coverted from camelCase, to snake-case)."
+            }
+          ],
+          "description": "Defines that the target property should be exposed as boolean attribute, and\nthat changes to the attribute should trigger a `notifyPropertyChanged`\ncallback."
+        },
+        {
+          "kind": "function",
+          "name": "NotifyNumericAttribute",
+          "parameters": [
+            {
+              "name": "attribute",
+              "optional": true,
+              "type": {
+                "text": "string"
+              },
+              "description": "Override the attribute name to use. If ommitted, the\nproperty name is used (coverted from camelCase, to snake-case)."
+            }
+          ],
+          "description": "Defines that the target property should be exposed as numeric attribute, and\nthat changes to the attribute should trigger a `notifyPropertyChanged`\ncallback."
+        },
+        {
+          "kind": "function",
+          "name": "Notify",
+          "return": {
+            "type": {
+              "text": "(target: NotifyTarget & HTMLElement, key: string) => void"
+            }
+          },
+          "parameters": [
+            {
+              "name": "attribute",
+              "optional": true,
+              "type": {
+                "text": "string"
+              },
+              "description": "Expose the property as an attribute. Note that when\nattribute is specified, this method has the same behavior as\n`NotifyAttribute`."
+            }
+          ],
+          "description": "Defines that the target property should trigger a `notifyPropertyChanged`\ncallback when the property changes."
+        },
+        {
+          "kind": "function",
+          "name": "Alias",
+          "parameters": [
+            {
+              "name": "alias",
+              "type": {
+                "text": "string"
+              },
+              "description": "Name of the alias."
+            }
+          ],
+          "description": "Creates an alias for the given property with a getter and a setter."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "NotifyAttribute",
+          "declaration": {
+            "name": "NotifyAttribute",
+            "module": "ace-editor/property-decorators.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "NotifyBooleanAttribute",
+          "declaration": {
+            "name": "NotifyBooleanAttribute",
+            "module": "ace-editor/property-decorators.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "NotifyNumericAttribute",
+          "declaration": {
+            "name": "NotifyNumericAttribute",
+            "module": "ace-editor/property-decorators.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "Notify",
+          "declaration": {
+            "name": "Notify",
+            "module": "ace-editor/property-decorators.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "Alias",
+          "declaration": {
+            "name": "Alias",
+            "module": "ace-editor/property-decorators.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "demo/demo-editor-plugin.js",
       "declarations": [
         {
@@ -946,12 +1339,21 @@
             },
             {
               "kind": "field",
+              "name": "storageKeys",
+              "type": {
+                "text": "object"
+              },
+              "static": true,
+              "default": "{ parentSelector: 'demo-editor-parent-selector', newTagName: 'demo-editor-new-tag-name', tagSelector: 'demo-editor-tag-selector', }"
+            },
+            {
+              "kind": "field",
               "name": "properties",
               "type": {
                 "text": "object"
               },
               "static": true,
-              "default": "{ doc: { type: Object }, docVersion: { type: Number }, editor: { type: Object }, docsState: { type: Object }, editedText: { state: true }, editorDirty: { state: true }, }"
+              "default": "{ doc: { type: Object }, docVersion: { type: Number }, editor: { type: Object }, docsState: { type: Object }, editedText: { state: true }, editorDirty: { state: true }, parentSelectorValue: { state: true }, newTagNameValue: { state: true }, tagSelectorValue: { state: true }, }"
             },
             {
               "kind": "method",
@@ -1048,6 +1450,18 @@
                 "text": "boolean"
               },
               "default": "false"
+            },
+            {
+              "kind": "field",
+              "name": "parentSelectorValue"
+            },
+            {
+              "kind": "field",
+              "name": "newTagNameValue"
+            },
+            {
+              "kind": "field",
+              "name": "tagSelectorValue"
             }
           ],
           "mixins": [
@@ -1795,6 +2209,62 @@
     },
     {
       "kind": "javascript-module",
+      "path": "wizards/dataset.spec.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "scl-text-field",
+          "declaration": {
+            "name": "SclTextField",
+            "package": "@openenergytools/scl-text-field"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "selection-list",
+          "declaration": {
+            "name": "SelectionList",
+            "package": "@openenergytools/filterable-lists/dist/SelectionList.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "wizards/dataset.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "editDataSetWizard",
+          "return": {
+            "type": {
+              "text": "Wizard"
+            }
+          },
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "Element"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "editDataSetWizard",
+          "declaration": {
+            "name": "editDataSetWizard",
+            "module": "wizards/dataset.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "wizards/datype.ts",
       "declarations": [
         {
@@ -2325,6 +2795,70 @@
     },
     {
       "kind": "javascript-module",
+      "path": "wizards/gsecontrol.spec.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "scl-text-field",
+          "declaration": {
+            "name": "SclTextField",
+            "package": "@openenergytools/scl-text-field"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "scl-select",
+          "declaration": {
+            "name": "SclSelect",
+            "package": "@openenergytools/scl-select"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "scl-checkbox",
+          "declaration": {
+            "name": "SclCheckbox",
+            "package": "@openenergytools/scl-checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "wizards/gsecontrol.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "editGSEControlWizard",
+          "return": {
+            "type": {
+              "text": "Wizard"
+            }
+          },
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "Element"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "editGSEControlWizard",
+          "declaration": {
+            "name": "editGSEControlWizard",
+            "module": "wizards/gsecontrol.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "wizards/ied.ts",
       "declarations": [
         {
@@ -2786,6 +3320,23 @@
               }
             }
           ]
+        },
+        {
+          "kind": "function",
+          "name": "editLNodeWizard",
+          "return": {
+            "type": {
+              "text": "Wizard"
+            }
+          },
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "Element"
+              }
+            }
+          ]
         }
       ],
       "exports": [
@@ -2794,6 +3345,14 @@
           "name": "createLNodeWizard",
           "declaration": {
             "name": "createLNodeWizard",
+            "module": "wizards/lnode.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "editLNodeWizard",
+          "declaration": {
+            "name": "editLNodeWizard",
             "module": "wizards/lnode.ts"
           }
         }
@@ -2928,6 +3487,22 @@
         },
         {
           "kind": "variable",
+          "name": "tGSEControlType",
+          "type": {
+            "text": "array"
+          },
+          "default": "['GOOSE', 'GSSE']"
+        },
+        {
+          "kind": "variable",
+          "name": "tSecurityEnable",
+          "type": {
+            "text": "array"
+          },
+          "default": "['None', 'Signature', 'SignatureAndEncryption']"
+        },
+        {
+          "kind": "variable",
           "name": "typePattern",
           "type": {
             "text": "Partial<Record<string, string>>"
@@ -3014,6 +3589,22 @@
           "name": "tSmpMod",
           "declaration": {
             "name": "tSmpMod",
+            "module": "wizards/patterns.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "tGSEControlType",
+          "declaration": {
+            "name": "tGSEControlType",
+            "module": "wizards/patterns.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "tSecurityEnable",
+          "declaration": {
+            "name": "tSecurityEnable",
             "module": "wizards/patterns.ts"
           }
         },
@@ -3145,6 +3736,70 @@
     },
     {
       "kind": "javascript-module",
+      "path": "wizards/sampledvaluecontrol.spec.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "scl-text-field",
+          "declaration": {
+            "name": "SclTextField",
+            "package": "@openenergytools/scl-text-field"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "scl-select",
+          "declaration": {
+            "name": "SclSelect",
+            "package": "@openenergytools/scl-select"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "scl-checkbox",
+          "declaration": {
+            "name": "SclCheckbox",
+            "package": "@openenergytools/scl-checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "wizards/sampledvaluecontrol.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "editSampledValueControlWizard",
+          "return": {
+            "type": {
+              "text": "Wizard"
+            }
+          },
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "Element"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "editSampledValueControlWizard",
+          "declaration": {
+            "name": "editSampledValueControlWizard",
+            "module": "wizards/sampledvaluecontrol.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "wizards/sdo.ts",
       "declarations": [
         {
@@ -3230,6 +3885,54 @@
           "declaration": {
             "name": "editSMvWizard",
             "module": "wizards/smv.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "wizards/smvopts.spec.ts",
+      "declarations": [],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "scl-checkbox",
+          "declaration": {
+            "name": "SclCheckbox",
+            "package": "@openenergytools/scl-checkbox"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "wizards/smvopts.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "editSmvOptsWizard",
+          "return": {
+            "type": {
+              "text": "Wizard"
+            }
+          },
+          "parameters": [
+            {
+              "name": "element",
+              "type": {
+                "text": "Element"
+              }
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "editSmvOptsWizard",
+          "declaration": {
+            "name": "editSmvOptsWizard",
+            "module": "wizards/smvopts.ts"
           }
         }
       ]
@@ -3892,7 +4595,7 @@
           "type": {
             "text": "Record<\n  string,\n  {\n    edit: SclElementWizard;\n    create: SclElementWizard;\n  }\n>"
           },
-          "default": "{ AccessControl: { edit: emptyWizard, create: emptyWizard, }, AccessPoint: { edit: emptyWizard, create: emptyWizard, }, Address: { edit: emptyWizard, create: emptyWizard, }, Association: { edit: emptyWizard, create: emptyWizard, }, Authentication: { edit: emptyWizard, create: emptyWizard, }, Bay: { edit: editBayWizard, create: createBayWizard, }, BDA: { edit: editBDaWizard, create: emptyWizard, }, BitRate: { edit: emptyWizard, create: emptyWizard, }, ClientLN: { edit: emptyWizard, create: emptyWizard, }, ClientServices: { edit: emptyWizard, create: emptyWizard, }, CommProt: { edit: emptyWizard, create: emptyWizard, }, Communication: { edit: emptyWizard, create: emptyWizard, }, ConductingEquipment: { edit: editConductingEquipmentWizard, create: createConductingEquipmentWizard, }, ConfDataSet: { edit: emptyWizard, create: emptyWizard, }, ConfLdName: { edit: emptyWizard, create: emptyWizard, }, ConfLNs: { edit: emptyWizard, create: emptyWizard, }, ConfLogControl: { edit: emptyWizard, create: emptyWizard, }, ConfReportControl: { edit: emptyWizard, create: emptyWizard, }, ConfSG: { edit: emptyWizard, create: emptyWizard, }, ConfSigRef: { edit: emptyWizard, create: emptyWizard, }, ConnectedAP: { edit: editConnectedApWizard, create: createConnectedApWizard, }, DA: { edit: editDAWizard, create: createDaWizard, }, DAType: { edit: emptyWizard, create: emptyWizard, }, DO: { edit: editDoWizard, create: createDoWizard, }, DOI: { edit: emptyWizard, create: emptyWizard, }, DOType: { edit: emptyWizard, create: createDOTypeWizard, }, DataObjectDirectory: { edit: emptyWizard, create: emptyWizard, }, DataSet: { edit: emptyWizard, create: emptyWizard, }, DataSetDirectory: { edit: emptyWizard, create: emptyWizard, }, DataTypeTemplates: { edit: emptyWizard, create: emptyWizard, }, DynAssociation: { edit: emptyWizard, create: emptyWizard, }, DynDataSet: { edit: emptyWizard, create: emptyWizard, }, EnumType: { edit: emptyWizard, create: createEnumTypeWizard, }, EnumVal: { edit: editEnumValWizard, create: createEnumValWizard, }, EqFunction: { edit: editEqFunctionWizard, create: createEqFunctionWizard, }, EqSubFunction: { edit: editEqSubFunctionWizard, create: createEqSubFunctionWizard, }, ExtRef: { edit: emptyWizard, create: emptyWizard, }, FileHandling: { edit: emptyWizard, create: emptyWizard, }, Function: { edit: editFunctionWizard, create: createFunctionWizard, }, GeneralEquipment: { edit: editGeneralEquipmentWizard, create: createGeneralEquipmentWizard, }, GetCBValues: { edit: emptyWizard, create: emptyWizard, }, GetDataObjectDefinition: { edit: emptyWizard, create: emptyWizard, }, GetDataSetValue: { edit: emptyWizard, create: emptyWizard, }, GetDirectory: { edit: emptyWizard, create: emptyWizard, }, GOOSE: { edit: emptyWizard, create: emptyWizard, }, GOOSESecurity: { edit: emptyWizard, create: emptyWizard, }, GSE: { edit: editGseWizard, create: emptyWizard, }, GSEDir: { edit: emptyWizard, create: emptyWizard, }, GSESettings: { edit: emptyWizard, create: emptyWizard, }, GSSE: { edit: emptyWizard, create: emptyWizard, }, Header: { edit: emptyWizard, create: emptyWizard, }, History: { edit: emptyWizard, create: emptyWizard, }, Hitem: { edit: emptyWizard, create: emptyWizard, }, IED: { edit: editIEDWizard, create: createIEDWizard, }, IEDName: { edit: emptyWizard, create: emptyWizard, }, Inputs: { edit: emptyWizard, create: emptyWizard, }, IssuerName: { edit: emptyWizard, create: emptyWizard, }, KDC: { edit: emptyWizard, create: emptyWizard, }, LDevice: { edit: editLDeviceWizard, create: createLDeviceWizard, }, LN: { edit: updateLNWizard, create: createLNWizard, }, LN0: { edit: updateLN0Wizard, create: emptyWizard, }, LNode: { edit: emptyWizard, create: createLNodeWizard, }, LNodeType: { edit: emptyWizard, create: createLNodeTypeWizard, }, Line: { edit: editLineWizard, create: createLineWizard, }, Log: { edit: emptyWizard, create: emptyWizard, }, LogControl: { edit: emptyWizard, create: emptyWizard, }, LogSettings: { edit: emptyWizard, create: emptyWizard, }, MaxTime: { edit: emptyWizard, create: emptyWizard, }, McSecurity: { edit: emptyWizard, create: emptyWizard, }, MinTime: { edit: emptyWizard, create: emptyWizard, }, NeutralPoint: { edit: emptyWizard, create: emptyWizard, }, P: { edit: emptyWizard, create: emptyWizard, }, PhysConn: { edit: emptyWizard, create: emptyWizard, }, PowerTransformer: { edit: editPowerTransformerWizard, create: createPowerTransformerWizard, }, Private: { edit: emptyWizard, create: emptyWizard, }, Process: { edit: editProcessWizard, create: createProcessWizard, }, ProtNs: { edit: emptyWizard, create: emptyWizard, }, Protocol: { edit: emptyWizard, create: emptyWizard, }, ReadWrite: { edit: emptyWizard, create: emptyWizard, }, RedProt: { edit: emptyWizard, create: emptyWizard, }, ReportControl: { edit: emptyWizard, create: emptyWizard, }, ReportSettings: { edit: emptyWizard, create: emptyWizard, }, RptEnabled: { edit: emptyWizard, create: emptyWizard, }, SamplesPerSec: { edit: emptyWizard, create: emptyWizard, }, SecPerSamples: { edit: emptyWizard, create: emptyWizard, }, SCL: { edit: emptyWizard, create: emptyWizard, }, SDI: { edit: emptyWizard, create: emptyWizard, }, SDO: { edit: editSDoWizard, create: createSDoWizard, }, Server: { edit: emptyWizard, create: emptyWizard, }, ServerAt: { edit: emptyWizard, create: emptyWizard, }, Services: { edit: emptyWizard, create: emptyWizard, }, SetDataSetValue: { edit: emptyWizard, create: emptyWizard, }, SettingControl: { edit: emptyWizard, create: emptyWizard, }, SettingGroups: { edit: emptyWizard, create: emptyWizard, }, SGEdit: { edit: emptyWizard, create: emptyWizard, }, SmpRate: { edit: emptyWizard, create: emptyWizard, }, SMV: { edit: editSMvWizard, create: emptyWizard, }, SmvOpts: { edit: emptyWizard, create: emptyWizard, }, SMVsc: { edit: emptyWizard, create: emptyWizard, }, SMVSecurity: { edit: emptyWizard, create: emptyWizard, }, SMVSettings: { edit: emptyWizard, create: emptyWizard, }, SubEquipment: { edit: editSubEquipmentWizard, create: createSubEquipmentWizard, }, SubFunction: { edit: editSubFunctionWizard, create: createSubFunctionWizard, }, SubNetwork: { edit: editSubNetworkWizard, create: createSubNetworkWizard, }, Subject: { edit: emptyWizard, create: emptyWizard, }, Substation: { edit: editSubstationWizard, create: createSubstationWizard, }, SupSubscription: { edit: emptyWizard, create: emptyWizard, }, TapChanger: { edit: editTapChangerWizard, create: createTapChangerWizard, }, Text: { edit: editTextWizard, create: createTextWizard, }, TimerActivatedControl: { edit: emptyWizard, create: emptyWizard, }, TimeSyncProt: { edit: emptyWizard, create: emptyWizard, }, TransformerWinding: { edit: editTransformerWindingWizard, create: createTransformerWindingWizard, }, Val: { edit: emptyWizard, create: emptyWizard, }, ValueHandling: { edit: emptyWizard, create: emptyWizard, }, Voltage: { edit: emptyWizard, create: emptyWizard, }, VoltageLevel: { edit: editVoltageLevelWizard, create: createVoltageLevelWizard, }, }"
+          "default": "{ AccessControl: { edit: emptyWizard, create: emptyWizard, }, AccessPoint: { edit: emptyWizard, create: emptyWizard, }, Address: { edit: emptyWizard, create: emptyWizard, }, Association: { edit: emptyWizard, create: emptyWizard, }, Authentication: { edit: emptyWizard, create: emptyWizard, }, Bay: { edit: editBayWizard, create: createBayWizard, }, BDA: { edit: editBDaWizard, create: emptyWizard, }, BitRate: { edit: emptyWizard, create: emptyWizard, }, ClientLN: { edit: emptyWizard, create: emptyWizard, }, ClientServices: { edit: emptyWizard, create: emptyWizard, }, CommProt: { edit: emptyWizard, create: emptyWizard, }, Communication: { edit: emptyWizard, create: emptyWizard, }, ConductingEquipment: { edit: editConductingEquipmentWizard, create: createConductingEquipmentWizard, }, ConfDataSet: { edit: emptyWizard, create: emptyWizard, }, ConfLdName: { edit: emptyWizard, create: emptyWizard, }, ConfLNs: { edit: emptyWizard, create: emptyWizard, }, ConfLogControl: { edit: emptyWizard, create: emptyWizard, }, ConfReportControl: { edit: emptyWizard, create: emptyWizard, }, ConfSG: { edit: emptyWizard, create: emptyWizard, }, ConfSigRef: { edit: emptyWizard, create: emptyWizard, }, ConnectedAP: { edit: editConnectedApWizard, create: createConnectedApWizard, }, DA: { edit: editDAWizard, create: createDaWizard, }, DAType: { edit: emptyWizard, create: emptyWizard, }, DO: { edit: editDoWizard, create: createDoWizard, }, DOI: { edit: emptyWizard, create: emptyWizard, }, DOType: { edit: emptyWizard, create: createDOTypeWizard, }, DataObjectDirectory: { edit: emptyWizard, create: emptyWizard, }, DataSet: { edit: editDataSetWizard, create: emptyWizard, }, DataSetDirectory: { edit: emptyWizard, create: emptyWizard, }, DataTypeTemplates: { edit: emptyWizard, create: emptyWizard, }, DynAssociation: { edit: emptyWizard, create: emptyWizard, }, DynDataSet: { edit: emptyWizard, create: emptyWizard, }, EnumType: { edit: emptyWizard, create: createEnumTypeWizard, }, EnumVal: { edit: editEnumValWizard, create: createEnumValWizard, }, EqFunction: { edit: editEqFunctionWizard, create: createEqFunctionWizard, }, EqSubFunction: { edit: editEqSubFunctionWizard, create: createEqSubFunctionWizard, }, ExtRef: { edit: emptyWizard, create: emptyWizard, }, FileHandling: { edit: emptyWizard, create: emptyWizard, }, Function: { edit: editFunctionWizard, create: createFunctionWizard, }, GeneralEquipment: { edit: editGeneralEquipmentWizard, create: createGeneralEquipmentWizard, }, GetCBValues: { edit: emptyWizard, create: emptyWizard, }, GetDataObjectDefinition: { edit: emptyWizard, create: emptyWizard, }, GetDataSetValue: { edit: emptyWizard, create: emptyWizard, }, GetDirectory: { edit: emptyWizard, create: emptyWizard, }, GOOSE: { edit: emptyWizard, create: emptyWizard, }, GOOSESecurity: { edit: emptyWizard, create: emptyWizard, }, GSE: { edit: editGseWizard, create: emptyWizard, }, GSEControl: { edit: editGSEControlWizard, create: emptyWizard, }, GSEDir: { edit: emptyWizard, create: emptyWizard, }, GSESettings: { edit: emptyWizard, create: emptyWizard, }, GSSE: { edit: emptyWizard, create: emptyWizard, }, Header: { edit: emptyWizard, create: emptyWizard, }, History: { edit: emptyWizard, create: emptyWizard, }, Hitem: { edit: emptyWizard, create: emptyWizard, }, IED: { edit: editIEDWizard, create: createIEDWizard, }, IEDName: { edit: emptyWizard, create: emptyWizard, }, Inputs: { edit: emptyWizard, create: emptyWizard, }, IssuerName: { edit: emptyWizard, create: emptyWizard, }, KDC: { edit: emptyWizard, create: emptyWizard, }, LDevice: { edit: editLDeviceWizard, create: createLDeviceWizard, }, LN: { edit: updateLNWizard, create: createLNWizard, }, LN0: { edit: updateLN0Wizard, create: emptyWizard, }, LNode: { edit: editLNodeWizard, create: createLNodeWizard, }, LNodeType: { edit: emptyWizard, create: createLNodeTypeWizard, }, Line: { edit: editLineWizard, create: createLineWizard, }, Log: { edit: emptyWizard, create: emptyWizard, }, LogControl: { edit: emptyWizard, create: emptyWizard, }, LogSettings: { edit: emptyWizard, create: emptyWizard, }, MaxTime: { edit: emptyWizard, create: emptyWizard, }, McSecurity: { edit: emptyWizard, create: emptyWizard, }, MinTime: { edit: emptyWizard, create: emptyWizard, }, NeutralPoint: { edit: emptyWizard, create: emptyWizard, }, P: { edit: emptyWizard, create: emptyWizard, }, PhysConn: { edit: emptyWizard, create: emptyWizard, }, PowerTransformer: { edit: editPowerTransformerWizard, create: createPowerTransformerWizard, }, Private: { edit: emptyWizard, create: emptyWizard, }, Process: { edit: editProcessWizard, create: createProcessWizard, }, ProtNs: { edit: emptyWizard, create: emptyWizard, }, Protocol: { edit: emptyWizard, create: emptyWizard, }, ReadWrite: { edit: emptyWizard, create: emptyWizard, }, RedProt: { edit: emptyWizard, create: emptyWizard, }, ReportControl: { edit: emptyWizard, create: emptyWizard, }, ReportSettings: { edit: emptyWizard, create: emptyWizard, }, RptEnabled: { edit: emptyWizard, create: emptyWizard, }, SamplesPerSec: { edit: emptyWizard, create: emptyWizard, }, SampledValueControl: { edit: editSampledValueControlWizard, create: emptyWizard, }, SecPerSamples: { edit: emptyWizard, create: emptyWizard, }, SCL: { edit: emptyWizard, create: emptyWizard, }, SDI: { edit: emptyWizard, create: emptyWizard, }, SDO: { edit: editSDoWizard, create: createSDoWizard, }, Server: { edit: emptyWizard, create: emptyWizard, }, ServerAt: { edit: emptyWizard, create: emptyWizard, }, Services: { edit: emptyWizard, create: emptyWizard, }, SetDataSetValue: { edit: emptyWizard, create: emptyWizard, }, SettingControl: { edit: emptyWizard, create: emptyWizard, }, SettingGroups: { edit: emptyWizard, create: emptyWizard, }, SGEdit: { edit: emptyWizard, create: emptyWizard, }, SmpRate: { edit: emptyWizard, create: emptyWizard, }, SMV: { edit: editSMvWizard, create: emptyWizard, }, SmvOpts: { edit: editSmvOptsWizard, create: emptyWizard, }, SMVsc: { edit: emptyWizard, create: emptyWizard, }, SMVSecurity: { edit: emptyWizard, create: emptyWizard, }, SMVSettings: { edit: emptyWizard, create: emptyWizard, }, SubEquipment: { edit: editSubEquipmentWizard, create: createSubEquipmentWizard, }, SubFunction: { edit: editSubFunctionWizard, create: createSubFunctionWizard, }, SubNetwork: { edit: editSubNetworkWizard, create: createSubNetworkWizard, }, Subject: { edit: emptyWizard, create: emptyWizard, }, Substation: { edit: editSubstationWizard, create: createSubstationWizard, }, SupSubscription: { edit: emptyWizard, create: emptyWizard, }, TapChanger: { edit: editTapChangerWizard, create: createTapChangerWizard, }, Text: { edit: editTextWizard, create: createTextWizard, }, TimerActivatedControl: { edit: emptyWizard, create: emptyWizard, }, TimeSyncProt: { edit: emptyWizard, create: emptyWizard, }, TransformerWinding: { edit: editTransformerWindingWizard, create: createTransformerWindingWizard, }, Val: { edit: emptyWizard, create: emptyWizard, }, ValueHandling: { edit: emptyWizard, create: emptyWizard, }, Voltage: { edit: emptyWizard, create: emptyWizard, }, VoltageLevel: { edit: editVoltageLevelWizard, create: createVoltageLevelWizard, }, }"
         }
       ],
       "exports": [

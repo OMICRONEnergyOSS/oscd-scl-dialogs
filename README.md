@@ -33,7 +33,7 @@ Currently supported Tag matrix
 | DOI | ❌ | ❌ |
 | DOType | ✅ | ❌ |
 | DataObjectDirectory | ❌ | ❌ |
-| DataSet | ❌ | ❌ |
+| DataSet | ❌ | ✅ |
 | DataSetDirectory | ❌ | ❌ |
 | DataTypeTemplates | ❌ | ❌ |
 | DynAssociation | ❌ | ❌ |
@@ -53,6 +53,7 @@ Currently supported Tag matrix
 | GOOSE | ❌ | ❌ |
 | GOOSESecurity | ❌ | ❌ |
 | GSE | ❌ | ✅ |
+| GSEControl | ❌ | ✅ |
 | GSEDir | ❌ | ❌ |
 | GSESettings | ❌ | ❌ |
 | GSSE | ❌ | ❌ |
@@ -90,6 +91,7 @@ Currently supported Tag matrix
 | ReportSettings | ❌ | ❌ |
 | RptEnabled | ❌ | ❌ |
 | SamplesPerSec | ❌ | ❌ |
+| SampledValueControl | ❌ | ✅ |
 | SecPerSamples | ❌ | ❌ |
 | SCL | ❌ | ❌ |
 | SDI | ❌ | ❌ |
@@ -103,7 +105,7 @@ Currently supported Tag matrix
 | SGEdit | ❌ | ❌ |
 | SmpRate | ❌ | ❌ |
 | SMV | ❌ | ✅ |
-| SmvOpts | ❌ | ❌ |
+| SmvOpts | ❌ | ✅ |
 | SMVsc | ❌ | ❌ |
 | SMVSecurity | ❌ | ❌ |
 | SMVSettings | ❌ | ❌ |

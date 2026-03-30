@@ -51,9 +51,13 @@ import {
 } from './voltagelevel.js';
 
 import { editGseWizard } from './gse.js';
+import { editGSEControlWizard } from './gsecontrol.js';
 import { createIEDWizard, editIEDWizard } from './ied.js';
 import { editLDeviceWizard, createLDeviceWizard } from './ldevice.js';
 import { editSMvWizard } from './smv.js';
+import { editSampledValueControlWizard } from './sampledvaluecontrol.js';
+import { editSmvOptsWizard } from './smvopts.js';
+import { editDataSetWizard } from './dataset.js';
 
 import { createDOTypeWizard } from './dotype.js';
 import { createEnumTypeWizard } from './enumtype.js';
@@ -189,7 +193,7 @@ export const wizards: Record<
     create: emptyWizard,
   },
   DataSet: {
-    edit: emptyWizard,
+    edit: editDataSetWizard,
     create: emptyWizard,
   },
   DataSetDirectory: {
@@ -266,6 +270,10 @@ export const wizards: Record<
   },
   GSE: {
     edit: editGseWizard,
+    create: emptyWizard,
+  },
+  GSEControl: {
+    edit: editGSEControlWizard,
     create: emptyWizard,
   },
   GSEDir: {
@@ -416,6 +424,10 @@ export const wizards: Record<
     edit: emptyWizard,
     create: emptyWizard,
   },
+  SampledValueControl: {
+    edit: editSampledValueControlWizard,
+    create: emptyWizard,
+  },
   SecPerSamples: {
     edit: emptyWizard,
     create: emptyWizard,
@@ -469,7 +481,7 @@ export const wizards: Record<
     create: emptyWizard,
   },
   SmvOpts: {
-    edit: emptyWizard,
+    edit: editSmvOptsWizard,
     create: emptyWizard,
   },
   SMVsc: {

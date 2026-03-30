@@ -150,6 +150,10 @@ export const tRightEnum = ['full', 'fix', 'dataflow'];
 
 export const tSmpMod = ['SmpPerPeriod', 'SmpPerSec', 'SecPerSmp'];
 
+export const tGSEControlType = ['GOOSE', 'GSSE'];
+
+export const tSecurityEnable = ['None', 'Signature', 'SignatureAndEncryption'];
+
 const typeBase = {
   IP: '([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])[.]([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])[.]([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])[.]([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])',
   OSI: '[0-9A-F]+',
