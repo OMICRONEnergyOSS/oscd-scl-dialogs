@@ -19,6 +19,7 @@ const patterns = {
         '(SPG)|(ING)|(ENG)|(ORG)|(TSG)|(CUG)|(VSG)|(ASG)|(CURVE)|(CSG)|(DPL)|(LPL)|(CSD)|(CST)|' +
         '(BTS)|(UTS)|(LTS)|(GTS)|(MTS)|(NTS)|(STS)|(CTS)|(OTS)|(VSD)'};
 const maxLength = {
+    cbName: 32,
     abstracDaName: 60,
     prefix: 11};
 const predefinedBasicTypeEnum = [
@@ -77,6 +78,9 @@ const functionalConstraintEnum = [
     'EX',
     'CO',
 ];
+const tSmpMod = ['SmpPerPeriod', 'SmpPerSec', 'SecPerSmp'];
+const tGSEControlType = ['GOOSE', 'GSSE'];
+const tSecurityEnable = ['None', 'Signature', 'SignatureAndEncryption'];
 const typeBase = {
     IP: '([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])[.]([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])[.]([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])[.]([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])',
     OSI: '[0-9A-F]+',
@@ -123,5 +127,5 @@ const typePattern = {
     'IP-ClassOfTraffic': typeBase.OSI,
 };
 
-export { functionalConstraintEnum, maxLength, patterns, predefinedBasicTypeEnum, typePattern, valKindEnum };
+export { functionalConstraintEnum, maxLength, patterns, predefinedBasicTypeEnum, tGSEControlType, tSecurityEnable, tSmpMod, typePattern, valKindEnum };
 //# sourceMappingURL=patterns.js.map

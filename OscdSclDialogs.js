@@ -34930,7 +34930,7 @@ function createBayWizard(parent) {
         }),
     };
 }
-function updateAction$n(element) {
+function updateAction$r(element) {
     return (inputs) => {
         const name = inputs.find(i => i.label === 'name').value;
         const desc = getValue(inputs.find(i => i.label === 'desc'));
@@ -34947,7 +34947,7 @@ function editBayWizard(element) {
         primary: {
             icon: 'edit',
             label: 'save',
-            action: updateAction$n(element),
+            action: updateAction$r(element),
         },
         content: renderBayWizard({
             name: element.getAttribute('name'),
@@ -35172,7 +35172,7 @@ function createConductingEquipmentWizard(parent) {
         }),
     };
 }
-function updateAction$m(element) {
+function updateAction$q(element) {
     return (inputs) => {
         const name = getValue(inputs.find(i => i.label === 'name'));
         const desc = getValue(inputs.find(i => i.label === 'desc'));
@@ -35189,7 +35189,7 @@ function editConductingEquipmentWizard(element) {
         primary: {
             icon: 'edit',
             label: 'save',
-            action: updateAction$m(element),
+            action: updateAction$q(element),
         },
         content: renderConductingEquipmentWizard({
             name: element.getAttribute('name'),
@@ -35228,6 +35228,7 @@ const patterns = {
         '(SPG)|(ING)|(ENG)|(ORG)|(TSG)|(CUG)|(VSG)|(ASG)|(CURVE)|(CSG)|(DPL)|(LPL)|(CSD)|(CST)|' +
         '(BTS)|(UTS)|(LTS)|(GTS)|(MTS)|(NTS)|(STS)|(CTS)|(OTS)|(VSD)'};
 const maxLength = {
+    cbName: 32,
     abstracDaName: 60,
     prefix: 11};
 const predefinedBasicTypeEnum = [
@@ -35286,6 +35287,9 @@ const functionalConstraintEnum = [
     'EX',
     'CO',
 ];
+const tSmpMod = ['SmpPerPeriod', 'SmpPerSec', 'SecPerSmp'];
+const tGSEControlType = ['GOOSE', 'GSSE'];
+const tSecurityEnable = ['None', 'Signature', 'SignatureAndEncryption'];
 const typeBase = {
     IP: '([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])[.]([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])[.]([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])[.]([0-9]{1,2}|1[0-9]{2}|2[0-4][0-9]|25[0-5])',
     OSI: '[0-9A-F]+',
@@ -35685,7 +35689,7 @@ function createConnectedApWizard(element) {
         ],
     };
 }
-function updateAction$l(element) {
+function updateAction$p(element) {
     return (inputs, wizard) => {
         const instType = wizard.querySelector('#instType').value === 'true';
         const addressContent = {};
@@ -35704,7 +35708,7 @@ function editConnectedApWizard(element) {
         primary: {
             icon: 'save',
             label: 'save',
-            action: updateAction$l(element),
+            action: updateAction$p(element),
         },
         content: [...contentAddress({ element, types: getTypes(element) })],
     };
@@ -36260,7 +36264,7 @@ function createEnumValWizard(parent) {
         content: renderContent$3({ ord, desc, value }),
     };
 }
-function updateAction$k(element) {
+function updateAction$o(element) {
     return (inputs) => {
         const value = getValue(inputs.find(i => i.label === 'value')) ?? '';
         const desc = getValue(inputs.find(i => i.label === 'desc'));
@@ -36295,7 +36299,7 @@ function editEnumValWizard(element) {
         primary: {
             icon: '',
             label: 'Save',
-            action: updateAction$k(element),
+            action: updateAction$o(element),
         },
         content: renderContent$3({ ord, desc, value }),
     };
@@ -36429,7 +36433,7 @@ function createEqFunctionWizard(parent) {
         ],
     };
 }
-function updateAction$j(element) {
+function updateAction$n(element) {
     return (inputs) => {
         const attributes = {};
         const functionKeys = ['name', 'desc', 'type'];
@@ -36451,7 +36455,7 @@ function editEqFunctionWizard(element) {
         primary: {
             icon: 'save',
             label: 'save',
-            action: updateAction$j(element),
+            action: updateAction$n(element),
         },
         content: [
             ...contentFunctionWizard({
@@ -36502,7 +36506,7 @@ function createEqSubFunctionWizard(parent) {
         ],
     };
 }
-function updateAction$i(element) {
+function updateAction$m(element) {
     return (inputs) => {
         const attributes = {};
         const functionKeys = ['name', 'desc', 'type'];
@@ -36524,7 +36528,7 @@ function editEqSubFunctionWizard(element) {
         primary: {
             icon: 'save',
             label: 'save',
-            action: updateAction$i(element),
+            action: updateAction$m(element),
         },
         content: [
             ...contentFunctionWizard({
@@ -36605,7 +36609,7 @@ function createGeneralEquipmentWizard(parent) {
         ],
     };
 }
-function updateAction$h(element) {
+function updateAction$l(element) {
     return (inputs) => {
         const attributes = {};
         const generalEquipmentKeys = ['name', 'desc', 'type', 'virtual'];
@@ -36628,7 +36632,7 @@ function editGeneralEquipmentWizard(element) {
         primary: {
             icon: 'save',
             label: 'save',
-            action: updateAction$h(element),
+            action: updateAction$l(element),
         },
         content: [
             ...contentGeneralEquipmentWizard({
@@ -36714,7 +36718,7 @@ function createLineWizard(parent) {
         ],
     };
 }
-function updateAction$g(element) {
+function updateAction$k(element) {
     return (inputs) => {
         const attributes = {};
         const lineKeys = ['name', 'desc', 'type', 'nomFreq', 'numPhases'];
@@ -36733,7 +36737,7 @@ function editLineWizard(element) {
         primary: {
             icon: 'edit',
             label: 'save',
-            action: updateAction$g(element),
+            action: updateAction$k(element),
         },
         content: renderContent$2({
             name: element.getAttribute('name') ?? '',
@@ -36802,7 +36806,7 @@ function createPowerTransformerWizard(parent) {
         }),
     };
 }
-function updateAction$f(element) {
+function updateAction$j(element) {
     return (inputs) => {
         const name = inputs.find(i => i.label === 'name').value;
         const desc = getValue(inputs.find(i => i.label === 'desc'));
@@ -36819,7 +36823,7 @@ function editPowerTransformerWizard(element) {
         primary: {
             icon: 'edit',
             label: 'save',
-            action: updateAction$f(element),
+            action: updateAction$j(element),
         },
         content: renderPowerTransformerWizard({
             name: element.getAttribute('name'),
@@ -36888,7 +36892,7 @@ function createProcessWizard(parent) {
         ],
     };
 }
-function updateAction$e(element) {
+function updateAction$i(element) {
     return (inputs) => {
         const attributes = {};
         const tapProcessKeys = ['name', 'desc', 'type'];
@@ -36913,7 +36917,7 @@ function editProcessWizard(element) {
         primary: {
             icon: 'save',
             label: 'save',
-            action: updateAction$e(element),
+            action: updateAction$i(element),
         },
         content: [
             ...contentProcessWizard({
@@ -37084,7 +37088,7 @@ function createSubEquipmentWizard(parent) {
         ],
     };
 }
-function updateAction$d(element) {
+function updateAction$h(element) {
     return (inputs) => {
         const attributes = {};
         const subFunctionKeys = ['name', 'desc', 'phase', 'virtual'];
@@ -37107,7 +37111,7 @@ function editSubEquipmentWizard(element) {
         primary: {
             icon: 'save',
             label: 'save',
-            action: updateAction$d(element),
+            action: updateAction$h(element),
         },
         content: [
             ...contentSubEquipmentWizard({
@@ -37159,7 +37163,7 @@ function createSubFunctionWizard(parent) {
         ],
     };
 }
-function updateAction$c(element) {
+function updateAction$g(element) {
     return (inputs) => {
         const attributes = {};
         const subFunctionKeys = ['name', 'desc', 'type'];
@@ -37181,7 +37185,7 @@ function editSubFunctionWizard(element) {
         primary: {
             icon: 'save',
             label: 'save',
-            action: updateAction$c(element),
+            action: updateAction$g(element),
         },
         content: [
             ...contentFunctionWizard({
@@ -37312,7 +37316,7 @@ function getBitRateAction(oldBitRate, BitRate, multiplier, SubNetwork) {
         { node: oldBitRate },
     ];
 }
-function updateAction$b(element) {
+function updateAction$f(element) {
     return (inputs) => {
         const name = inputs.find(i => i.label === 'name').value;
         const desc = getValue(inputs.find(i => i.label === 'desc'));
@@ -37364,7 +37368,7 @@ function editSubNetworkWizard(element) {
         primary: {
             icon: 'save',
             label: 'save',
-            action: updateAction$b(element),
+            action: updateAction$f(element),
         },
         content: renderContent({
             name,
@@ -37376,7 +37380,7 @@ function editSubNetworkWizard(element) {
     };
 }
 
-function render$4(options) {
+function render$8(options) {
     return [
         b `<scl-text-field
       label="name"
@@ -37418,14 +37422,14 @@ function createSubstationWizard(parent) {
             label: 'add',
             action: createAction$7(parent),
         },
-        content: render$4({
+        content: render$8({
             name: '',
             reservedValues: reservedNames(parent, 'Substation'),
             desc: '',
         }),
     };
 }
-function updateAction$a(element) {
+function updateAction$e(element) {
     return (inputs) => {
         const name = inputs.find(i => i.label === 'name').value;
         const desc = getValue(inputs.find(i => i.label === 'desc'));
@@ -37442,9 +37446,9 @@ function editSubstationWizard(element) {
         primary: {
             icon: 'edit',
             label: 'save',
-            action: updateAction$a(element),
+            action: updateAction$e(element),
         },
-        content: render$4({
+        content: render$8({
             name: element.getAttribute('name') ?? '',
             reservedValues: reservedNames(element),
             desc: element.getAttribute('desc'),
@@ -37518,7 +37522,7 @@ function createTapChangerWizard(parent) {
         ],
     };
 }
-function updateAction$9(element) {
+function updateAction$d(element) {
     return (inputs) => {
         const attributes = {};
         const tapChangerKeys = ['name', 'desc', 'type', 'virtual'];
@@ -37541,7 +37545,7 @@ function editTapChangerWizard(element) {
         primary: {
             icon: 'save',
             label: 'save',
-            action: updateAction$9(element),
+            action: updateAction$d(element),
         },
         content: [
             ...contentTapChangerWizard({
@@ -37555,7 +37559,7 @@ function editTapChangerWizard(element) {
     };
 }
 
-function render$3({ content }) {
+function render$7({ content }) {
     return [
         b `<md-filled-textfield
       type="textarea"
@@ -37590,12 +37594,12 @@ function createTextWizard(parent) {
             label: 'add',
             action: createAction$5(parent),
         },
-        content: render$3({
+        content: render$7({
             content: '',
         }),
     };
 }
-function updateAction$8(element) {
+function updateAction$c(element) {
     return (inputs) => {
         const content = inputs.find(i => i.label === 'content').value;
         if (content === element.textContent) {
@@ -37618,9 +37622,9 @@ function editTextWizard(element) {
         primary: {
             icon: 'edit',
             label: 'save',
-            action: updateAction$8(element),
+            action: updateAction$c(element),
         },
-        content: render$3({
+        content: render$7({
             content: element.textContent || '',
         }),
     };
@@ -37692,7 +37696,7 @@ function createTransformerWindingWizard(parent) {
         ],
     };
 }
-function updateAction$7(element) {
+function updateAction$b(element) {
     return (inputs) => {
         const attributes = {};
         const transformerWindingKeys = ['name', 'desc', 'type', 'virtual'];
@@ -37715,7 +37719,7 @@ function editTransformerWindingWizard(element) {
         primary: {
             icon: 'save',
             label: 'save',
-            action: updateAction$7(element),
+            action: updateAction$b(element),
         },
         content: [
             ...contentTransformerWindingWizard({
@@ -37735,7 +37739,7 @@ const initial = {
     Voltage: '110',
     multiplier: 'k',
 };
-function render$2(option) {
+function render$6(option) {
     return [
         b `<scl-text-field
       label="name"
@@ -37825,7 +37829,7 @@ function createVoltageLevelWizard(parent) {
             label: 'add',
             action: createAction$3(parent),
         },
-        content: render$2({
+        content: render$6({
             name: '',
             reservedValues: reservedNames(parent, 'VoltageLevel'),
             desc: '',
@@ -37869,7 +37873,7 @@ function getVoltageAction(oldVoltage, Voltage, multiplier, voltageLevel) {
         { node: oldVoltage },
     ];
 }
-function updateAction$6(element) {
+function updateAction$a(element) {
     return (inputs) => {
         const name = inputs.find(i => i.label === 'name').value;
         const desc = getValue(inputs.find(i => i.label === 'desc'));
@@ -37919,9 +37923,9 @@ function editVoltageLevelWizard(element) {
         primary: {
             icon: 'edit',
             label: 'save',
-            action: updateAction$6(element),
+            action: updateAction$a(element),
         },
-        content: render$2({
+        content: render$6({
             name: element.getAttribute('name') ?? '',
             reservedValues: reservedNames(element),
             desc: element.getAttribute('desc'),
@@ -37969,7 +37973,7 @@ function mxxTimeUpdateAction(gse, oldMxxTime, newTimeValue, option) {
         { node: oldMxxTime },
     ];
 }
-function updateAction$5(element) {
+function updateAction$9(element) {
     return (inputs, wizard) => {
         const action = [];
         const instType = wizard.querySelector('#instType').value === 'true';
@@ -38004,7 +38008,7 @@ function editGseWizard(element) {
         primary: {
             label: 'save',
             icon: 'save',
-            action: updateAction$5(element),
+            action: updateAction$9(element),
         },
         content: [
             ...contentAddress({ element, types }),
@@ -38023,6 +38027,89 @@ function editGseWizard(element) {
         type="number"
       ></scl-text-field>`,
         ],
+    };
+}
+
+function render$5(options) {
+    return [
+        b `<scl-text-field
+      label="name"
+      .value=${options.name}
+      required
+      maxLength="${maxLength.cbName}"
+      .reservedValues=${options.reservedValues}
+      dialogInitialFocus
+    ></scl-text-field>`,
+        b `<scl-text-field
+      label="desc"
+      .value=${options.desc}
+      nullable
+    ></scl-text-field>`,
+        b `<scl-select
+      label="type"
+      .selectOptions=${tGSEControlType}
+      .value=${options.type}
+      nullable
+    ></scl-select>`,
+        b `<scl-text-field
+      label="appID"
+      .value=${options.appID}
+      required
+    ></scl-text-field>`,
+        b `<scl-checkbox
+      label="fixedOffs"
+      .value=${options.fixedOffs}
+      nullable
+    ></scl-checkbox>`,
+        b `<scl-select
+      label="securityEnabled"
+      .selectOptions=${tSecurityEnable}
+      .value=${options.securityEnabled}
+      nullable
+    ></scl-select>`,
+    ];
+}
+function updateAction$8(element) {
+    return (inputs) => {
+        const name = getValue(inputs.find(i => i.label === 'name'));
+        const desc = getValue(inputs.find(i => i.label === 'desc'));
+        const type = getValue(inputs.find(i => i.label === 'type'));
+        const appID = getValue(inputs.find(i => i.label === 'appID'));
+        const fixedOffs = getValue(inputs.find(i => i.label === 'fixedOffs'));
+        const securityEnabled = getValue(inputs.find(i => i.label === 'securityEnabled'));
+        if (name === element.getAttribute('name') &&
+            desc === element.getAttribute('desc') &&
+            type === element.getAttribute('type') &&
+            appID === element.getAttribute('appID') &&
+            fixedOffs === element.getAttribute('fixedOffs') &&
+            securityEnabled === element.getAttribute('securityEnabled')) {
+            return [];
+        }
+        return [
+            {
+                element,
+                attributes: { name, desc, type, appID, fixedOffs, securityEnabled },
+            },
+        ];
+    };
+}
+function editGSEControlWizard(element) {
+    return {
+        title: 'Edit GSEControl',
+        primary: {
+            icon: 'edit',
+            label: 'save',
+            action: updateAction$8(element),
+        },
+        content: render$5({
+            name: element.getAttribute('name') ?? '',
+            reservedValues: reservedNames(element),
+            desc: element.getAttribute('desc'),
+            type: element.getAttribute('type'),
+            appID: element.getAttribute('appID') ?? '',
+            fixedOffs: element.getAttribute('fixedOffs'),
+            securityEnabled: element.getAttribute('securityEnabled'),
+        }),
     };
 }
 
@@ -38062,7 +38149,7 @@ function renderEdit(name, iedNames, desc, type, manufacturer, owner) {
     ></scl-text-field>`,
     ];
 }
-function updateAction$4(element) {
+function updateAction$7(element) {
     return (inputs) => {
         const name = inputs.find(i => i.label === 'name').value;
         const desc = getValue(inputs.find(i => i.label === 'desc'));
@@ -38088,7 +38175,7 @@ function editIEDWizard(element) {
         primary: {
             icon: 'edit',
             label: 'save',
-            action: updateAction$4(element),
+            action: updateAction$7(element),
         },
         content: renderEdit(element.getAttribute('name') ?? '', iedNames, element.getAttribute('desc'), element.getAttribute('type'), element.getAttribute('manufacturer'), element.getAttribute('owner')),
     };
@@ -38100,7 +38187,7 @@ function createIEDWizard(parent) {
         primary: {
             icon: 'add',
             label: 'Create',
-            action: updateAction$4(parent),
+            action: updateAction$7(parent),
         },
         content: renderAdd(parent.getAttribute('name') ?? '', iedNames, parent.getAttribute('desc')),
     };
@@ -38126,7 +38213,7 @@ function reservedInstLDevice(currentElement) {
         .map(ld => ld.getAttribute('inst') ?? '')
         .filter(name => name !== currentElement.getAttribute('inst'));
 }
-function render$1(inst, ldName, desc, reservedInsts, allowLdName, disableInst) {
+function render$4(inst, ldName, desc, reservedInsts, allowLdName, disableInst) {
     const content = [
         allowLdName
             ? b `<scl-text-field
@@ -38197,7 +38284,7 @@ function createAction$2(parent) {
         ];
     };
 }
-function updateAction$3(element) {
+function updateAction$6(element) {
     return (inputs) => {
         const ldNameAllowed = ldNameIsAllowed(element);
         const desc = getValue(inputs.find(i => i.label === 'desc'));
@@ -38226,7 +38313,7 @@ function createLDeviceWizard(parent) {
             label: 'save',
             action: createAction$2(parent),
         },
-        content: render$1(null, null, null, reservedInstLDevice(parent), ldNameIsAllowed(parent), false),
+        content: render$4(null, null, null, reservedInstLDevice(parent), ldNameIsAllowed(parent), false),
     };
 }
 function editLDeviceWizard(element) {
@@ -38235,13 +38322,13 @@ function editLDeviceWizard(element) {
         primary: {
             icon: 'edit',
             label: 'save',
-            action: updateAction$3(element),
+            action: updateAction$6(element),
         },
-        content: render$1(element.getAttribute('inst'), element.getAttribute('ldName'), element.getAttribute('desc'), reservedInstLDevice(element), ldNameIsAllowed(element), true),
+        content: render$4(element.getAttribute('inst'), element.getAttribute('ldName'), element.getAttribute('desc'), reservedInstLDevice(element), ldNameIsAllowed(element), true),
     };
 }
 
-function updateAction$2(element) {
+function updateAction$5(element) {
     return (inputs, wizard) => {
         const action = [];
         const instType = wizard.querySelector('#instType').value === 'true';
@@ -38267,9 +38354,246 @@ function editSMvWizard(element) {
         primary: {
             label: 'save',
             icon: 'edit',
-            action: updateAction$2(element),
+            action: updateAction$5(element),
         },
         content: [...contentAddress({ element, types })],
+    };
+}
+
+function render$3(options) {
+    const fields = [
+        b `<scl-text-field
+      label="name"
+      .value=${options.name}
+      required
+      maxLength="${maxLength.cbName}"
+      .reservedValues=${options.reservedValues}
+      dialogInitialFocus
+    ></scl-text-field>`,
+        b `<scl-text-field
+      label="desc"
+      .value=${options.desc}
+      nullable
+    ></scl-text-field>`,
+        b `<scl-text-field
+      label="smvID"
+      .value=${options.smvID}
+      required
+    ></scl-text-field>`,
+        b `<scl-select
+      label="smpMod"
+      .selectOptions=${tSmpMod}
+      .value=${options.smpMod}
+      nullable
+    ></scl-select>`,
+        b `<scl-text-field
+      label="smpRate"
+      .value=${options.smpRate}
+      required
+      type="number"
+      min="0"
+    ></scl-text-field>`,
+        b `<scl-text-field
+      label="nofASDU"
+      .value=${options.nofASDU}
+      required
+      type="number"
+      min="0"
+    ></scl-text-field>`,
+        b `<scl-select
+      label="securityEnabled"
+      .selectOptions=${tSecurityEnable}
+      .value=${options.securityEnabled}
+      nullable
+    ></scl-select>`,
+    ];
+    if (options.multicast === 'false') {
+        fields.push(b `<scl-checkbox
+        label="multicast"
+        .value=${'false'}
+        disabled
+      ></scl-checkbox>`);
+    }
+    return fields;
+}
+function updateAction$4(element) {
+    return (inputs) => {
+        const name = getValue(inputs.find(i => i.label === 'name'));
+        const desc = getValue(inputs.find(i => i.label === 'desc'));
+        const smvID = getValue(inputs.find(i => i.label === 'smvID'));
+        const smpMod = getValue(inputs.find(i => i.label === 'smpMod'));
+        const smpRate = getValue(inputs.find(i => i.label === 'smpRate'));
+        const nofASDU = getValue(inputs.find(i => i.label === 'nofASDU'));
+        const securityEnabled = getValue(inputs.find(i => i.label === 'securityEnabled'));
+        if (name === element.getAttribute('name') &&
+            desc === element.getAttribute('desc') &&
+            smvID === element.getAttribute('smvID') &&
+            smpMod === element.getAttribute('smpMod') &&
+            smpRate === element.getAttribute('smpRate') &&
+            nofASDU === element.getAttribute('nofASDU') &&
+            securityEnabled === element.getAttribute('securityEnabled')) {
+            return [];
+        }
+        return [
+            {
+                element,
+                attributes: {
+                    name,
+                    desc,
+                    smvID,
+                    smpMod,
+                    smpRate,
+                    nofASDU,
+                    securityEnabled,
+                },
+            },
+        ];
+    };
+}
+function editSampledValueControlWizard(element) {
+    return {
+        title: 'Edit SampledValueControl',
+        primary: {
+            icon: 'edit',
+            label: 'save',
+            action: updateAction$4(element),
+        },
+        content: render$3({
+            name: element.getAttribute('name') ?? '',
+            reservedValues: reservedNames(element),
+            desc: element.getAttribute('desc'),
+            smvID: element.getAttribute('smvID') ?? '',
+            smpMod: element.getAttribute('smpMod'),
+            smpRate: element.getAttribute('smpRate') ?? '',
+            nofASDU: element.getAttribute('nofASDU') ?? '',
+            securityEnabled: element.getAttribute('securityEnabled'),
+            multicast: element.getAttribute('multicast'),
+        }),
+    };
+}
+
+const smvOptKeys = [
+    'refreshTime',
+    'sampleRate',
+    'dataSet',
+    'security',
+    'synchSourceId',
+];
+function render$2(options) {
+    return smvOptKeys.map(key => b `<scl-checkbox
+        label="${key}"
+        .value=${options[key]}
+        nullable
+      ></scl-checkbox>`);
+}
+function updateAction$3(element) {
+    return (inputs) => {
+        const attributes = {};
+        for (const key of smvOptKeys) {
+            attributes[key] = getValue(inputs.find(i => i.label === key));
+        }
+        if (!smvOptKeys.some(key => attributes[key] !== element.getAttribute(key)))
+            return [];
+        return [{ element, attributes }];
+    };
+}
+function editSmvOptsWizard(element) {
+    const options = {};
+    for (const key of smvOptKeys) {
+        options[key] = element.getAttribute(key);
+    }
+    return {
+        title: 'Edit SmvOpts',
+        primary: {
+            icon: 'edit',
+            label: 'save',
+            action: updateAction$3(element),
+        },
+        content: render$2(options),
+    };
+}
+
+function fcdaLabel(fcda) {
+    const parts = [];
+    const ldInst = fcda.getAttribute('ldInst');
+    if (ldInst)
+        parts.push(ldInst);
+    const prefix = fcda.getAttribute('prefix') ?? '';
+    const lnClass = fcda.getAttribute('lnClass') ?? '';
+    const lnInst = fcda.getAttribute('lnInst') ?? '';
+    if (lnClass)
+        parts.push(`${prefix}${lnClass}${lnInst}`);
+    const doName = fcda.getAttribute('doName');
+    if (doName)
+        parts.push(doName);
+    const daName = fcda.getAttribute('daName');
+    if (daName)
+        parts.push(daName);
+    const fc = fcda.getAttribute('fc');
+    if (fc)
+        parts.push(`[${fc}]`);
+    return parts.join('.');
+}
+function render$1(options) {
+    return [
+        b `<scl-text-field
+      label="name"
+      .value=${options.name}
+      disabled
+      dialogInitialFocus
+    ></scl-text-field>`,
+        b `<scl-text-field
+      label="desc"
+      .value=${options.desc}
+      nullable
+    ></scl-text-field>`,
+        b `<selection-list
+      id="fcda-list"
+      .items=${options.fcdas.map(fcda => ({
+            headline: fcdaLabel(fcda),
+            attachedElement: fcda,
+            selected: true,
+        }))}
+    ></selection-list>`,
+    ];
+}
+function updateAction$2(element) {
+    return (inputs, wizard) => {
+        const name = getValue(inputs.find(i => i.label === 'name'));
+        const desc = getValue(inputs.find(i => i.label === 'desc'));
+        const edits = [];
+        // Collect FCDA removals from the selection list
+        const list = wizard.querySelector('#fcda-list');
+        if (list) {
+            const selectedFcdas = new Set(list.selectedElements);
+            const allFcdas = Array.from(element.querySelectorAll('FCDA'));
+            for (const fcda of allFcdas) {
+                if (!selectedFcdas.has(fcda)) {
+                    edits.push({ node: fcda });
+                }
+            }
+        }
+        // Collect attribute changes
+        if (name !== element.getAttribute('name') ||
+            desc !== element.getAttribute('desc')) {
+            edits.push({ element, attributes: { name, desc } });
+        }
+        return edits;
+    };
+}
+function editDataSetWizard(element) {
+    return {
+        title: 'Edit DataSet',
+        primary: {
+            icon: 'edit',
+            label: 'save',
+            action: updateAction$2(element),
+        },
+        content: render$1({
+            name: element.getAttribute('name') ?? '',
+            desc: element.getAttribute('desc'),
+            fcdas: Array.from(element.querySelectorAll('FCDA')),
+        }),
     };
 }
 
@@ -39289,7 +39613,7 @@ const wizards = {
         create: emptyWizard,
     },
     DataSet: {
-        edit: emptyWizard,
+        edit: editDataSetWizard,
         create: emptyWizard,
     },
     DataSetDirectory: {
@@ -39366,6 +39690,10 @@ const wizards = {
     },
     GSE: {
         edit: editGseWizard,
+        create: emptyWizard,
+    },
+    GSEControl: {
+        edit: editGSEControlWizard,
         create: emptyWizard,
     },
     GSEDir: {
@@ -39516,6 +39844,10 @@ const wizards = {
         edit: emptyWizard,
         create: emptyWizard,
     },
+    SampledValueControl: {
+        edit: editSampledValueControlWizard,
+        create: emptyWizard,
+    },
     SecPerSamples: {
         edit: emptyWizard,
         create: emptyWizard,
@@ -39569,7 +39901,7 @@ const wizards = {
         create: emptyWizard,
     },
     SmvOpts: {
-        edit: emptyWizard,
+        edit: editSmvOptsWizard,
         create: emptyWizard,
     },
     SMVsc: {
