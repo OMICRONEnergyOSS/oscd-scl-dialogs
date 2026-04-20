@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.14](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.13...oscd-scl-dialogs-v0.0.14) (2026-04-20)
+
+
+### Bug Fixes
+
+* connectedap adding illegal attribute to Address ([92ad0d7](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/commit/92ad0d7319012ded4603cdaacbafa886ff90d4fb))
+
 ## [0.0.13](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.12...oscd-scl-dialogs-v0.0.13) (2026-03-30)
 
 
