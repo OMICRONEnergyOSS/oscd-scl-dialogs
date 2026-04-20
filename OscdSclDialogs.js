@@ -35694,9 +35694,11 @@ function updateAction$p(element) {
         const instType = wizard.querySelector('#instType').value === 'true';
         const addressContent = {};
         inputs.forEach(input => {
-            const key = input.label;
-            const value = getValue(input);
-            addressContent[key] = value;
+            if (!(input instanceof SclCheckbox)) {
+                const key = input.label;
+                const value = getValue(input);
+                addressContent[key] = value;
+            }
         });
         return updateAddress(element, addressContent, instType);
     };

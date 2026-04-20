@@ -1,6 +1,7 @@
 import '../node_modules/@lit/reactive-element/reactive-element.js';
 import { html as b } from '../node_modules/lit-html/lit-html.js';
 import '../node_modules/lit-element/lit-element.js';
+import { SclCheckbox } from '../node_modules/@openenergytools/scl-checkbox/dist/SclCheckbox.js';
 import { getReference } from '../node_modules/@openscd/scl-lib/dist/tBaseElement/getReference.js';
 import '../node_modules/@openscd/scl-lib/dist/generator/lnInstGenerator.js';
 import { macAddressGenerator } from '../node_modules/@openscd/scl-lib/dist/generator/macAddressGenerator.js';
@@ -295,9 +296,11 @@ function updateAction(element) {
         const instType = wizard.querySelector('#instType').value === 'true';
         const addressContent = {};
         inputs.forEach(input => {
-            const key = input.label;
-            const value = getValue(input);
-            addressContent[key] = value;
+            if (!(input instanceof SclCheckbox)) {
+                const key = input.label;
+                const value = getValue(input);
+                addressContent[key] = value;
+            }
         });
         return updateAddress(element, addressContent, instType);
     };
