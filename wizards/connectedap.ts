@@ -403,9 +403,11 @@ function updateAction(element: Element): WizardActor {
 
     const addressContent: Record<string, string | null> = {};
     inputs.forEach(input => {
-      const key = input.label;
-      const value = getValue(input);
-      addressContent[key] = value;
+      if (!(input instanceof SclCheckbox)) {
+        const key = input.label;
+        const value = getValue(input);
+        addressContent[key] = value;
+      }
     });
 
     return updateAddress(element, addressContent, instType);
