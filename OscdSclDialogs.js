@@ -35365,7 +35365,7 @@ function createAddressElement(parent, inputs, instType) {
 function updateAddress(parent, inputs, instType) {
     const actions = [];
     const newAddress = createAddressElement(parent, inputs, instType);
-    const oldAddress = parent.querySelector('Address');
+    const oldAddress = parent.querySelector(':scope > Address');
     if (oldAddress !== null && existDiff(oldAddress, newAddress)) {
         actions.push({
             node: oldAddress,
