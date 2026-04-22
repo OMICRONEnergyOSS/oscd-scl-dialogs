@@ -71,7 +71,7 @@ export function updateAddress(
   const actions: EditV2[] = [];
 
   const newAddress = createAddressElement(parent, inputs, instType);
-  const oldAddress = parent.querySelector('Address');
+  const oldAddress = parent.querySelector(':scope > Address');
 
   if (oldAddress !== null && existDiff(oldAddress, newAddress)) {
     actions.push({
