@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.15](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.14...oscd-scl-dialogs-v0.0.15) (2026-04-22)
+
+
+### Bug Fixes
+
+* edits to the connectedAP should affect the correct address ([e9318e5](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/commit/e9318e5464508d7e5c29e3f1c0c5764451c46228))
+
 ## [0.0.14](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.13...oscd-scl-dialogs-v0.0.14) (2026-04-20)
 
 
