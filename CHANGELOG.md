@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.16](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.15...oscd-scl-dialogs-v0.0.16) (2026-09-24)
+
+
+### Features
+
+* fired up existing BDA and DAType forms ([3607779](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/commit/36077794b7fc66c75dc28d157b156bbb1e4486c2))
+
 ## [0.0.15](https://github.com/OMICRONEnergyOSS/oscd-scl-dialogs/compare/oscd-scl-dialogs-v0.0.14...oscd-scl-dialogs-v0.0.15) (2026-04-22)
 
 
