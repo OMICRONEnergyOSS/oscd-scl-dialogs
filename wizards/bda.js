@@ -1,13 +1,78 @@
-import '../node_modules/@openscd/scl-lib/dist/tBaseElement/tags.js';
+import { getReference } from '../node_modules/@openscd/scl-lib/dist/tBaseElement/getReference.js';
 import '../node_modules/@openscd/scl-lib/dist/generator/lnInstGenerator.js';
 import '../node_modules/@openscd/scl-lib/dist/generator/macAddressGenerator.js';
 import '../node_modules/@openscd/scl-lib/dist/generator/appIdGenerator.js';
 import '../node_modules/@openscd/scl-lib/dist/tExtRef/extRefTypeRestrictions.js';
 import '../node_modules/@openscd/scl-lib/dist/tDataTypeTemplates/nsdToJson.js';
 import '../node_modules/@openscd/scl-lib/dist/tBaseElement/find.js';
-import { getValue } from '../foundation.js';
+import '../node_modules/@openscd/scl-lib/dist/tBaseElement/tags.js';
+import { getValue, createElement } from '../foundation.js';
 import { renderAbstractDataAttributeContent, getValAction } from './abstractda.js';
 
+function createBDaAction(parent) {
+    return (inputs) => {
+        const name = getValue(inputs.find(i => i.label === 'name'));
+        const desc = getValue(inputs.find(i => i.label === 'desc'));
+        const bType = getValue(inputs.find(i => i.label === 'bType'));
+        const type = bType === 'Enum' || bType === 'Struct'
+            ? getValue(inputs.find(i => i.label === 'type'))
+            : null;
+        const sAddr = getValue(inputs.find(i => i.label === 'sAddr'));
+        const valKind = getValue(inputs.find(i => i.label === 'valKind')) !== ''
+            ? getValue(inputs.find(i => i.label === 'valKind'))
+            : null;
+        const valImport = getValue(inputs.find(i => i.label === 'valImport')) !== ''
+            ? getValue(inputs.find(i => i.label === 'valImport'))
+            : null;
+        const valField = inputs.find(i => i.label === 'Val' && i.style.display !== 'none');
+        const Val = valField ? getValue(valField) : null;
+        const element = createElement(parent.ownerDocument, 'BDA', {
+            name,
+            desc,
+            bType,
+            type,
+            sAddr,
+            valKind,
+            valImport,
+        });
+        if (Val !== null) {
+            const valElement = createElement(parent.ownerDocument, 'Val', {});
+            valElement.textContent = Val;
+            element.appendChild(valElement);
+        }
+        return [
+            {
+                parent,
+                node: element,
+                reference: getReference(parent, 'BDA'),
+            },
+        ];
+    };
+}
+function createBDaWizard(element) {
+    const doc = element.ownerDocument;
+    const name = '';
+    const desc = null;
+    const bType = '';
+    const type = null;
+    const sAddr = null;
+    const Val = null;
+    const valKind = null;
+    const valImport = null;
+    const doOrEnumTypes = Array.from(doc.querySelectorAll('DAType, EnumType')).filter(doOrEnumType => doOrEnumType.getAttribute('id'));
+    const data = element.closest('DataTypeTemplates');
+    return {
+        title: 'Add BDA',
+        primary: {
+            icon: '',
+            label: 'save',
+            action: createBDaAction(element),
+        },
+        content: [
+            ...renderAbstractDataAttributeContent(name, desc, bType, doOrEnumTypes, type, sAddr, valKind, valImport, Val, data),
+        ],
+    };
+}
 function updateBDaAction(element) {
     return (inputs) => {
         const name = getValue(inputs.find(i => i.label === 'name'));
@@ -84,5 +149,5 @@ function editBDaWizard(element) {
     };
 }
 
-export { editBDaWizard };
+export { createBDaWizard, editBDaWizard };
 //# sourceMappingURL=bda.js.map

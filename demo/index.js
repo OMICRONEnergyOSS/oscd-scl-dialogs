@@ -114671,6 +114671,46 @@ function editDataSetWizard$1(element) {
     };
 }
 
+function createDATypeAction$1(parent) {
+    return (inputs) => {
+        const daTypeAttrs = {};
+        const daTypeKeys = ['id', 'desc'];
+        daTypeKeys.forEach(key => {
+            daTypeAttrs[key] = getValue(inputs.find(i => i.label === key));
+        });
+        const daType = createElement$2(parent.ownerDocument, 'DAType', daTypeAttrs);
+        return [
+            { parent, node: daType, reference: getReference$1(parent, 'DAType') },
+        ];
+    };
+}
+function createDATypeWizard$1(parent) {
+    return {
+        title: 'Add DAType',
+        primary: {
+            icon: 'Save',
+            label: 'Save',
+            action: createDATypeAction$1(parent),
+        },
+        content: [
+            b$2 `<scl-text-field
+        label="id"
+        .value=${''}
+        required
+        maxlength="127"
+        minlength="1"
+        pattern="${patterns$1.nmToken}"
+      ></scl-text-field>`,
+            b$2 `<scl-text-field
+        label="desc"
+        .value=${null}
+        nullable
+        pattern="${patterns$1.normalizedString}"
+      ></scl-text-field>`,
+        ],
+    };
+}
+
 function createDOTypeAction$1(parent) {
     return (inputs) => {
         const doTypeAttrs = {};
@@ -115498,6 +115538,70 @@ function updateLN0Wizard$1(element) {
     };
 }
 
+function createBDaAction$1(parent) {
+    return (inputs) => {
+        const name = getValue(inputs.find(i => i.label === 'name'));
+        const desc = getValue(inputs.find(i => i.label === 'desc'));
+        const bType = getValue(inputs.find(i => i.label === 'bType'));
+        const type = bType === 'Enum' || bType === 'Struct'
+            ? getValue(inputs.find(i => i.label === 'type'))
+            : null;
+        const sAddr = getValue(inputs.find(i => i.label === 'sAddr'));
+        const valKind = getValue(inputs.find(i => i.label === 'valKind')) !== ''
+            ? getValue(inputs.find(i => i.label === 'valKind'))
+            : null;
+        const valImport = getValue(inputs.find(i => i.label === 'valImport')) !== ''
+            ? getValue(inputs.find(i => i.label === 'valImport'))
+            : null;
+        const valField = inputs.find(i => i.label === 'Val' && i.style.display !== 'none');
+        const Val = valField ? getValue(valField) : null;
+        const element = createElement$2(parent.ownerDocument, 'BDA', {
+            name,
+            desc,
+            bType,
+            type,
+            sAddr,
+            valKind,
+            valImport,
+        });
+        if (Val !== null) {
+            const valElement = createElement$2(parent.ownerDocument, 'Val', {});
+            valElement.textContent = Val;
+            element.appendChild(valElement);
+        }
+        return [
+            {
+                parent,
+                node: element,
+                reference: getReference$1(parent, 'BDA'),
+            },
+        ];
+    };
+}
+function createBDaWizard$1(element) {
+    const doc = element.ownerDocument;
+    const name = '';
+    const desc = null;
+    const bType = '';
+    const type = null;
+    const sAddr = null;
+    const Val = null;
+    const valKind = null;
+    const valImport = null;
+    const doOrEnumTypes = Array.from(doc.querySelectorAll('DAType, EnumType')).filter(doOrEnumType => doOrEnumType.getAttribute('id'));
+    const data = element.closest('DataTypeTemplates');
+    return {
+        title: 'Add BDA',
+        primary: {
+            icon: '',
+            label: 'save',
+            action: createBDaAction$1(element),
+        },
+        content: [
+            ...renderAbstractDataAttributeContent$1(name, desc, bType, doOrEnumTypes, type, sAddr, valKind, valImport, Val, data),
+        ],
+    };
+}
 function updateBDaAction$1(element) {
     return (inputs) => {
         const name = getValue(inputs.find(i => i.label === 'name'));
@@ -115604,7 +115708,7 @@ const wizards$1 = {
     },
     BDA: {
         edit: editBDaWizard$1,
-        create: emptyWizard$1,
+        create: createBDaWizard$1,
     },
     BitRate: {
         edit: emptyWizard$1,
@@ -115668,7 +115772,7 @@ const wizards$1 = {
     },
     DAType: {
         edit: emptyWizard$1,
-        create: emptyWizard$1,
+        create: createDATypeWizard$1,
     },
     DO: {
         edit: editDoWizard$1,
@@ -147150,6 +147254,46 @@ function editDataSetWizard(element) {
     };
 }
 
+function createDATypeAction(parent) {
+    return (inputs) => {
+        const daTypeAttrs = {};
+        const daTypeKeys = ['id', 'desc'];
+        daTypeKeys.forEach(key => {
+            daTypeAttrs[key] = getValue(inputs.find(i => i.label === key));
+        });
+        const daType = createElement$2(parent.ownerDocument, 'DAType', daTypeAttrs);
+        return [
+            { parent, node: daType, reference: getReference(parent, 'DAType') },
+        ];
+    };
+}
+function createDATypeWizard(parent) {
+    return {
+        title: 'Add DAType',
+        primary: {
+            icon: 'Save',
+            label: 'Save',
+            action: createDATypeAction(parent),
+        },
+        content: [
+            b `<scl-text-field
+        label="id"
+        .value=${''}
+        required
+        maxlength="127"
+        minlength="1"
+        pattern="${patterns.nmToken}"
+      ></scl-text-field>`,
+            b `<scl-text-field
+        label="desc"
+        .value=${null}
+        nullable
+        pattern="${patterns.normalizedString}"
+      ></scl-text-field>`,
+        ],
+    };
+}
+
 function createDOTypeAction(parent) {
     return (inputs) => {
         const doTypeAttrs = {};
@@ -147977,6 +148121,70 @@ function updateLN0Wizard(element) {
     };
 }
 
+function createBDaAction(parent) {
+    return (inputs) => {
+        const name = getValue(inputs.find(i => i.label === 'name'));
+        const desc = getValue(inputs.find(i => i.label === 'desc'));
+        const bType = getValue(inputs.find(i => i.label === 'bType'));
+        const type = bType === 'Enum' || bType === 'Struct'
+            ? getValue(inputs.find(i => i.label === 'type'))
+            : null;
+        const sAddr = getValue(inputs.find(i => i.label === 'sAddr'));
+        const valKind = getValue(inputs.find(i => i.label === 'valKind')) !== ''
+            ? getValue(inputs.find(i => i.label === 'valKind'))
+            : null;
+        const valImport = getValue(inputs.find(i => i.label === 'valImport')) !== ''
+            ? getValue(inputs.find(i => i.label === 'valImport'))
+            : null;
+        const valField = inputs.find(i => i.label === 'Val' && i.style.display !== 'none');
+        const Val = valField ? getValue(valField) : null;
+        const element = createElement$2(parent.ownerDocument, 'BDA', {
+            name,
+            desc,
+            bType,
+            type,
+            sAddr,
+            valKind,
+            valImport,
+        });
+        if (Val !== null) {
+            const valElement = createElement$2(parent.ownerDocument, 'Val', {});
+            valElement.textContent = Val;
+            element.appendChild(valElement);
+        }
+        return [
+            {
+                parent,
+                node: element,
+                reference: getReference(parent, 'BDA'),
+            },
+        ];
+    };
+}
+function createBDaWizard(element) {
+    const doc = element.ownerDocument;
+    const name = '';
+    const desc = null;
+    const bType = '';
+    const type = null;
+    const sAddr = null;
+    const Val = null;
+    const valKind = null;
+    const valImport = null;
+    const doOrEnumTypes = Array.from(doc.querySelectorAll('DAType, EnumType')).filter(doOrEnumType => doOrEnumType.getAttribute('id'));
+    const data = element.closest('DataTypeTemplates');
+    return {
+        title: 'Add BDA',
+        primary: {
+            icon: '',
+            label: 'save',
+            action: createBDaAction(element),
+        },
+        content: [
+            ...renderAbstractDataAttributeContent(name, desc, bType, doOrEnumTypes, type, sAddr, valKind, valImport, Val, data),
+        ],
+    };
+}
 function updateBDaAction(element) {
     return (inputs) => {
         const name = getValue(inputs.find(i => i.label === 'name'));
@@ -148083,7 +148291,7 @@ const wizards = {
     },
     BDA: {
         edit: editBDaWizard,
-        create: emptyWizard,
+        create: createBDaWizard,
     },
     BitRate: {
         edit: emptyWizard,
@@ -148147,7 +148355,7 @@ const wizards = {
     },
     DAType: {
         edit: emptyWizard,
-        create: emptyWizard,
+        create: createDATypeWizard,
     },
     DO: {
         edit: editDoWizard,

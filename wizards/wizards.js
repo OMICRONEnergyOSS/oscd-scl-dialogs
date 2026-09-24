@@ -28,13 +28,14 @@ import { editSMvWizard } from './smv.js';
 import { editSampledValueControlWizard } from './sampledvaluecontrol.js';
 import { editSmvOptsWizard } from './smvopts.js';
 import { editDataSetWizard } from './dataset.js';
+import { createDATypeWizard } from './datype.js';
 import { createDOTypeWizard } from './dotype.js';
 import { createEnumTypeWizard } from './enumtype.js';
 import { createLNodeTypeWizard } from './lnodetype.js';
 import { createLNodeWizard, editLNodeWizard } from './lnode.js';
 import { createLNWizard, updateLNWizard } from './ln.js';
 import { updateLN0Wizard } from './ln0.js';
-import { editBDaWizard } from './bda.js';
+import { createBDaWizard, editBDaWizard } from './bda.js';
 
 function emptyWizard() {
     return undefined;
@@ -66,7 +67,7 @@ const wizards = {
     },
     BDA: {
         edit: editBDaWizard,
-        create: emptyWizard,
+        create: createBDaWizard,
     },
     BitRate: {
         edit: emptyWizard,
@@ -130,7 +131,7 @@ const wizards = {
     },
     DAType: {
         edit: emptyWizard,
-        create: emptyWizard,
+        create: createDATypeWizard,
     },
     DO: {
         edit: editDoWizard,
