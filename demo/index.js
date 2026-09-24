@@ -7610,11 +7610,11 @@ var lookup = function(parentId, moduleName) {
     if (!module) {
         module = define.payloads[moduleName];
         if (typeof module === 'function') {
-            var exports$1 = {};
+            var exports = {};
             var mod = {
                 id: moduleName,
                 uri: '',
-                exports: exports$1,
+                exports: exports,
                 packaged: true
             };
 
@@ -7622,12 +7622,12 @@ var lookup = function(parentId, moduleName) {
                 return _require(moduleName, module, callback);
             };
 
-            var returnValue = module(req, exports$1, mod);
-            exports$1 = returnValue || mod.exports;
-            define.modules[moduleName] = exports$1;
+            var returnValue = module(req, exports, mod);
+            exports = returnValue || mod.exports;
+            define.modules[moduleName] = exports;
             delete define.payloads[moduleName];
         }
-        module = define.modules[moduleName] = exports$1 || module;
+        module = define.modules[moduleName] = exports || module;
     }
     return module;
 };
@@ -7657,7 +7657,7 @@ exportAce(ACE_NAMESPACE);
 
 })();
 
-ace.define("ace/lib/es6-shim",["require","exports","module"], function(require, exports$1, module){function defineProp(obj, name, val) {
+ace.define("ace/lib/es6-shim",["require","exports","module"], function(require, exports, module){function defineProp(obj, name, val) {
     Object.defineProperty(obj, name, {
         value: val,
         enumerable: false,
@@ -7782,12 +7782,12 @@ if (!Array.of) {
 
 });
 
-ace.define("ace/lib/fixoldbrowsers",["require","exports","module","ace/lib/es6-shim"], function(require, exports$1, module){// vim:set ts=4 sts=4 sw=4 st:
+ace.define("ace/lib/fixoldbrowsers",["require","exports","module","ace/lib/es6-shim"], function(require, exports, module){// vim:set ts=4 sts=4 sw=4 st:
 require("./es6-shim");
 
 });
 
-ace.define("ace/lib/deep_copy",["require","exports","module"], function(require, exports$1, module){exports$1.deepCopy = function deepCopy(obj) {
+ace.define("ace/lib/deep_copy",["require","exports","module"], function(require, exports, module){exports.deepCopy = function deepCopy(obj) {
     if (typeof obj !== "object" || !obj)
         return obj;
     var copy;
@@ -7808,13 +7808,13 @@ ace.define("ace/lib/deep_copy",["require","exports","module"], function(require,
 
 });
 
-ace.define("ace/lib/lang",["require","exports","module","ace/lib/deep_copy"], function(require, exports$1, module){exports$1.last = function (a) {
+ace.define("ace/lib/lang",["require","exports","module","ace/lib/deep_copy"], function(require, exports, module){exports.last = function (a) {
     return a[a.length - 1];
 };
-exports$1.stringReverse = function (string) {
+exports.stringReverse = function (string) {
     return string.split("").reverse().join("");
 };
-exports$1.stringRepeat = function (string, count) {
+exports.stringRepeat = function (string, count) {
     var result = '';
     while (count > 0) {
         if (count & 1)
@@ -7826,20 +7826,20 @@ exports$1.stringRepeat = function (string, count) {
 };
 var trimBeginRegexp = /^\s\s*/;
 var trimEndRegexp = /\s\s*$/;
-exports$1.stringTrimLeft = function (string) {
+exports.stringTrimLeft = function (string) {
     return string.replace(trimBeginRegexp, '');
 };
-exports$1.stringTrimRight = function (string) {
+exports.stringTrimRight = function (string) {
     return string.replace(trimEndRegexp, '');
 };
-exports$1.copyObject = function (obj) {
+exports.copyObject = function (obj) {
     var copy = {};
     for (var key in obj) {
         copy[key] = obj[key];
     }
     return copy;
 };
-exports$1.copyArray = function (array) {
+exports.copyArray = function (array) {
     var copy = [];
     for (var i = 0, l = array.length; i < l; i++) {
         if (array[i] && typeof array[i] == "object")
@@ -7849,35 +7849,35 @@ exports$1.copyArray = function (array) {
     }
     return copy;
 };
-exports$1.deepCopy = require("./deep_copy").deepCopy;
-exports$1.arrayToMap = function (arr) {
+exports.deepCopy = require("./deep_copy").deepCopy;
+exports.arrayToMap = function (arr) {
     var map = {};
     for (var i = 0; i < arr.length; i++) {
         map[arr[i]] = 1;
     }
     return map;
 };
-exports$1.createMap = function (props) {
+exports.createMap = function (props) {
     var map = Object.create(null);
     for (var i in props) {
         map[i] = props[i];
     }
     return map;
 };
-exports$1.arrayRemove = function (array, value) {
+exports.arrayRemove = function (array, value) {
     for (var i = 0; i <= array.length; i++) {
         if (value === array[i]) {
             array.splice(i, 1);
         }
     }
 };
-exports$1.escapeRegExp = function (str) {
+exports.escapeRegExp = function (str) {
     return str.replace(/([.*+?^${}()|[\]\/\\])/g, '\\$1');
 };
-exports$1.escapeHTML = function (str) {
+exports.escapeHTML = function (str) {
     return ("" + str).replace(/&/g, "&#38;").replace(/"/g, "&#34;").replace(/'/g, "&#39;").replace(/</g, "&#60;");
 };
-exports$1.getMatchOffsets = function (string, regExp) {
+exports.getMatchOffsets = function (string, regExp) {
     var matches = [];
     string.replace(regExp, function (str) {
         matches.push({
@@ -7887,7 +7887,7 @@ exports$1.getMatchOffsets = function (string, regExp) {
     });
     return matches;
 };
-exports$1.deferredCall = function (fcn) {
+exports.deferredCall = function (fcn) {
     var timer = null;
     var callback = function () {
         timer = null;
@@ -7914,7 +7914,7 @@ exports$1.deferredCall = function (fcn) {
     };
     return deferred;
 };
-exports$1.delayedCall = function (fcn, defaultTimeout) {
+exports.delayedCall = function (fcn, defaultTimeout) {
     var timer = null;
     var callback = function () {
         timer = null;
@@ -7942,7 +7942,7 @@ exports$1.delayedCall = function (fcn, defaultTimeout) {
     };
     return _self;
 };
-exports$1.supportsLookbehind = function () {
+exports.supportsLookbehind = function () {
     try {
         new RegExp('(?<=.)');
     }
@@ -7951,59 +7951,59 @@ exports$1.supportsLookbehind = function () {
     }
     return true;
 };
-exports$1.skipEmptyMatch = function (line, last, supportsUnicodeFlag) {
+exports.skipEmptyMatch = function (line, last, supportsUnicodeFlag) {
     return supportsUnicodeFlag && line.codePointAt(last) > 0xffff ? 2 : 1;
 };
 
 });
 
-ace.define("ace/lib/useragent",["require","exports","module"], function(require, exports$1, module){exports$1.OS = {
+ace.define("ace/lib/useragent",["require","exports","module"], function(require, exports, module){exports.OS = {
     LINUX: "LINUX",
     MAC: "MAC",
     WINDOWS: "WINDOWS"
 };
-exports$1.getOS = function () {
-    if (exports$1.isMac) {
-        return exports$1.OS.MAC;
+exports.getOS = function () {
+    if (exports.isMac) {
+        return exports.OS.MAC;
     }
-    else if (exports$1.isLinux) {
-        return exports$1.OS.LINUX;
+    else if (exports.isLinux) {
+        return exports.OS.LINUX;
     }
     else {
-        return exports$1.OS.WINDOWS;
+        return exports.OS.WINDOWS;
     }
 };
 var _navigator = typeof navigator == "object" ? navigator : {};
 var os = (/mac|win|linux/i.exec(_navigator.platform) || ["other"])[0].toLowerCase();
 var ua = _navigator.userAgent || "";
 var appName = _navigator.appName || "";
-exports$1.isWin = (os == "win");
-exports$1.isMac = (os == "mac");
-exports$1.isLinux = (os == "linux");
-exports$1.isIE =
+exports.isWin = (os == "win");
+exports.isMac = (os == "mac");
+exports.isLinux = (os == "linux");
+exports.isIE =
     (appName == "Microsoft Internet Explorer" || appName.indexOf("MSAppHost") >= 0)
         ? parseFloat((ua.match(/(?:MSIE |Trident\/[0-9]+[\.0-9]+;.*rv:)([0-9]+[\.0-9]+)/) || [])[1])
         : parseFloat((ua.match(/(?:Trident\/[0-9]+[\.0-9]+;.*rv:)([0-9]+[\.0-9]+)/) || [])[1]); // for ie
-exports$1.isOldIE = exports$1.isIE && exports$1.isIE < 9;
-exports$1.isGecko = exports$1.isMozilla = ua.match(/ Gecko\/\d+/);
-exports$1.isOpera = typeof opera == "object" && Object.prototype.toString.call(window["opera"]) == "[object Opera]";
-exports$1.isWebKit = parseFloat(ua.split("WebKit/")[1]) || undefined;
-exports$1.isChrome = parseFloat(ua.split(" Chrome/")[1]) || undefined;
-exports$1.isSafari = parseFloat(ua.split(" Safari/")[1]) && !exports$1.isChrome || undefined;
-exports$1.isEdge = parseFloat(ua.split(" Edge/")[1]) || undefined;
-exports$1.isAIR = ua.indexOf("AdobeAIR") >= 0;
-exports$1.isAndroid = ua.indexOf("Android") >= 0;
-exports$1.isChromeOS = ua.indexOf(" CrOS ") >= 0;
-exports$1.isIOS = /iPad|iPhone|iPod/.test(ua) && !window["MSStream"];
-if (exports$1.isIOS)
-    exports$1.isMac = true;
-exports$1.isMobile = exports$1.isIOS || exports$1.isAndroid;
+exports.isOldIE = exports.isIE && exports.isIE < 9;
+exports.isGecko = exports.isMozilla = ua.match(/ Gecko\/\d+/);
+exports.isOpera = typeof opera == "object" && Object.prototype.toString.call(window["opera"]) == "[object Opera]";
+exports.isWebKit = parseFloat(ua.split("WebKit/")[1]) || undefined;
+exports.isChrome = parseFloat(ua.split(" Chrome/")[1]) || undefined;
+exports.isSafari = parseFloat(ua.split(" Safari/")[1]) && !exports.isChrome || undefined;
+exports.isEdge = parseFloat(ua.split(" Edge/")[1]) || undefined;
+exports.isAIR = ua.indexOf("AdobeAIR") >= 0;
+exports.isAndroid = ua.indexOf("Android") >= 0;
+exports.isChromeOS = ua.indexOf(" CrOS ") >= 0;
+exports.isIOS = /iPad|iPhone|iPod/.test(ua) && !window["MSStream"];
+if (exports.isIOS)
+    exports.isMac = true;
+exports.isMobile = exports.isIOS || exports.isAndroid;
 
 });
 
-ace.define("ace/lib/dom",["require","exports","module","ace/lib/useragent"], function(require, exports$1, module){var useragent = require("./useragent");
+ace.define("ace/lib/dom",["require","exports","module","ace/lib/useragent"], function(require, exports, module){var useragent = require("./useragent");
 var XHTML_NS = "http://www.w3.org/1999/xhtml";
-exports$1.buildDom = function buildDom(arr, parent, refs) {
+exports.buildDom = function buildDom(arr, parent, refs) {
     if (typeof arr == "string" && arr) {
         var txt = document.createTextNode(arr);
         if (parent)
@@ -8056,35 +8056,35 @@ exports$1.buildDom = function buildDom(arr, parent, refs) {
         parent.appendChild(el);
     return el;
 };
-exports$1.getDocumentHead = function (doc) {
+exports.getDocumentHead = function (doc) {
     if (!doc)
         doc = document;
     return doc.head || doc.getElementsByTagName("head")[0] || doc.documentElement;
 };
-exports$1.createElement = function (tag, ns) {
+exports.createElement = function (tag, ns) {
     return document.createElementNS ? document.createElementNS(ns || XHTML_NS, tag) : document.createElement(tag);
 };
-exports$1.removeChildren = function (element) {
+exports.removeChildren = function (element) {
     element.innerHTML = "";
 };
-exports$1.createTextNode = function (textContent, element) {
+exports.createTextNode = function (textContent, element) {
     var doc = element ? element.ownerDocument : document;
     return doc.createTextNode(textContent);
 };
-exports$1.createFragment = function (element) {
+exports.createFragment = function (element) {
     var doc = element ? element.ownerDocument : document;
     return doc.createDocumentFragment();
 };
-exports$1.hasCssClass = function (el, name) {
+exports.hasCssClass = function (el, name) {
     var classes = (el.className + "").split(/\s+/g);
     return classes.indexOf(name) !== -1;
 };
-exports$1.addCssClass = function (el, name) {
-    if (!exports$1.hasCssClass(el, name)) {
+exports.addCssClass = function (el, name) {
+    if (!exports.hasCssClass(el, name)) {
         el.className += " " + name;
     }
 };
-exports$1.removeCssClass = function (el, name) {
+exports.removeCssClass = function (el, name) {
     var classes = el.className.split(/\s+/g);
     while (true) {
         var index = classes.indexOf(name);
@@ -8095,7 +8095,7 @@ exports$1.removeCssClass = function (el, name) {
     }
     el.className = classes.join(" ");
 };
-exports$1.toggleCssClass = function (el, name) {
+exports.toggleCssClass = function (el, name) {
     var classes = el.className.split(/\s+/g), add = true;
     while (true) {
         var index = classes.indexOf(name);
@@ -8110,15 +8110,15 @@ exports$1.toggleCssClass = function (el, name) {
     el.className = classes.join(" ");
     return add;
 };
-exports$1.setCssClass = function (node, className, include) {
+exports.setCssClass = function (node, className, include) {
     if (include) {
-        exports$1.addCssClass(node, className);
+        exports.addCssClass(node, className);
     }
     else {
-        exports$1.removeCssClass(node, className);
+        exports.removeCssClass(node, className);
     }
 };
-exports$1.hasCssString = function (id, doc) {
+exports.hasCssString = function (id, doc) {
     var index = 0, sheets;
     doc = doc || document;
     if ((sheets = doc.querySelectorAll("style"))) {
@@ -8129,7 +8129,7 @@ exports$1.hasCssString = function (id, doc) {
         }
     }
 };
-exports$1.removeElementById = function (id, doc) {
+exports.removeElementById = function (id, doc) {
     doc = doc || document;
     if (doc.getElementById(id)) {
         doc.getElementById(id).remove();
@@ -8137,7 +8137,7 @@ exports$1.removeElementById = function (id, doc) {
 };
 var strictCSP;
 var cssCache = [];
-exports$1.useStrictCSP = function (value) {
+exports.useStrictCSP = function (value) {
     strictCSP = value;
     if (value == false)
         insertPendingStyles();
@@ -8174,23 +8174,23 @@ function importCssString(cssText, id, target) {
             container = document;
     }
     var doc = container.ownerDocument || container;
-    if (id && exports$1.hasCssString(id, container))
+    if (id && exports.hasCssString(id, container))
         return null;
     if (id)
         cssText += "\n/*# sourceURL=ace/css/" + id + " */";
-    var style = exports$1.createElement("style");
+    var style = exports.createElement("style");
     style.appendChild(doc.createTextNode(cssText));
     if (id)
         style.id = id;
     if (container == doc)
-        container = exports$1.getDocumentHead(doc);
+        container = exports.getDocumentHead(doc);
     container.insertBefore(style, container.firstChild);
 }
-exports$1.importCssString = importCssString;
-exports$1.importCssStylsheet = function (uri, doc) {
-    exports$1.buildDom(["link", { rel: "stylesheet", href: uri }], exports$1.getDocumentHead(doc));
+exports.importCssString = importCssString;
+exports.importCssStylsheet = function (uri, doc) {
+    exports.buildDom(["link", { rel: "stylesheet", href: uri }], exports.getDocumentHead(doc));
 };
-exports$1.$fixPositionBug = function (el) {
+exports.$fixPositionBug = function (el) {
     var rect = el.getBoundingClientRect();
     if (el.style.left) {
         var target = parseFloat(el.style.left);
@@ -8221,13 +8221,13 @@ exports$1.$fixPositionBug = function (el) {
         }
     }
 };
-exports$1.scrollbarWidth = function (doc) {
-    var inner = exports$1.createElement("ace_inner");
+exports.scrollbarWidth = function (doc) {
+    var inner = exports.createElement("ace_inner");
     inner.style.width = "100%";
     inner.style.minWidth = "0px";
     inner.style.height = "200px";
     inner.style.display = "block";
-    var outer = exports$1.createElement("ace_outer");
+    var outer = exports.createElement("ace_outer");
     var style = outer.style;
     style.position = "absolute";
     style.left = "-10000px";
@@ -8250,36 +8250,36 @@ exports$1.scrollbarWidth = function (doc) {
     body.removeChild(outer);
     return noScrollbar - withScrollbar;
 };
-exports$1.computedStyle = function (element, style) {
+exports.computedStyle = function (element, style) {
     return window.getComputedStyle(element, "") || {};
 };
-exports$1.setStyle = function (styles, property, value) {
+exports.setStyle = function (styles, property, value) {
     if (styles[property] !== value) {
         styles[property] = value;
     }
 };
-exports$1.HAS_CSS_ANIMATION = false;
-exports$1.HAS_CSS_TRANSFORMS = false;
-exports$1.HI_DPI = useragent.isWin
+exports.HAS_CSS_ANIMATION = false;
+exports.HAS_CSS_TRANSFORMS = false;
+exports.HI_DPI = useragent.isWin
     ? typeof window !== "undefined" && window.devicePixelRatio >= 1.5
     : true;
 if (useragent.isChromeOS)
-    exports$1.HI_DPI = false;
+    exports.HI_DPI = false;
 if (typeof document !== "undefined") {
     var div = document.createElement("div");
-    if (exports$1.HI_DPI && div.style.transform !== undefined)
-        exports$1.HAS_CSS_TRANSFORMS = true;
+    if (exports.HI_DPI && div.style.transform !== undefined)
+        exports.HAS_CSS_TRANSFORMS = true;
     if (!useragent.isEdge && typeof div.style.animationName !== "undefined")
-        exports$1.HAS_CSS_ANIMATION = true;
+        exports.HAS_CSS_ANIMATION = true;
     div = null;
 }
-if (exports$1.HAS_CSS_TRANSFORMS) {
-    exports$1.translate = function (element, tx, ty) {
+if (exports.HAS_CSS_TRANSFORMS) {
+    exports.translate = function (element, tx, ty) {
         element.style.transform = "translate(" + Math.round(tx) + "px, " + Math.round(ty) + "px)";
     };
 }
 else {
-    exports$1.translate = function (element, tx, ty) {
+    exports.translate = function (element, tx, ty) {
         element.style.top = Math.round(ty) + "px";
         element.style.left = Math.round(tx) + "px";
     };
@@ -8287,7 +8287,7 @@ else {
 
 });
 
-ace.define("ace/lib/net",["require","exports","module","ace/lib/dom"], function(require, exports$1, module){/*
+ace.define("ace/lib/net",["require","exports","module","ace/lib/dom"], function(require, exports, module){/*
  * based on code from:
  *
  * @license RequireJS text 0.25.0 Copyright (c) 2010-2011, The Dojo Foundation All Rights Reserved.
@@ -8295,7 +8295,7 @@ ace.define("ace/lib/net",["require","exports","module","ace/lib/dom"], function(
  * see: http://github.com/jrburke/requirejs for details
  */
 var dom = require("./dom");
-exports$1.get = function (url, callback) {
+exports.get = function (url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.onreadystatechange = function () {
@@ -8305,7 +8305,7 @@ exports$1.get = function (url, callback) {
     };
     xhr.send(null);
 };
-exports$1.loadScript = function (path, callback) {
+exports.loadScript = function (path, callback) {
     var head = dom.getDocumentHead();
     var s = document.createElement('script');
     s.src = path;
@@ -8318,7 +8318,7 @@ exports$1.loadScript = function (path, callback) {
         }
     };
 };
-exports$1.qualifyURL = function (url) {
+exports.qualifyURL = function (url) {
     var a = document.createElement('a');
     a.href = url;
     return a.href;
@@ -8326,7 +8326,7 @@ exports$1.qualifyURL = function (url) {
 
 });
 
-ace.define("ace/lib/oop",["require","exports","module"], function(require, exports$1, module){exports$1.inherits = function (ctor, superCtor) {
+ace.define("ace/lib/oop",["require","exports","module"], function(require, exports, module){exports.inherits = function (ctor, superCtor) {
     ctor.super_ = superCtor;
     ctor.prototype = Object.create(superCtor.prototype, {
         constructor: {
@@ -8337,19 +8337,19 @@ ace.define("ace/lib/oop",["require","exports","module"], function(require, expor
         }
     });
 };
-exports$1.mixin = function (obj, mixin) {
+exports.mixin = function (obj, mixin) {
     for (var key in mixin) {
         obj[key] = mixin[key];
     }
     return obj;
 };
-exports$1.implement = function (proto, mixin) {
-    exports$1.mixin(proto, mixin);
+exports.implement = function (proto, mixin) {
+    exports.mixin(proto, mixin);
 };
 
 });
 
-ace.define("ace/lib/event_emitter",["require","exports","module"], function(require, exports$1, module){var EventEmitter = {};
+ace.define("ace/lib/event_emitter",["require","exports","module"], function(require, exports, module){var EventEmitter = {};
 var stopPropagation = function () { this.propagationStopped = true; };
 var preventDefault = function () { this.defaultPrevented = true; };
 EventEmitter._emit =
@@ -8457,11 +8457,11 @@ EventEmitter.removeAllListeners = function (eventName) {
     if (this._defaultHandlers)
         this._defaultHandlers[eventName] = undefined;
 };
-exports$1.EventEmitter = EventEmitter;
+exports.EventEmitter = EventEmitter;
 
 });
 
-ace.define("ace/lib/report_error",["require","exports","module"], function(require, exports$1, module){exports$1.reportError = function reportError(msg, data) {
+ace.define("ace/lib/report_error",["require","exports","module"], function(require, exports, module){exports.reportError = function reportError(msg, data) {
     var e = new Error(msg);
     e["data"] = data;
     if (typeof console == "object" && console.error)
@@ -8471,7 +8471,7 @@ ace.define("ace/lib/report_error",["require","exports","module"], function(requi
 
 });
 
-ace.define("ace/lib/default_english_messages",["require","exports","module"], function(require, exports$1, module){var defaultEnglishMessages = {
+ace.define("ace/lib/default_english_messages",["require","exports","module"], function(require, exports, module){var defaultEnglishMessages = {
     "autocomplete.popup.aria-roledescription": "Autocomplete suggestions",
     "autocomplete.popup.aria-label": "Autocomplete suggestions",
     "autocomplete.popup.item.aria-roledescription": "item",
@@ -8520,11 +8520,11 @@ ace.define("ace/lib/default_english_messages",["require","exports","module"], fu
     "gutter-tooltip.aria-label.hint.plural": "suggestions",
     "editor.tooltip.disable-editing": "Editing is disabled"
 };
-exports$1.defaultEnglishMessages = defaultEnglishMessages;
+exports.defaultEnglishMessages = defaultEnglishMessages;
 
 });
 
-ace.define("ace/lib/app_config",["require","exports","module","ace/lib/oop","ace/lib/event_emitter","ace/lib/report_error","ace/lib/default_english_messages"], function(require, exports$1, module){"no use strict";
+ace.define("ace/lib/app_config",["require","exports","module","ace/lib/oop","ace/lib/event_emitter","ace/lib/report_error","ace/lib/default_english_messages"], function(require, exports, module){"no use strict";
 var oop = require("./oop");
 var EventEmitter = require("./event_emitter").EventEmitter;
 var reportError = require("./report_error").reportError;
@@ -8665,29 +8665,29 @@ var AppConfig = /** @class */ (function () {
 AppConfig.prototype.warn = warn;
 AppConfig.prototype.reportError = reportError;
 oop.implement(AppConfig.prototype, EventEmitter);
-exports$1.AppConfig = AppConfig;
+exports.AppConfig = AppConfig;
 
 });
 
-ace.define("ace/theme/textmate-css",["require","exports","module"], function(require, exports$1, module){module.exports = ".ace-tm .ace_gutter {\n  background: #f0f0f0;\n  color: #333;\n}\n\n.ace-tm .ace_print-margin {\n  width: 1px;\n  background: #e8e8e8;\n}\n\n.ace-tm .ace_fold {\n    background-color: #6B72E6;\n}\n\n.ace-tm {\n  background-color: #FFFFFF;\n  color: black;\n}\n\n.ace-tm .ace_cursor {\n  color: black;\n}\n        \n.ace-tm .ace_invisible {\n  color: rgb(191, 191, 191);\n}\n\n.ace-tm .ace_storage,\n.ace-tm .ace_keyword {\n  color: blue;\n}\n\n.ace-tm .ace_constant {\n  color: rgb(197, 6, 11);\n}\n\n.ace-tm .ace_constant.ace_buildin {\n  color: rgb(88, 72, 246);\n}\n\n.ace-tm .ace_constant.ace_language {\n  color: rgb(88, 92, 246);\n}\n\n.ace-tm .ace_constant.ace_library {\n  color: rgb(6, 150, 14);\n}\n\n.ace-tm .ace_invalid {\n  background-color: rgba(255, 0, 0, 0.1);\n  color: red;\n}\n\n.ace-tm .ace_support.ace_function {\n  color: rgb(60, 76, 114);\n}\n\n.ace-tm .ace_support.ace_constant {\n  color: rgb(6, 150, 14);\n}\n\n.ace-tm .ace_support.ace_type,\n.ace-tm .ace_support.ace_class {\n  color: rgb(109, 121, 222);\n}\n\n.ace-tm .ace_keyword.ace_operator {\n  color: rgb(104, 118, 135);\n}\n\n.ace-tm .ace_string {\n  color: rgb(3, 106, 7);\n}\n\n.ace-tm .ace_comment {\n  color: rgb(76, 136, 107);\n}\n\n.ace-tm .ace_comment.ace_doc {\n  color: rgb(0, 102, 255);\n}\n\n.ace-tm .ace_comment.ace_doc.ace_tag {\n  color: rgb(128, 159, 191);\n}\n\n.ace-tm .ace_constant.ace_numeric {\n  color: rgb(0, 0, 205);\n}\n\n.ace-tm .ace_variable {\n  color: rgb(49, 132, 149);\n}\n\n.ace-tm .ace_xml-pe {\n  color: rgb(104, 104, 91);\n}\n\n.ace-tm .ace_entity.ace_name.ace_function {\n  color: #0000A2;\n}\n\n\n.ace-tm .ace_heading {\n  color: rgb(12, 7, 255);\n}\n\n.ace-tm .ace_list {\n  color:rgb(185, 6, 144);\n}\n\n.ace-tm .ace_meta.ace_tag {\n  color:rgb(0, 22, 142);\n}\n\n.ace-tm .ace_string.ace_regex {\n  color: rgb(255, 0, 0)\n}\n\n.ace-tm .ace_marker-layer .ace_selection {\n  background: rgb(181, 213, 255);\n}\n.ace-tm.ace_multiselect .ace_selection.ace_start {\n  box-shadow: 0 0 3px 0px white;\n}\n.ace-tm .ace_marker-layer .ace_step {\n  background: rgb(252, 255, 0);\n}\n\n.ace-tm .ace_marker-layer .ace_stack {\n  background: rgb(164, 229, 101);\n}\n\n.ace-tm .ace_marker-layer .ace_bracket {\n  margin: -1px 0 0 -1px;\n  border: 1px solid rgb(192, 192, 192);\n}\n\n.ace-tm .ace_marker-layer .ace_active-line {\n  background: rgba(0, 0, 0, 0.07);\n}\n\n.ace-tm .ace_gutter-active-line {\n    background-color : #dcdcdc;\n}\n\n.ace-tm .ace_marker-layer .ace_selected-word {\n  background: rgb(250, 250, 255);\n  border: 1px solid rgb(200, 200, 250);\n}\n\n.ace-tm .ace_indent-guide {\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y;\n}\n\n.ace-tm .ace_indent-guide-active {\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC\") right repeat-y;\n}\n";
+ace.define("ace/theme/textmate-css",["require","exports","module"], function(require, exports, module){module.exports = ".ace-tm .ace_gutter {\n  background: #f0f0f0;\n  color: #333;\n}\n\n.ace-tm .ace_print-margin {\n  width: 1px;\n  background: #e8e8e8;\n}\n\n.ace-tm .ace_fold {\n    background-color: #6B72E6;\n}\n\n.ace-tm {\n  background-color: #FFFFFF;\n  color: black;\n}\n\n.ace-tm .ace_cursor {\n  color: black;\n}\n        \n.ace-tm .ace_invisible {\n  color: rgb(191, 191, 191);\n}\n\n.ace-tm .ace_storage,\n.ace-tm .ace_keyword {\n  color: blue;\n}\n\n.ace-tm .ace_constant {\n  color: rgb(197, 6, 11);\n}\n\n.ace-tm .ace_constant.ace_buildin {\n  color: rgb(88, 72, 246);\n}\n\n.ace-tm .ace_constant.ace_language {\n  color: rgb(88, 92, 246);\n}\n\n.ace-tm .ace_constant.ace_library {\n  color: rgb(6, 150, 14);\n}\n\n.ace-tm .ace_invalid {\n  background-color: rgba(255, 0, 0, 0.1);\n  color: red;\n}\n\n.ace-tm .ace_support.ace_function {\n  color: rgb(60, 76, 114);\n}\n\n.ace-tm .ace_support.ace_constant {\n  color: rgb(6, 150, 14);\n}\n\n.ace-tm .ace_support.ace_type,\n.ace-tm .ace_support.ace_class {\n  color: rgb(109, 121, 222);\n}\n\n.ace-tm .ace_keyword.ace_operator {\n  color: rgb(104, 118, 135);\n}\n\n.ace-tm .ace_string {\n  color: rgb(3, 106, 7);\n}\n\n.ace-tm .ace_comment {\n  color: rgb(76, 136, 107);\n}\n\n.ace-tm .ace_comment.ace_doc {\n  color: rgb(0, 102, 255);\n}\n\n.ace-tm .ace_comment.ace_doc.ace_tag {\n  color: rgb(128, 159, 191);\n}\n\n.ace-tm .ace_constant.ace_numeric {\n  color: rgb(0, 0, 205);\n}\n\n.ace-tm .ace_variable {\n  color: rgb(49, 132, 149);\n}\n\n.ace-tm .ace_xml-pe {\n  color: rgb(104, 104, 91);\n}\n\n.ace-tm .ace_entity.ace_name.ace_function {\n  color: #0000A2;\n}\n\n\n.ace-tm .ace_heading {\n  color: rgb(12, 7, 255);\n}\n\n.ace-tm .ace_list {\n  color:rgb(185, 6, 144);\n}\n\n.ace-tm .ace_meta.ace_tag {\n  color:rgb(0, 22, 142);\n}\n\n.ace-tm .ace_string.ace_regex {\n  color: rgb(255, 0, 0)\n}\n\n.ace-tm .ace_marker-layer .ace_selection {\n  background: rgb(181, 213, 255);\n}\n.ace-tm.ace_multiselect .ace_selection.ace_start {\n  box-shadow: 0 0 3px 0px white;\n}\n.ace-tm .ace_marker-layer .ace_step {\n  background: rgb(252, 255, 0);\n}\n\n.ace-tm .ace_marker-layer .ace_stack {\n  background: rgb(164, 229, 101);\n}\n\n.ace-tm .ace_marker-layer .ace_bracket {\n  margin: -1px 0 0 -1px;\n  border: 1px solid rgb(192, 192, 192);\n}\n\n.ace-tm .ace_marker-layer .ace_active-line {\n  background: rgba(0, 0, 0, 0.07);\n}\n\n.ace-tm .ace_gutter-active-line {\n    background-color : #dcdcdc;\n}\n\n.ace-tm .ace_marker-layer .ace_selected-word {\n  background: rgb(250, 250, 255);\n  border: 1px solid rgb(200, 200, 250);\n}\n\n.ace-tm .ace_indent-guide {\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y;\n}\n\n.ace-tm .ace_indent-guide-active {\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC\") right repeat-y;\n}\n";
 
 });
 
-ace.define("ace/theme/textmate",["require","exports","module","ace/theme/textmate-css","ace/lib/dom"], function(require, exports$1, module){exports$1.isDark = false;
-exports$1.cssClass = "ace-tm";
-exports$1.cssText = require("./textmate-css");
-exports$1.$id = "ace/theme/textmate";
+ace.define("ace/theme/textmate",["require","exports","module","ace/theme/textmate-css","ace/lib/dom"], function(require, exports, module){exports.isDark = false;
+exports.cssClass = "ace-tm";
+exports.cssText = require("./textmate-css");
+exports.$id = "ace/theme/textmate";
 var dom = require("../lib/dom");
-dom.importCssString(exports$1.cssText, exports$1.cssClass, false);
+dom.importCssString(exports.cssText, exports.cssClass, false);
 
 });
 
-ace.define("ace/config",["require","exports","module","ace/lib/lang","ace/lib/net","ace/lib/dom","ace/lib/app_config","ace/theme/textmate"], function(require, exports$1, module){"no use strict";
+ace.define("ace/config",["require","exports","module","ace/lib/lang","ace/lib/net","ace/lib/dom","ace/lib/app_config","ace/theme/textmate"], function(require, exports, module){"no use strict";
 var lang = require("./lib/lang");
 var net = require("./lib/net");
 var dom = require("./lib/dom");
 var AppConfig = require("./lib/app_config").AppConfig;
-module.exports = exports$1 = new AppConfig();
+module.exports = exports = new AppConfig();
 var options = {
     packaged: false,
     workerPath: null,
@@ -8700,12 +8700,12 @@ var options = {
     sharedPopups: false,
     useStrictCSP: null
 };
-exports$1.get = function (key) {
+exports.get = function (key) {
     if (!options.hasOwnProperty(key))
         throw new Error("Unknown config key: " + key);
     return options[key];
 };
-exports$1.set = function (key, value) {
+exports.set = function (key, value) {
     if (options.hasOwnProperty(key))
         options[key] = value;
     else if (this.setDefaultValue("", key, value) == false)
@@ -8713,11 +8713,11 @@ exports$1.set = function (key, value) {
     if (key == "useStrictCSP")
         dom.useStrictCSP(value);
 };
-exports$1.all = function () {
+exports.all = function () {
     return lang.copyObject(options);
 };
-exports$1.$modes = {};
-exports$1.moduleUrl = function (name, component) {
+exports.$modes = {};
+exports.moduleUrl = function (name, component) {
     if (options.$moduleUrls[name])
         return options.$moduleUrls[name];
     var parts = name.split("/");
@@ -8741,7 +8741,7 @@ exports$1.moduleUrl = function (name, component) {
         path += "/";
     return path + component + sep + base + this.get("suffix");
 };
-exports$1.setModuleUrl = function (name, subst) {
+exports.setModuleUrl = function (name, subst) {
     return options.$moduleUrls[name] = subst;
 };
 var loader = function (moduleName, cb) {
@@ -8752,13 +8752,13 @@ var loader = function (moduleName, cb) {
     console.error("loader is not configured");
 };
 var customLoader;
-exports$1.setLoader = function (cb) {
+exports.setLoader = function (cb) {
     customLoader = cb;
 };
-exports$1.dynamicModules = Object.create(null);
-exports$1.$loading = {};
-exports$1.$loaded = {};
-exports$1.loadModule = function (moduleId, onLoad) {
+exports.dynamicModules = Object.create(null);
+exports.$loading = {};
+exports.$loaded = {};
+exports.loadModule = function (moduleId, onLoad) {
     var loadedModule;
     if (Array.isArray(moduleId)) {
         var moduleType = moduleId[0];
@@ -8768,32 +8768,32 @@ exports$1.loadModule = function (moduleId, onLoad) {
         var moduleName = moduleId;
     }
     var load = function (module) {
-        if (module && !exports$1.$loading[moduleName])
+        if (module && !exports.$loading[moduleName])
             return onLoad && onLoad(module);
-        if (!exports$1.$loading[moduleName])
-            exports$1.$loading[moduleName] = [];
-        exports$1.$loading[moduleName].push(onLoad);
-        if (exports$1.$loading[moduleName].length > 1)
+        if (!exports.$loading[moduleName])
+            exports.$loading[moduleName] = [];
+        exports.$loading[moduleName].push(onLoad);
+        if (exports.$loading[moduleName].length > 1)
             return;
         var afterLoad = function () {
             loader(moduleName, function (err, module) {
                 if (module)
-                    exports$1.$loaded[moduleName] = module;
-                exports$1._emit("load.module", { name: moduleName, module: module });
-                var listeners = exports$1.$loading[moduleName];
-                exports$1.$loading[moduleName] = null;
+                    exports.$loaded[moduleName] = module;
+                exports._emit("load.module", { name: moduleName, module: module });
+                var listeners = exports.$loading[moduleName];
+                exports.$loading[moduleName] = null;
                 listeners.forEach(function (onLoad) {
                     onLoad && onLoad(module);
                 });
             });
         };
-        if (!exports$1.get("packaged"))
+        if (!exports.get("packaged"))
             return afterLoad();
-        net.loadScript(exports$1.moduleUrl(moduleName, moduleType), afterLoad);
+        net.loadScript(exports.moduleUrl(moduleName, moduleType), afterLoad);
         reportErrorIfPathIsNotConfigured();
     };
-    if (exports$1.dynamicModules[moduleName]) {
-        exports$1.dynamicModules[moduleName]().then(function (module) {
+    if (exports.dynamicModules[moduleName]) {
+        exports.dynamicModules[moduleName]().then(function (module) {
             if (module.default) {
                 load(module.default);
             }
@@ -8807,17 +8807,17 @@ exports$1.loadModule = function (moduleId, onLoad) {
             loadedModule = this.$require(moduleName);
         }
         catch (e) { }
-        load(loadedModule || exports$1.$loaded[moduleName]);
+        load(loadedModule || exports.$loaded[moduleName]);
     }
 };
-exports$1.$require = function (moduleName) {
+exports.$require = function (moduleName) {
     if (typeof module["require"] == "function") {
         var req = "require";
         return module[req](moduleName);
     }
 };
-exports$1.setModuleLoader = function (moduleName, onLoad) {
-    exports$1.dynamicModules[moduleName] = onLoad;
+exports.setModuleLoader = function (moduleName, onLoad) {
+    exports.dynamicModules[moduleName] = onLoad;
 };
 var reportErrorIfPathIsNotConfigured = function () {
     if (!options.basePath && !options.workerPath
@@ -8827,11 +8827,11 @@ var reportErrorIfPathIsNotConfigured = function () {
         reportErrorIfPathIsNotConfigured = function () { };
     }
 };
-exports$1.version = "1.43.6";
+exports.version = "1.43.6";
 
 });
 
-ace.define("ace/loader_build",["require","exports","module","ace/lib/fixoldbrowsers","ace/config"], function(require, exports$1, module) {
+ace.define("ace/loader_build",["require","exports","module","ace/lib/fixoldbrowsers","ace/config"], function(require, exports, module) {
 
 require("./lib/fixoldbrowsers");
 var config = require("./config");
@@ -8911,7 +8911,7 @@ function deHyphenate(str) {
 }
 });
 
-ace.define("ace/range",["require","exports","module"], function(require, exports$1, module){var Range = /** @class */ (function () {
+ace.define("ace/range",["require","exports","module"], function(require, exports, module){var Range = /** @class */ (function () {
     function Range(startRow, startColumn, endRow, endColumn) {
         this.start = {
             row: startRow,
@@ -9133,11 +9133,11 @@ Range.fromPoints = function (start, end) {
 Range.comparePoints = function (p1, p2) {
     return p1.row - p2.row || p1.column - p2.column;
 };
-exports$1.Range = Range;
+exports.Range = Range;
 
 });
 
-ace.define("ace/lib/keys",["require","exports","module","ace/lib/oop"], function(require, exports$1, module){var oop = require("./oop");
+ace.define("ace/lib/keys",["require","exports","module","ace/lib/oop"], function(require, exports, module){var oop = require("./oop");
 var Keys = {
     MODIFIER_KEYS: {
         16: 'Shift', 17: 'Ctrl', 18: 'Alt', 224: 'Meta',
@@ -9237,7 +9237,7 @@ for (var mod in modifiers) {
     codeToKeyCode[mod] = codeToKeyCode[mod + "Left"]
         = codeToKeyCode[mod + "Right"] = modifiers[mod];
 }
-exports$1.$codeToKeyCode = codeToKeyCode;
+exports.$codeToKeyCode = codeToKeyCode;
 Keys.PRINTABLE_KEYS[173] = '-';
 for (var j in Keys.FUNCTION_KEYS) {
     var name = Keys.FUNCTION_KEYS[j].toLowerCase();
@@ -9263,9 +9263,9 @@ Keys.del = Keys["delete"];
 })();
 Keys.KEY_MODS[0] = "";
 Keys.KEY_MODS[-1] = "input-";
-oop.mixin(exports$1, Keys);
-exports$1.default = exports$1;
-exports$1.keyCodeToString = function (keyCode) {
+oop.mixin(exports, Keys);
+exports.default = exports;
+exports.keyCodeToString = function (keyCode) {
     var keyString = Keys[keyCode];
     if (typeof keyString != "string")
         keyString = String.fromCharCode(keyCode);
@@ -9274,7 +9274,7 @@ exports$1.keyCodeToString = function (keyCode) {
 
 });
 
-ace.define("ace/lib/event",["require","exports","module","ace/lib/keys","ace/lib/useragent"], function(require, exports$1, module){ var keys = require("./keys");
+ace.define("ace/lib/event",["require","exports","module","ace/lib/keys","ace/lib/useragent"], function(require, exports, module){ var keys = require("./keys");
 var useragent = require("./useragent");
 var pressedKeys = null;
 var ts = 0;
@@ -9305,35 +9305,35 @@ EventListener.prototype.destroy = function () {
     removeListener(this.elem, this.type, this.callback);
     this.elem = this.type = this.callback = undefined;
 };
-var addListener = exports$1.addListener = function (elem, type, callback, destroyer) {
+var addListener = exports.addListener = function (elem, type, callback, destroyer) {
     elem.addEventListener(type, callback, getListenerOptions());
     if (destroyer)
         destroyer.$toDestroy.push(new EventListener(elem, type, callback));
 };
-var removeListener = exports$1.removeListener = function (elem, type, callback) {
+var removeListener = exports.removeListener = function (elem, type, callback) {
     elem.removeEventListener(type, callback, getListenerOptions());
 };
-exports$1.stopEvent = function (e) {
-    exports$1.stopPropagation(e);
-    exports$1.preventDefault(e);
+exports.stopEvent = function (e) {
+    exports.stopPropagation(e);
+    exports.preventDefault(e);
     return false;
 };
-exports$1.stopPropagation = function (e) {
+exports.stopPropagation = function (e) {
     if (e.stopPropagation)
         e.stopPropagation();
 };
-exports$1.preventDefault = function (e) {
+exports.preventDefault = function (e) {
     if (e.preventDefault)
         e.preventDefault();
 };
-exports$1.getButton = function (e) {
+exports.getButton = function (e) {
     if (e.type == "dblclick")
         return 0;
     if (e.type == "contextmenu" || (useragent.isMac && (e.ctrlKey && !e.altKey && !e.shiftKey)))
         return 2;
     return e.button;
 };
-exports$1.capture = function (el, eventHandler, releaseCaptureHandler) {
+exports.capture = function (el, eventHandler, releaseCaptureHandler) {
     var ownerDocument = el && el.ownerDocument || document;
     function onMouseUp(e) {
         eventHandler && eventHandler(e);
@@ -9347,7 +9347,7 @@ exports$1.capture = function (el, eventHandler, releaseCaptureHandler) {
     addListener(ownerDocument, "dragstart", onMouseUp);
     return onMouseUp;
 };
-exports$1.addMouseWheelListener = function (el, callback, destroyer) {
+exports.addMouseWheelListener = function (el, callback, destroyer) {
     addListener(el, "wheel", function (e) {
         var factor = 0.15;
         var deltaX = e.deltaX || 0;
@@ -9371,7 +9371,7 @@ exports$1.addMouseWheelListener = function (el, callback, destroyer) {
         callback(e);
     }, destroyer);
 };
-exports$1.addMultiMouseDownListener = function (elements, timeouts, eventHandler, callbackName, destroyer) {
+exports.addMultiMouseDownListener = function (elements, timeouts, eventHandler, callbackName, destroyer) {
     var clicks = 0;
     var startX, startY, timer;
     var eventNames = {
@@ -9380,7 +9380,7 @@ exports$1.addMultiMouseDownListener = function (elements, timeouts, eventHandler
         4: "quadclick"
     };
     function onMousedown(e) {
-        if (exports$1.getButton(e) !== 0) {
+        if (exports.getButton(e) !== 0) {
             clicks = 0;
         }
         else if (e.detail > 1) {
@@ -9419,7 +9419,7 @@ exports$1.addMultiMouseDownListener = function (elements, timeouts, eventHandler
 function getModifierHash(e) {
     return 0 | (e.ctrlKey ? 1 : 0) | (e.altKey ? 2 : 0) | (e.shiftKey ? 4 : 0) | (e.metaKey ? 8 : 0);
 }
-exports$1.getModifierString = function (e) {
+exports.getModifierString = function (e) {
     return keys.KEY_MODS[getModifierHash(e)];
 };
 function normalizeCommandKeys(callback, e, keyCode) {
@@ -9471,7 +9471,7 @@ function normalizeCommandKeys(callback, e, keyCode) {
     }
     return callback(e, hashId, keyCode);
 }
-exports$1.addCommandKeyListener = function (el, callback, destroyer) {
+exports.addCommandKeyListener = function (el, callback, destroyer) {
     var lastDefaultPrevented = null;
     addListener(el, "keydown", function (e) {
         pressedKeys[e.keyCode] = (pressedKeys[e.keyCode] || 0) + 1;
@@ -9481,7 +9481,7 @@ exports$1.addCommandKeyListener = function (el, callback, destroyer) {
     }, destroyer);
     addListener(el, "keypress", function (e) {
         if (lastDefaultPrevented && (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey)) {
-            exports$1.stopEvent(e);
+            exports.stopEvent(e);
             lastDefaultPrevented = null;
         }
     }, destroyer);
@@ -9498,12 +9498,12 @@ function resetPressedKeys() {
 }
 if (typeof window == "object" && window.postMessage && !useragent.isOldIE) {
     var postMessageId = 1;
-    exports$1.nextTick = function (callback, win) {
+    exports.nextTick = function (callback, win) {
         win = win || window;
         var messageName = "zero-timeout-message-" + (postMessageId++);
         var listener = function (e) {
             if (e.data == messageName) {
-                exports$1.stopPropagation(e);
+                exports.stopPropagation(e);
                 removeListener(win, "message", listener);
                 callback();
             }
@@ -9512,10 +9512,10 @@ if (typeof window == "object" && window.postMessage && !useragent.isOldIE) {
         win.postMessage(messageName, "*");
     };
 }
-exports$1.$idleBlocked = false;
-exports$1.onIdle = function (cb, timeout) {
+exports.$idleBlocked = false;
+exports.onIdle = function (cb, timeout) {
     return setTimeout(function handler() {
-        if (!exports$1.$idleBlocked) {
+        if (!exports.$idleBlocked) {
             cb();
         }
         else {
@@ -9523,30 +9523,30 @@ exports$1.onIdle = function (cb, timeout) {
         }
     }, timeout);
 };
-exports$1.$idleBlockId = null;
-exports$1.blockIdle = function (delay) {
-    if (exports$1.$idleBlockId)
-        clearTimeout(exports$1.$idleBlockId);
-    exports$1.$idleBlocked = true;
-    exports$1.$idleBlockId = setTimeout(function () {
-        exports$1.$idleBlocked = false;
+exports.$idleBlockId = null;
+exports.blockIdle = function (delay) {
+    if (exports.$idleBlockId)
+        clearTimeout(exports.$idleBlockId);
+    exports.$idleBlocked = true;
+    exports.$idleBlockId = setTimeout(function () {
+        exports.$idleBlocked = false;
     }, delay || 100);
 };
-exports$1.nextFrame = typeof window == "object" && (window.requestAnimationFrame
+exports.nextFrame = typeof window == "object" && (window.requestAnimationFrame
     || window["mozRequestAnimationFrame"]
     || window["webkitRequestAnimationFrame"]
     || window["msRequestAnimationFrame"]
     || window["oRequestAnimationFrame"]);
-if (exports$1.nextFrame)
-    exports$1.nextFrame = exports$1.nextFrame.bind(window);
+if (exports.nextFrame)
+    exports.nextFrame = exports.nextFrame.bind(window);
 else
-    exports$1.nextFrame = function (callback) {
+    exports.nextFrame = function (callback) {
         setTimeout(callback, 17);
     };
 
 });
 
-ace.define("ace/clipboard",["require","exports","module"], function(require, exports$1, module){var $cancelT;
+ace.define("ace/clipboard",["require","exports","module"], function(require, exports, module){var $cancelT;
 module.exports = {
     lineMode: false,
     pasteCancelled: function () {
@@ -9561,7 +9561,7 @@ module.exports = {
 
 });
 
-ace.define("ace/keyboard/textinput",["require","exports","module","ace/lib/event","ace/config","ace/lib/useragent","ace/lib/dom","ace/lib/lang","ace/clipboard","ace/lib/keys"], function(require, exports$1, module){var event = require("../lib/event");
+ace.define("ace/keyboard/textinput",["require","exports","module","ace/lib/event","ace/config","ace/lib/useragent","ace/lib/dom","ace/lib/lang","ace/clipboard","ace/lib/keys"], function(require, exports, module){var event = require("../lib/event");
 var nls = require("../config").nls;
 var useragent = require("../lib/useragent");
 var dom = require("../lib/dom");
@@ -10285,15 +10285,15 @@ var TextInput = /** @class */ (function () {
     };
     return TextInput;
 }());
-exports$1.TextInput = TextInput;
-exports$1.$setUserAgentForTests = function (_isMobile, _isIOS) {
+exports.TextInput = TextInput;
+exports.$setUserAgentForTests = function (_isMobile, _isIOS) {
     isMobile = _isMobile;
     isIOS = _isIOS;
 };
 
 });
 
-ace.define("ace/mouse/default_handlers",["require","exports","module","ace/lib/useragent"], function(require, exports$1, module){var useragent = require("../lib/useragent");
+ace.define("ace/mouse/default_handlers",["require","exports","module","ace/lib/useragent"], function(require, exports, module){var useragent = require("../lib/useragent");
 var DRAG_OFFSET = 0; // pixels
 var SCROLL_COOLDOWN_T = 550; // milliseconds
 var DefaultHandlers = /** @class */ (function () {
@@ -10305,9 +10305,9 @@ var DefaultHandlers = /** @class */ (function () {
         editor.setDefaultHandler("tripleclick", this.onTripleClick.bind(mouseHandler));
         editor.setDefaultHandler("quadclick", this.onQuadClick.bind(mouseHandler));
         editor.setDefaultHandler("mousewheel", this.onMouseWheel.bind(mouseHandler));
-        var exports$1 = ["select", "startSelect", "selectEnd", "selectAllEnd", "selectByWordsEnd",
+        var exports = ["select", "startSelect", "selectEnd", "selectAllEnd", "selectByWordsEnd",
             "selectByLinesEnd", "dragWait", "dragWaitEnd", "focusWait"];
-        exports$1.forEach(function (x) {
+        exports.forEach(function (x) {
             mouseHandler[x] = this[x];
         }, this);
         mouseHandler["selectByLines"] = this.extendSelectionBy.bind(mouseHandler, "getLineRange");
@@ -10511,7 +10511,7 @@ var DefaultHandlers = /** @class */ (function () {
 DefaultHandlers.prototype.selectEnd = DefaultHandlers.prototype.selectByLinesEnd;
 DefaultHandlers.prototype.selectAllEnd = DefaultHandlers.prototype.selectByLinesEnd;
 DefaultHandlers.prototype.selectByWordsEnd = DefaultHandlers.prototype.selectByLinesEnd;
-exports$1.DefaultHandlers = DefaultHandlers;
+exports.DefaultHandlers = DefaultHandlers;
 function calcDistance(ax, ay, bx, by) {
     return Math.sqrt(Math.pow(bx - ax, 2) + Math.pow(by - ay, 2));
 }
@@ -10530,7 +10530,7 @@ function calcRangeOrientation(range, cursor, session) {
 
 });
 
-ace.define("ace/mouse/mouse_event",["require","exports","module","ace/lib/event","ace/lib/useragent"], function(require, exports$1, module){var event = require("../lib/event");
+ace.define("ace/mouse/mouse_event",["require","exports","module","ace/lib/event","ace/lib/useragent"], function(require, exports, module){var event = require("../lib/event");
 var useragent = require("../lib/useragent");
 var MouseEvent = /** @class */ (function () {
     function MouseEvent(domEvent, editor) { this.speed; this.wheelX; this.wheelY;
@@ -10591,11 +10591,11 @@ var MouseEvent = /** @class */ (function () {
     };
     return MouseEvent;
 }());
-exports$1.MouseEvent = MouseEvent;
+exports.MouseEvent = MouseEvent;
 
 });
 
-ace.define("ace/lib/scroll",["require","exports","module"], function(require, exports$1, module){exports$1.preventParentScroll = function preventParentScroll(event) {
+ace.define("ace/lib/scroll",["require","exports","module"], function(require, exports, module){exports.preventParentScroll = function preventParentScroll(event) {
     event.stopPropagation();
     var target = event.currentTarget;
     var contentOverflows = target.scrollHeight > target.clientHeight;
@@ -10606,7 +10606,7 @@ ace.define("ace/lib/scroll",["require","exports","module"], function(require, ex
 
 });
 
-ace.define("ace/tooltip",["require","exports","module","ace/lib/dom","ace/lib/event","ace/range","ace/lib/scroll"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/tooltip",["require","exports","module","ace/lib/dom","ace/lib/event","ace/range","ace/lib/scroll"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -10777,8 +10777,8 @@ var PopupManager = /** @class */ (function () {
     return PopupManager;
 }());
 var popupManager = new PopupManager();
-exports$1.popupManager = popupManager;
-exports$1.Tooltip = Tooltip;
+exports.popupManager = popupManager;
+exports.Tooltip = Tooltip;
 var HoverTooltip = /** @class */ (function (_super) {
     __extends(HoverTooltip, _super);
     function HoverTooltip(parentNode) {
@@ -10973,11 +10973,11 @@ var HoverTooltip = /** @class */ (function (_super) {
     };
     return HoverTooltip;
 }(Tooltip));
-exports$1.HoverTooltip = HoverTooltip;
+exports.HoverTooltip = HoverTooltip;
 
 });
 
-ace.define("ace/mouse/default_gutter_handler",["require","exports","module","ace/lib/dom","ace/mouse/mouse_event","ace/tooltip","ace/config","ace/range"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/mouse/default_gutter_handler",["require","exports","module","ace/lib/dom","ace/mouse/mouse_event","ace/tooltip","ace/config","ace/range"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -11039,7 +11039,7 @@ function GutterHandler(mouseHandler) {
         return e.preventDefault();
     });
 }
-exports$1.GutterHandler = GutterHandler;
+exports.GutterHandler = GutterHandler;
 var GutterTooltip = /** @class */ (function (_super) {
     __extends(GutterTooltip, _super);
     function GutterTooltip(editor) {
@@ -11256,11 +11256,11 @@ var GutterTooltip = /** @class */ (function (_super) {
     return GutterTooltip;
 }(HoverTooltip));
 GutterTooltip.$uid = 0;
-exports$1.GutterTooltip = GutterTooltip;
+exports.GutterTooltip = GutterTooltip;
 
 });
 
-ace.define("ace/mouse/dragdrop_handler",["require","exports","module","ace/lib/dom","ace/lib/event","ace/lib/useragent"], function(require, exports$1, module){var dom = require("../lib/dom");
+ace.define("ace/mouse/dragdrop_handler",["require","exports","module","ace/lib/dom","ace/lib/event","ace/lib/useragent"], function(require, exports, module){var dom = require("../lib/dom");
 var event = require("../lib/event");
 var useragent = require("../lib/useragent");
 var AUTOSCROLL_DELAY = 200;
@@ -11271,8 +11271,8 @@ function DragdropHandler(mouseHandler) {
     var dragImage = dom.createElement("div");
     dragImage.style.cssText = "top:-100px;position:absolute;z-index:2147483647;opacity:0.5";
     dragImage.textContent = "\xa0";
-    var exports$1 = ["dragWait", "dragWaitEnd", "startDrag", "dragReadyEnd", "onMouseDrag"];
-    exports$1.forEach(function (x) {
+    var exports = ["dragWait", "dragWaitEnd", "startDrag", "dragReadyEnd", "onMouseDrag"];
+    exports.forEach(function (x) {
         mouseHandler[x] = this[x];
     }, this);
     editor.on("mousedown", this.onMouseDown.bind(mouseHandler));
@@ -11594,14 +11594,14 @@ function DragdropHandler(mouseHandler) {
 function calcDistance(ax, ay, bx, by) {
     return Math.sqrt(Math.pow(bx - ax, 2) + Math.pow(by - ay, 2));
 }
-exports$1.DragdropHandler = DragdropHandler;
+exports.DragdropHandler = DragdropHandler;
 
 });
 
-ace.define("ace/mouse/touch_handler",["require","exports","module","ace/mouse/mouse_event","ace/lib/event","ace/lib/dom"], function(require, exports$1, module){var MouseEvent = require("./mouse_event").MouseEvent;
+ace.define("ace/mouse/touch_handler",["require","exports","module","ace/mouse/mouse_event","ace/lib/event","ace/lib/dom"], function(require, exports, module){var MouseEvent = require("./mouse_event").MouseEvent;
 var event = require("../lib/event");
 var dom = require("../lib/dom");
-exports$1.addTouchListeners = function (el, editor) {
+exports.addTouchListeners = function (el, editor) {
     var mode = "scroll";
     var startX;
     var startY;
@@ -11908,7 +11908,7 @@ exports$1.addTouchListeners = function (el, editor) {
 
 });
 
-ace.define("ace/mouse/mouse_handler",["require","exports","module","ace/lib/event","ace/lib/useragent","ace/mouse/default_handlers","ace/mouse/default_gutter_handler","ace/mouse/mouse_event","ace/mouse/dragdrop_handler","ace/mouse/touch_handler","ace/config"], function(require, exports$1, module){var event = require("../lib/event");
+ace.define("ace/mouse/mouse_handler",["require","exports","module","ace/lib/event","ace/lib/useragent","ace/mouse/default_handlers","ace/mouse/default_gutter_handler","ace/mouse/mouse_event","ace/mouse/dragdrop_handler","ace/mouse/touch_handler","ace/config"], function(require, exports, module){var event = require("../lib/event");
 var useragent = require("../lib/useragent");
 var DefaultHandlers = require("./default_handlers").DefaultHandlers;
 var DefaultGutterHandler = require("./default_gutter_handler").GutterHandler;
@@ -12080,11 +12080,11 @@ config.defineOptions(MouseHandler.prototype, "mouseHandler", {
     dragEnabled: { initialValue: true },
     focusTimeout: { initialValue: 0 },
 });
-exports$1.MouseHandler = MouseHandler;
+exports.MouseHandler = MouseHandler;
 
 });
 
-ace.define("ace/mouse/fold_handler",["require","exports","module","ace/lib/dom"], function(require, exports$1, module){var dom = require("../lib/dom");
+ace.define("ace/mouse/fold_handler",["require","exports","module","ace/lib/dom"], function(require, exports, module){var dom = require("../lib/dom");
 var FoldHandler = /** @class */ (function () {
     function FoldHandler(editor) {
         editor.on("click", function (e) {
@@ -12142,11 +12142,11 @@ var FoldHandler = /** @class */ (function () {
     }
     return FoldHandler;
 }());
-exports$1.FoldHandler = FoldHandler;
+exports.FoldHandler = FoldHandler;
 
 });
 
-ace.define("ace/keyboard/keybinding",["require","exports","module","ace/lib/keys","ace/lib/event"], function(require, exports$1, module){var keyUtil = require("../lib/keys");
+ace.define("ace/keyboard/keybinding",["require","exports","module","ace/lib/keys","ace/lib/event"], function(require, exports, module){var keyUtil = require("../lib/keys");
 var event = require("../lib/event");
 var KeyBinding = /** @class */ (function () {
     function KeyBinding(editor) {
@@ -12240,11 +12240,11 @@ var KeyBinding = /** @class */ (function () {
     };
     return KeyBinding;
 }());
-exports$1.KeyBinding = KeyBinding;
+exports.KeyBinding = KeyBinding;
 
 });
 
-ace.define("ace/lib/bidiutil",["require","exports","module"], function(require, exports$1, module){var dir = 0, hiLevel = 0;
+ace.define("ace/lib/bidiutil",["require","exports","module"], function(require, exports, module){var dir = 0, hiLevel = 0;
 var lastArabic = false, hasUBAT_B = false, hasUBAT_S = false;
 var impTab_LTR = [ [0, 3, 0, 1, 0, 0, 0], [0, 3, 0, 1, 2, 2, 0], [0, 3, 0, 0x11, 2, 0, 1], [0, 3, 5, 5, 4, 1, 0], [0, 3, 0x15, 0x15, 4, 0, 1], [0, 3, 5, 5, 4, 2, 0]
 ];
@@ -12491,16 +12491,16 @@ function _getCharacterType(ch) {
     }
     return ON;
 }
-exports$1.L = L;
-exports$1.R = R;
-exports$1.EN = EN;
-exports$1.ON_R = 3;
-exports$1.AN = 4;
-exports$1.R_H = 5;
-exports$1.B = 6;
-exports$1.RLE = 7;
-exports$1.DOT = "\xB7";
-exports$1.doBidiReorder = function (text, textCharTypes, isRtl) {
+exports.L = L;
+exports.R = R;
+exports.EN = EN;
+exports.ON_R = 3;
+exports.AN = 4;
+exports.R_H = 5;
+exports.B = 6;
+exports.RLE = 7;
+exports.DOT = "\xB7";
+exports.doBidiReorder = function (text, textCharTypes, isRtl) {
     if (text.length < 2)
         return {};
     var chars = text.split(""), logicalFromVisual = new Array(chars.length), bidiLevels = new Array(chars.length), levels = [];
@@ -12512,27 +12512,27 @@ exports$1.doBidiReorder = function (text, textCharTypes, isRtl) {
     _invertLevel(1, levels, logicalFromVisual);
     for (var i = 0; i < logicalFromVisual.length - 1; i++) { //fix levels to reflect character width
         if (textCharTypes[i] === AN) {
-            levels[i] = exports$1.AN;
+            levels[i] = exports.AN;
         }
         else if (levels[i] === R && ((textCharTypes[i] > AL && textCharTypes[i] < LRE)
             || textCharTypes[i] === ON || textCharTypes[i] === BN)) {
-            levels[i] = exports$1.ON_R;
+            levels[i] = exports.ON_R;
         }
         else if ((i > 0 && chars[i - 1] === '\u0644') && /\u0622|\u0623|\u0625|\u0627/.test(chars[i])) {
-            levels[i - 1] = levels[i] = exports$1.R_H;
+            levels[i - 1] = levels[i] = exports.R_H;
             i++;
         }
     }
-    if (chars[chars.length - 1] === exports$1.DOT)
-        levels[chars.length - 1] = exports$1.B;
+    if (chars[chars.length - 1] === exports.DOT)
+        levels[chars.length - 1] = exports.B;
     if (chars[0] === '\u202B')
-        levels[0] = exports$1.RLE;
+        levels[0] = exports.RLE;
     for (var i = 0; i < logicalFromVisual.length; i++) {
         bidiLevels[i] = levels[logicalFromVisual[i]];
     }
     return { 'logicalFromVisual': logicalFromVisual, 'bidiLevels': bidiLevels };
 };
-exports$1.hasBidiCharacters = function (text, textCharTypes) {
+exports.hasBidiCharacters = function (text, textCharTypes) {
     var ret = false;
     for (var i = 0; i < text.length; i++) {
         textCharTypes[i] = _getCharacterType(text.charAt(i));
@@ -12541,7 +12541,7 @@ exports$1.hasBidiCharacters = function (text, textCharTypes) {
     }
     return ret;
 };
-exports$1.getVisualFromLogicalIdx = function (logIdx, rowMap) {
+exports.getVisualFromLogicalIdx = function (logIdx, rowMap) {
     for (var i = 0; i < rowMap.logicalFromVisual.length; i++) {
         if (rowMap.logicalFromVisual[i] == logIdx)
             return i;
@@ -12551,7 +12551,7 @@ exports$1.getVisualFromLogicalIdx = function (logIdx, rowMap) {
 
 });
 
-ace.define("ace/bidihandler",["require","exports","module","ace/lib/bidiutil","ace/lib/lang"], function(require, exports$1, module){var bidiUtil = require("./lib/bidiutil");
+ace.define("ace/bidihandler",["require","exports","module","ace/lib/bidiutil","ace/lib/lang"], function(require, exports, module){var bidiUtil = require("./lib/bidiutil");
 var lang = require("./lib/lang");
 var bidiRE = /[\u0590-\u05f4\u0600-\u06ff\u0700-\u08ac\u202B]/;
 var BidiHandler = /** @class */ (function () {
@@ -12803,11 +12803,11 @@ var BidiHandler = /** @class */ (function () {
     };
     return BidiHandler;
 }());
-exports$1.BidiHandler = BidiHandler;
+exports.BidiHandler = BidiHandler;
 
 });
 
-ace.define("ace/selection",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/lib/event_emitter","ace/range"], function(require, exports$1, module){var oop = require("./lib/oop");
+ace.define("ace/selection",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/lib/event_emitter","ace/range"], function(require, exports, module){var oop = require("./lib/oop");
 var lang = require("./lib/lang");
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
 var Range = require("./range").Range;
@@ -13369,11 +13369,11 @@ Selection.prototype.setSelectionAnchor = Selection.prototype.setAnchor;
 Selection.prototype.getSelectionAnchor = Selection.prototype.getAnchor;
 Selection.prototype.setSelectionRange = Selection.prototype.setRange;
 oop.implement(Selection.prototype, EventEmitter);
-exports$1.Selection = Selection;
+exports.Selection = Selection;
 
 });
 
-ace.define("ace/tokenizer",["require","exports","module","ace/lib/report_error"], function(require, exports$1, module){var reportError = require("./lib/report_error").reportError;
+ace.define("ace/tokenizer",["require","exports","module","ace/lib/report_error"], function(require, exports, module){var reportError = require("./lib/report_error").reportError;
 var MAX_TOKEN_COUNT = 2000;
 var Tokenizer = /** @class */ (function () {
     function Tokenizer(rules) {
@@ -13656,11 +13656,11 @@ var Tokenizer = /** @class */ (function () {
     return Tokenizer;
 }());
 Tokenizer.prototype.reportError = reportError;
-exports$1.Tokenizer = Tokenizer;
+exports.Tokenizer = Tokenizer;
 
 });
 
-ace.define("ace/mode/text_highlight_rules",["require","exports","module","ace/lib/deep_copy"], function(require, exports$1, module){var deepCopy = require("../lib/deep_copy").deepCopy;
+ace.define("ace/mode/text_highlight_rules",["require","exports","module","ace/lib/deep_copy"], function(require, exports, module){var deepCopy = require("../lib/deep_copy").deepCopy;
 var TextHighlightRules;
 TextHighlightRules = function () {
     this.$rules = {
@@ -13840,11 +13840,11 @@ TextHighlightRules = function () {
         return this.$keywords;
     };
 }).call(TextHighlightRules.prototype);
-exports$1.TextHighlightRules = TextHighlightRules;
+exports.TextHighlightRules = TextHighlightRules;
 
 });
 
-ace.define("ace/mode/behaviour",["require","exports","module"], function(require, exports$1, module){var Behaviour;
+ace.define("ace/mode/behaviour",["require","exports","module"], function(require, exports, module){var Behaviour;
 Behaviour = function () {
     this.$behaviours = {};
 };
@@ -13894,11 +13894,11 @@ Behaviour = function () {
         }
     };
 }).call(Behaviour.prototype);
-exports$1.Behaviour = Behaviour;
+exports.Behaviour = Behaviour;
 
 });
 
-ace.define("ace/token_iterator",["require","exports","module","ace/range"], function(require, exports$1, module){var Range = require("./range").Range;
+ace.define("ace/token_iterator",["require","exports","module","ace/range"], function(require, exports, module){var Range = require("./range").Range;
 var TokenIterator = /** @class */ (function () {
     function TokenIterator(session, initialRow, initialColumn) {
         this.$session = session;
@@ -13965,11 +13965,11 @@ var TokenIterator = /** @class */ (function () {
     };
     return TokenIterator;
 }());
-exports$1.TokenIterator = TokenIterator;
+exports.TokenIterator = TokenIterator;
 
 });
 
-ace.define("ace/mode/behaviour/cstyle",["require","exports","module","ace/lib/oop","ace/mode/behaviour","ace/token_iterator","ace/lib/lang"], function(require, exports$1, module){var oop = require("../../lib/oop");
+ace.define("ace/mode/behaviour/cstyle",["require","exports","module","ace/lib/oop","ace/mode/behaviour","ace/token_iterator","ace/lib/lang"], function(require, exports, module){var oop = require("../../lib/oop");
 var Behaviour = require("../behaviour").Behaviour;
 var TokenIterator = require("../../token_iterator").TokenIterator;
 var lang = require("../../lib/lang");
@@ -14396,11 +14396,11 @@ CstyleBehaviour["clearMaybeInsertedClosing"] = function () {
     }
 };
 oop.inherits(CstyleBehaviour, Behaviour);
-exports$1.CstyleBehaviour = CstyleBehaviour;
+exports.CstyleBehaviour = CstyleBehaviour;
 
 });
 
-ace.define("ace/unicode",["require","exports","module"], function(require, exports$1, module){var wordChars = [48, 9, 8, 25, 5, 0, 2, 25, 48, 0, 11, 0, 5, 0, 6, 22, 2, 30, 2, 457, 5, 11, 15, 4, 8, 0, 2, 0, 18, 116, 2, 1, 3, 3, 9, 0, 2, 2, 2, 0, 2, 19, 2, 82, 2, 138, 2, 4, 3, 155, 12, 37, 3, 0, 8, 38, 10, 44, 2, 0, 2, 1, 2, 1, 2, 0, 9, 26, 6, 2, 30, 10, 7, 61, 2, 9, 5, 101, 2, 7, 3, 9, 2, 18, 3, 0, 17, 58, 3, 100, 15, 53, 5, 0, 6, 45, 211, 57, 3, 18, 2, 5, 3, 11, 3, 9, 2, 1, 7, 6, 2, 2, 2, 7, 3, 1, 3, 21, 2, 6, 2, 0, 4, 3, 3, 8, 3, 1, 3, 3, 9, 0, 5, 1, 2, 4, 3, 11, 16, 2, 2, 5, 5, 1, 3, 21, 2, 6, 2, 1, 2, 1, 2, 1, 3, 0, 2, 4, 5, 1, 3, 2, 4, 0, 8, 3, 2, 0, 8, 15, 12, 2, 2, 8, 2, 2, 2, 21, 2, 6, 2, 1, 2, 4, 3, 9, 2, 2, 2, 2, 3, 0, 16, 3, 3, 9, 18, 2, 2, 7, 3, 1, 3, 21, 2, 6, 2, 1, 2, 4, 3, 8, 3, 1, 3, 2, 9, 1, 5, 1, 2, 4, 3, 9, 2, 0, 17, 1, 2, 5, 4, 2, 2, 3, 4, 1, 2, 0, 2, 1, 4, 1, 4, 2, 4, 11, 5, 4, 4, 2, 2, 3, 3, 0, 7, 0, 15, 9, 18, 2, 2, 7, 2, 2, 2, 22, 2, 9, 2, 4, 4, 7, 2, 2, 2, 3, 8, 1, 2, 1, 7, 3, 3, 9, 19, 1, 2, 7, 2, 2, 2, 22, 2, 9, 2, 4, 3, 8, 2, 2, 2, 3, 8, 1, 8, 0, 2, 3, 3, 9, 19, 1, 2, 7, 2, 2, 2, 22, 2, 15, 4, 7, 2, 2, 2, 3, 10, 0, 9, 3, 3, 9, 11, 5, 3, 1, 2, 17, 4, 23, 2, 8, 2, 0, 3, 6, 4, 0, 5, 5, 2, 0, 2, 7, 19, 1, 14, 57, 6, 14, 2, 9, 40, 1, 2, 0, 3, 1, 2, 0, 3, 0, 7, 3, 2, 6, 2, 2, 2, 0, 2, 0, 3, 1, 2, 12, 2, 2, 3, 4, 2, 0, 2, 5, 3, 9, 3, 1, 35, 0, 24, 1, 7, 9, 12, 0, 2, 0, 2, 0, 5, 9, 2, 35, 5, 19, 2, 5, 5, 7, 2, 35, 10, 0, 58, 73, 7, 77, 3, 37, 11, 42, 2, 0, 4, 328, 2, 3, 3, 6, 2, 0, 2, 3, 3, 40, 2, 3, 3, 32, 2, 3, 3, 6, 2, 0, 2, 3, 3, 14, 2, 56, 2, 3, 3, 66, 5, 0, 33, 15, 17, 84, 13, 619, 3, 16, 2, 25, 6, 74, 22, 12, 2, 6, 12, 20, 12, 19, 13, 12, 2, 2, 2, 1, 13, 51, 3, 29, 4, 0, 5, 1, 3, 9, 34, 2, 3, 9, 7, 87, 9, 42, 6, 69, 11, 28, 4, 11, 5, 11, 11, 39, 3, 4, 12, 43, 5, 25, 7, 10, 38, 27, 5, 62, 2, 28, 3, 10, 7, 9, 14, 0, 89, 75, 5, 9, 18, 8, 13, 42, 4, 11, 71, 55, 9, 9, 4, 48, 83, 2, 2, 30, 14, 230, 23, 280, 3, 5, 3, 37, 3, 5, 3, 7, 2, 0, 2, 0, 2, 0, 2, 30, 3, 52, 2, 6, 2, 0, 4, 2, 2, 6, 4, 3, 3, 5, 5, 12, 6, 2, 2, 6, 67, 1, 20, 0, 29, 0, 14, 0, 17, 4, 60, 12, 5, 0, 4, 11, 18, 0, 5, 0, 3, 9, 2, 0, 4, 4, 7, 0, 2, 0, 2, 0, 2, 3, 2, 10, 3, 3, 6, 4, 5, 0, 53, 1, 2684, 46, 2, 46, 2, 132, 7, 6, 15, 37, 11, 53, 10, 0, 17, 22, 10, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 31, 48, 0, 470, 1, 36, 5, 2, 4, 6, 1, 5, 85, 3, 1, 3, 2, 2, 89, 2, 3, 6, 40, 4, 93, 18, 23, 57, 15, 513, 6581, 75, 20939, 53, 1164, 68, 45, 3, 268, 4, 27, 21, 31, 3, 13, 13, 1, 2, 24, 9, 69, 11, 1, 38, 8, 3, 102, 3, 1, 111, 44, 25, 51, 13, 68, 12, 9, 7, 23, 4, 0, 5, 45, 3, 35, 13, 28, 4, 64, 15, 10, 39, 54, 10, 13, 3, 9, 7, 22, 4, 1, 5, 66, 25, 2, 227, 42, 2, 1, 3, 9, 7, 11171, 13, 22, 5, 48, 8453, 301, 3, 61, 3, 105, 39, 6, 13, 4, 6, 11, 2, 12, 2, 4, 2, 0, 2, 1, 2, 1, 2, 107, 34, 362, 19, 63, 3, 53, 41, 11, 5, 15, 17, 6, 13, 1, 25, 2, 33, 4, 2, 134, 20, 9, 8, 25, 5, 0, 2, 25, 12, 88, 4, 5, 3, 5, 3, 5, 3, 2];
+ace.define("ace/unicode",["require","exports","module"], function(require, exports, module){var wordChars = [48, 9, 8, 25, 5, 0, 2, 25, 48, 0, 11, 0, 5, 0, 6, 22, 2, 30, 2, 457, 5, 11, 15, 4, 8, 0, 2, 0, 18, 116, 2, 1, 3, 3, 9, 0, 2, 2, 2, 0, 2, 19, 2, 82, 2, 138, 2, 4, 3, 155, 12, 37, 3, 0, 8, 38, 10, 44, 2, 0, 2, 1, 2, 1, 2, 0, 9, 26, 6, 2, 30, 10, 7, 61, 2, 9, 5, 101, 2, 7, 3, 9, 2, 18, 3, 0, 17, 58, 3, 100, 15, 53, 5, 0, 6, 45, 211, 57, 3, 18, 2, 5, 3, 11, 3, 9, 2, 1, 7, 6, 2, 2, 2, 7, 3, 1, 3, 21, 2, 6, 2, 0, 4, 3, 3, 8, 3, 1, 3, 3, 9, 0, 5, 1, 2, 4, 3, 11, 16, 2, 2, 5, 5, 1, 3, 21, 2, 6, 2, 1, 2, 1, 2, 1, 3, 0, 2, 4, 5, 1, 3, 2, 4, 0, 8, 3, 2, 0, 8, 15, 12, 2, 2, 8, 2, 2, 2, 21, 2, 6, 2, 1, 2, 4, 3, 9, 2, 2, 2, 2, 3, 0, 16, 3, 3, 9, 18, 2, 2, 7, 3, 1, 3, 21, 2, 6, 2, 1, 2, 4, 3, 8, 3, 1, 3, 2, 9, 1, 5, 1, 2, 4, 3, 9, 2, 0, 17, 1, 2, 5, 4, 2, 2, 3, 4, 1, 2, 0, 2, 1, 4, 1, 4, 2, 4, 11, 5, 4, 4, 2, 2, 3, 3, 0, 7, 0, 15, 9, 18, 2, 2, 7, 2, 2, 2, 22, 2, 9, 2, 4, 4, 7, 2, 2, 2, 3, 8, 1, 2, 1, 7, 3, 3, 9, 19, 1, 2, 7, 2, 2, 2, 22, 2, 9, 2, 4, 3, 8, 2, 2, 2, 3, 8, 1, 8, 0, 2, 3, 3, 9, 19, 1, 2, 7, 2, 2, 2, 22, 2, 15, 4, 7, 2, 2, 2, 3, 10, 0, 9, 3, 3, 9, 11, 5, 3, 1, 2, 17, 4, 23, 2, 8, 2, 0, 3, 6, 4, 0, 5, 5, 2, 0, 2, 7, 19, 1, 14, 57, 6, 14, 2, 9, 40, 1, 2, 0, 3, 1, 2, 0, 3, 0, 7, 3, 2, 6, 2, 2, 2, 0, 2, 0, 3, 1, 2, 12, 2, 2, 3, 4, 2, 0, 2, 5, 3, 9, 3, 1, 35, 0, 24, 1, 7, 9, 12, 0, 2, 0, 2, 0, 5, 9, 2, 35, 5, 19, 2, 5, 5, 7, 2, 35, 10, 0, 58, 73, 7, 77, 3, 37, 11, 42, 2, 0, 4, 328, 2, 3, 3, 6, 2, 0, 2, 3, 3, 40, 2, 3, 3, 32, 2, 3, 3, 6, 2, 0, 2, 3, 3, 14, 2, 56, 2, 3, 3, 66, 5, 0, 33, 15, 17, 84, 13, 619, 3, 16, 2, 25, 6, 74, 22, 12, 2, 6, 12, 20, 12, 19, 13, 12, 2, 2, 2, 1, 13, 51, 3, 29, 4, 0, 5, 1, 3, 9, 34, 2, 3, 9, 7, 87, 9, 42, 6, 69, 11, 28, 4, 11, 5, 11, 11, 39, 3, 4, 12, 43, 5, 25, 7, 10, 38, 27, 5, 62, 2, 28, 3, 10, 7, 9, 14, 0, 89, 75, 5, 9, 18, 8, 13, 42, 4, 11, 71, 55, 9, 9, 4, 48, 83, 2, 2, 30, 14, 230, 23, 280, 3, 5, 3, 37, 3, 5, 3, 7, 2, 0, 2, 0, 2, 0, 2, 30, 3, 52, 2, 6, 2, 0, 4, 2, 2, 6, 4, 3, 3, 5, 5, 12, 6, 2, 2, 6, 67, 1, 20, 0, 29, 0, 14, 0, 17, 4, 60, 12, 5, 0, 4, 11, 18, 0, 5, 0, 3, 9, 2, 0, 4, 4, 7, 0, 2, 0, 2, 0, 2, 3, 2, 10, 3, 3, 6, 4, 5, 0, 53, 1, 2684, 46, 2, 46, 2, 132, 7, 6, 15, 37, 11, 53, 10, 0, 17, 22, 10, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 31, 48, 0, 470, 1, 36, 5, 2, 4, 6, 1, 5, 85, 3, 1, 3, 2, 2, 89, 2, 3, 6, 40, 4, 93, 18, 23, 57, 15, 513, 6581, 75, 20939, 53, 1164, 68, 45, 3, 268, 4, 27, 21, 31, 3, 13, 13, 1, 2, 24, 9, 69, 11, 1, 38, 8, 3, 102, 3, 1, 111, 44, 25, 51, 13, 68, 12, 9, 7, 23, 4, 0, 5, 45, 3, 35, 13, 28, 4, 64, 15, 10, 39, 54, 10, 13, 3, 9, 7, 22, 4, 1, 5, 66, 25, 2, 227, 42, 2, 1, 3, 9, 7, 11171, 13, 22, 5, 48, 8453, 301, 3, 61, 3, 105, 39, 6, 13, 4, 6, 11, 2, 12, 2, 4, 2, 0, 2, 1, 2, 1, 2, 107, 34, 362, 19, 63, 3, 53, 41, 11, 5, 15, 17, 6, 13, 1, 25, 2, 33, 4, 2, 134, 20, 9, 8, 25, 5, 0, 2, 25, 12, 88, 4, 5, 3, 5, 3, 5, 3, 2];
 var code = 0;
 var str = [];
 for (var i = 0; i < wordChars.length; i += 2) {
@@ -14408,11 +14408,11 @@ for (var i = 0; i < wordChars.length; i += 2) {
     if (wordChars[i + 1])
         str.push(45, code += wordChars[i + 1]);
 }
-exports$1.wordChars = String.fromCharCode.apply(null, str);
+exports.wordChars = String.fromCharCode.apply(null, str);
 
 });
 
-ace.define("ace/mode/text",["require","exports","module","ace/config","ace/tokenizer","ace/mode/text_highlight_rules","ace/mode/behaviour/cstyle","ace/unicode","ace/lib/lang","ace/token_iterator","ace/range"], function(require, exports$1, module){var config = require("../config");
+ace.define("ace/mode/text",["require","exports","module","ace/config","ace/tokenizer","ace/mode/text_highlight_rules","ace/mode/behaviour/cstyle","ace/unicode","ace/lib/lang","ace/token_iterator","ace/range"], function(require, exports, module){var config = require("../config");
 var Tokenizer = require("../tokenizer").Tokenizer;
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var CstyleBehaviour = require("./behaviour/cstyle").CstyleBehaviour;
@@ -14733,11 +14733,11 @@ Mode = function () {
     };
     this.$id = "ace/mode/text";
 }).call(Mode.prototype);
-exports$1.Mode = Mode;
+exports.Mode = Mode;
 
 });
 
-ace.define("ace/line_widgets",["require","exports","module","ace/lib/dom"], function(require, exports$1, module){var dom = require("./lib/dom");
+ace.define("ace/line_widgets",["require","exports","module","ace/lib/dom"], function(require, exports, module){var dom = require("./lib/dom");
 var LineWidgets = /** @class */ (function () {
     function LineWidgets(session) {
         this.session = session;
@@ -15070,11 +15070,11 @@ var LineWidgets = /** @class */ (function () {
     };
     return LineWidgets;
 }());
-exports$1.LineWidgets = LineWidgets;
+exports.LineWidgets = LineWidgets;
 
 });
 
-ace.define("ace/apply_delta",["require","exports","module"], function(require, exports$1, module){exports$1.applyDelta = function (docLines, delta, doNotValidate) {
+ace.define("ace/apply_delta",["require","exports","module"], function(require, exports, module){exports.applyDelta = function (docLines, delta, doNotValidate) {
     var row = delta.start.row;
     var startColumn = delta.start.column;
     var line = docLines[row] || "";
@@ -15106,7 +15106,7 @@ ace.define("ace/apply_delta",["require","exports","module"], function(require, e
 
 });
 
-ace.define("ace/anchor",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports$1, module){var oop = require("./lib/oop");
+ace.define("ace/anchor",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports, module){var oop = require("./lib/oop");
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
 var Anchor = /** @class */ (function () {
     function Anchor(doc, row, column) {
@@ -15211,11 +15211,11 @@ function $getTransformedPoint(delta, point, moveIfEqual) {
         column: deltaStart.column
     };
 }
-exports$1.Anchor = Anchor;
+exports.Anchor = Anchor;
 
 });
 
-ace.define("ace/document",["require","exports","module","ace/lib/oop","ace/apply_delta","ace/lib/event_emitter","ace/range","ace/anchor"], function(require, exports$1, module){var oop = require("./lib/oop");
+ace.define("ace/document",["require","exports","module","ace/lib/oop","ace/apply_delta","ace/lib/event_emitter","ace/range","ace/anchor"], function(require, exports, module){var oop = require("./lib/oop");
 var applyDelta = require("./apply_delta").applyDelta;
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
 var Range = require("./range").Range;
@@ -15547,11 +15547,11 @@ var Document = /** @class */ (function () {
 Document.prototype.$autoNewLine = "";
 Document.prototype.$newLineMode = "auto";
 oop.implement(Document.prototype, EventEmitter);
-exports$1.Document = Document;
+exports.Document = Document;
 
 });
 
-ace.define("ace/background_tokenizer",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports$1, module){var oop = require("./lib/oop");
+ace.define("ace/background_tokenizer",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports, module){var oop = require("./lib/oop");
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
 var BackgroundTokenizer = /** @class */ (function () {
     function BackgroundTokenizer(tokenizer, session) {
@@ -15681,11 +15681,11 @@ var BackgroundTokenizer = /** @class */ (function () {
     return BackgroundTokenizer;
 }());
 oop.implement(BackgroundTokenizer.prototype, EventEmitter);
-exports$1.BackgroundTokenizer = BackgroundTokenizer;
+exports.BackgroundTokenizer = BackgroundTokenizer;
 
 });
 
-ace.define("ace/search_highlight",["require","exports","module","ace/lib/lang","ace/range"], function(require, exports$1, module){var lang = require("./lib/lang");
+ace.define("ace/search_highlight",["require","exports","module","ace/lib/lang","ace/range"], function(require, exports, module){var lang = require("./lib/lang");
 var Range = require("./range").Range;
 var SearchHighlight = /** @class */ (function () {
     function SearchHighlight(regExp, clazz, type) {
@@ -15750,11 +15750,11 @@ var SearchHighlight = /** @class */ (function () {
     return SearchHighlight;
 }());
 SearchHighlight.prototype.MAX_RANGES = 500;
-exports$1.SearchHighlight = SearchHighlight;
+exports.SearchHighlight = SearchHighlight;
 
 });
 
-ace.define("ace/undomanager",["require","exports","module","ace/range"], function(require, exports$1, module){var UndoManager = /** @class */ (function () {
+ace.define("ace/undomanager",["require","exports","module","ace/range"], function(require, exports, module){var UndoManager = /** @class */ (function () {
     function UndoManager() {
         this.$keepRedoStack;
         this.$maxRev = 0;
@@ -16191,11 +16191,11 @@ function rebaseRedoStack(redoStack, deltaSets) {
         }
     }
 }
-exports$1.UndoManager = UndoManager;
+exports.UndoManager = UndoManager;
 
 });
 
-ace.define("ace/edit_session/fold_line",["require","exports","module","ace/range"], function(require, exports$1, module){var Range = require("../range").Range;
+ace.define("ace/edit_session/fold_line",["require","exports","module","ace/range"], function(require, exports, module){var Range = require("../range").Range;
 var FoldLine = /** @class */ (function () {
     function FoldLine(foldData, folds) {
         this.foldData = foldData;
@@ -16383,11 +16383,11 @@ var FoldLine = /** @class */ (function () {
     };
     return FoldLine;
 }());
-exports$1.FoldLine = FoldLine;
+exports.FoldLine = FoldLine;
 
 });
 
-ace.define("ace/range_list",["require","exports","module","ace/range"], function(require, exports$1, module){var Range = require("./range").Range;
+ace.define("ace/range_list",["require","exports","module","ace/range"], function(require, exports, module){var Range = require("./range").Range;
 var comparePoints = Range.comparePoints;
 var RangeList = /** @class */ (function () {
     function RangeList() {
@@ -16604,11 +16604,11 @@ var RangeList = /** @class */ (function () {
     return RangeList;
 }());
 RangeList.prototype.comparePoints = comparePoints;
-exports$1.RangeList = RangeList;
+exports.RangeList = RangeList;
 
 });
 
-ace.define("ace/edit_session/fold",["require","exports","module","ace/range_list"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/edit_session/fold",["require","exports","module","ace/range_list"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -16712,11 +16712,11 @@ function restoreRange(range, anchor) {
     restorePoint(range.start, anchor);
     restorePoint(range.end, anchor);
 }
-exports$1.Fold = Fold;
+exports.Fold = Fold;
 
 });
 
-ace.define("ace/edit_session/folding",["require","exports","module","ace/range","ace/edit_session/fold_line","ace/edit_session/fold","ace/token_iterator","ace/mouse/mouse_event"], function(require, exports$1, module){// @ts-nocheck
+ace.define("ace/edit_session/folding",["require","exports","module","ace/range","ace/edit_session/fold_line","ace/edit_session/fold","ace/token_iterator","ace/mouse/mouse_event"], function(require, exports, module){// @ts-nocheck
 var Range = require("../range").Range;
 var FoldLine = require("./fold_line").FoldLine;
 var Fold = require("./fold").Fold;
@@ -17438,11 +17438,11 @@ function Folding() {
         }
     };
 }
-exports$1.Folding = Folding;
+exports.Folding = Folding;
 
 });
 
-ace.define("ace/edit_session/bracket_match",["require","exports","module","ace/token_iterator","ace/range"], function(require, exports$1, module){var TokenIterator = require("../token_iterator").TokenIterator;
+ace.define("ace/edit_session/bracket_match",["require","exports","module","ace/token_iterator","ace/range"], function(require, exports, module){var TokenIterator = require("../token_iterator").TokenIterator;
 var Range = require("../range").Range;
 function BracketMatch() {
     this.findMatchingBracket = function (position, chr) {
@@ -17790,11 +17790,11 @@ function BracketMatch() {
         }
     };
 }
-exports$1.BracketMatch = BracketMatch;
+exports.BracketMatch = BracketMatch;
 
 });
 
-ace.define("ace/edit_session",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/bidihandler","ace/config","ace/lib/event_emitter","ace/selection","ace/mode/text","ace/range","ace/line_widgets","ace/document","ace/background_tokenizer","ace/search_highlight","ace/undomanager","ace/edit_session/folding","ace/edit_session/bracket_match"], function(require, exports$1, module){var oop = require("./lib/oop");
+ace.define("ace/edit_session",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/bidihandler","ace/config","ace/lib/event_emitter","ace/selection","ace/mode/text","ace/range","ace/line_widgets","ace/document","ace/background_tokenizer","ace/search_highlight","ace/undomanager","ace/edit_session/folding","ace/edit_session/bracket_match"], function(require, exports, module){var oop = require("./lib/oop");
 var lang = require("./lib/lang");
 var BidiHandler = require("./bidihandler").BidiHandler;
 var config = require("./config");
@@ -19536,11 +19536,11 @@ config.defineOptions(EditSession.prototype, "session", {
         handlesSet: true
     }
 });
-exports$1.EditSession = EditSession;
+exports.EditSession = EditSession;
 
 });
 
-ace.define("ace/search",["require","exports","module","ace/lib/lang","ace/lib/oop","ace/range"], function(require, exports$1, module){var lang = require("./lib/lang");
+ace.define("ace/search",["require","exports","module","ace/lib/lang","ace/lib/oop","ace/range"], function(require, exports, module){var lang = require("./lib/lang");
 var oop = require("./lib/oop");
 var Range = require("./range").Range;
 var Search = /** @class */ (function () {
@@ -20017,11 +20017,11 @@ function chunkEnd(session, start) {
     var base = 5000, startPosition = { row: start, column: 0 }, startIndex = session.doc.positionToIndex(startPosition), targetIndex = startIndex + base, targetPosition = session.doc.indexToPosition(targetIndex), targetLine = targetPosition.row;
     return targetLine + 1;
 }
-exports$1.Search = Search;
+exports.Search = Search;
 
 });
 
-ace.define("ace/keyboard/hash_handler",["require","exports","module","ace/lib/keys","ace/lib/useragent"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/keyboard/hash_handler",["require","exports","module","ace/lib/keys","ace/lib/useragent"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -20235,12 +20235,12 @@ HashHandler.call = function (thisArg, config, platform) {
 MultiHashHandler.call = function (thisArg, config, platform) {
     MultiHashHandler.prototype.$init.call(thisArg, config, platform, false);
 };
-exports$1.HashHandler = HashHandler;
-exports$1.MultiHashHandler = MultiHashHandler;
+exports.HashHandler = HashHandler;
+exports.MultiHashHandler = MultiHashHandler;
 
 });
 
-ace.define("ace/commands/command_manager",["require","exports","module","ace/lib/oop","ace/keyboard/hash_handler","ace/lib/event_emitter"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/commands/command_manager",["require","exports","module","ace/lib/oop","ace/keyboard/hash_handler","ace/lib/event_emitter"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -20352,17 +20352,17 @@ var CommandManager = /** @class */ (function (_super) {
     return CommandManager;
 }(MultiHashHandler));
 oop.implement(CommandManager.prototype, EventEmitter);
-exports$1.CommandManager = CommandManager;
+exports.CommandManager = CommandManager;
 
 });
 
-ace.define("ace/commands/default_commands",["require","exports","module","ace/lib/lang","ace/config","ace/range"], function(require, exports$1, module){var lang = require("../lib/lang");
+ace.define("ace/commands/default_commands",["require","exports","module","ace/lib/lang","ace/config","ace/range"], function(require, exports, module){var lang = require("../lib/lang");
 var config = require("../config");
 var Range = require("../range").Range;
 function bindKey(win, mac) {
     return { win: win, mac: mac };
 }
-exports$1.commands = [{
+exports.commands = [{
         name: "showSettingsMenu",
         description: "Show settings menu",
         bindKey: bindKey("Ctrl-,", "Command-,"),
@@ -21207,7 +21207,7 @@ exports$1.commands = [{
         readOnly: true
     }];
 for (var i = 1; i < 9; i++) {
-    exports$1.commands.push({
+    exports.commands.push({
         name: "foldToLevel" + i,
         description: "Fold To Level " + i,
         level: i,
@@ -21219,7 +21219,7 @@ for (var i = 1; i < 9; i++) {
 
 });
 
-ace.define("ace/keyboard/gutter_handler",["require","exports","module","ace/lib/keys"], function(require, exports$1, module){var keys = require('../lib/keys');
+ace.define("ace/keyboard/gutter_handler",["require","exports","module","ace/lib/keys"], function(require, exports, module){var keys = require('../lib/keys');
 var GutterKeyboardHandler = /** @class */ (function () {
     function GutterKeyboardHandler(editor) {
         this.editor = editor;
@@ -21612,7 +21612,7 @@ var GutterKeyboardHandler = /** @class */ (function () {
     };
     return GutterKeyboardHandler;
 }());
-exports$1.GutterKeyboardHandler = GutterKeyboardHandler;
+exports.GutterKeyboardHandler = GutterKeyboardHandler;
 var GutterKeyboardEvent = /** @class */ (function () {
     function GutterKeyboardEvent(domEvent, gutterKeyboardHandler) {
         this.gutterKeyboardHandler = gutterKeyboardHandler;
@@ -21632,11 +21632,11 @@ var GutterKeyboardEvent = /** @class */ (function () {
     };
     return GutterKeyboardEvent;
 }());
-exports$1.GutterKeyboardEvent = GutterKeyboardEvent;
+exports.GutterKeyboardEvent = GutterKeyboardEvent;
 
 });
 
-ace.define("ace/editor",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/lib/useragent","ace/keyboard/textinput","ace/mouse/mouse_handler","ace/mouse/fold_handler","ace/keyboard/keybinding","ace/edit_session","ace/search","ace/range","ace/lib/event_emitter","ace/commands/command_manager","ace/commands/default_commands","ace/config","ace/token_iterator","ace/keyboard/gutter_handler","ace/config","ace/clipboard","ace/lib/keys","ace/lib/event","ace/tooltip"], function(require, exports$1, module){var __values = (this && this.__values) || function(o) {
+ace.define("ace/editor",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/lib/useragent","ace/keyboard/textinput","ace/mouse/mouse_handler","ace/mouse/fold_handler","ace/keyboard/keybinding","ace/edit_session","ace/search","ace/range","ace/lib/event_emitter","ace/commands/command_manager","ace/commands/default_commands","ace/config","ace/token_iterator","ace/keyboard/gutter_handler","ace/config","ace/clipboard","ace/lib/keys","ace/lib/event","ace/tooltip"], function(require, exports, module){var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
     if (o && typeof o.length === "number") return {
@@ -23707,11 +23707,11 @@ var relativeNumberRenderer = {
         this.update(null, editor);
     }
 };
-exports$1.Editor = Editor;
+exports.Editor = Editor;
 
 });
 
-ace.define("ace/layer/lines",["require","exports","module","ace/lib/dom"], function(require, exports$1, module){var dom = require("../lib/dom");
+ace.define("ace/layer/lines",["require","exports","module","ace/lib/dom"], function(require, exports, module){var dom = require("../lib/dom");
 var Lines = /** @class */ (function () {
     function Lines(element, canvasHeight) {
         this.element = element;
@@ -23810,11 +23810,11 @@ var Lines = /** @class */ (function () {
     };
     return Lines;
 }());
-exports$1.Lines = Lines;
+exports.Lines = Lines;
 
 });
 
-ace.define("ace/layer/gutter",["require","exports","module","ace/lib/dom","ace/lib/oop","ace/lib/lang","ace/lib/event_emitter","ace/layer/lines","ace/config"], function(require, exports$1, module){var dom = require("../lib/dom");
+ace.define("ace/layer/gutter",["require","exports","module","ace/lib/dom","ace/lib/oop","ace/lib/lang","ace/lib/event_emitter","ace/layer/lines","ace/config"], function(require, exports, module){var dom = require("../lib/dom");
 var oop = require("../lib/oop");
 var lang = require("../lib/lang");
 var EventEmitter = require("../lib/event_emitter").EventEmitter;
@@ -24404,11 +24404,11 @@ function onCreateCell(element) {
     annotationNode.appendChild(annotationIconNode);
     return element;
 }
-exports$1.Gutter = Gutter;
+exports.Gutter = Gutter;
 
 });
 
-ace.define("ace/layer/marker",["require","exports","module","ace/range","ace/lib/dom"], function(require, exports$1, module){var Range = require("../range").Range;
+ace.define("ace/layer/marker",["require","exports","module","ace/range","ace/lib/dom"], function(require, exports, module){var Range = require("../range").Range;
 var dom = require("../lib/dom");
 var Marker = /** @class */ (function () {
     function Marker(parentEl) {
@@ -24586,19 +24586,19 @@ Marker.prototype.$padding = 0;
 function getBorderClass(tl, tr, br, bl) {
     return (tl ? 1 : 0) | (tr ? 2 : 0) | (br ? 4 : 0) | (bl ? 8 : 0);
 }
-exports$1.Marker = Marker;
+exports.Marker = Marker;
 
 });
 
-ace.define("ace/layer/text_util",["require","exports","module"], function(require, exports$1, module){// Tokens for which Ace just uses a simple TextNode and does not add any special className.
+ace.define("ace/layer/text_util",["require","exports","module"], function(require, exports, module){// Tokens for which Ace just uses a simple TextNode and does not add any special className.
 var textTokens = new Set(["text", "rparen", "lparen"]);
-exports$1.isTextToken = function (tokenType) {
+exports.isTextToken = function (tokenType) {
     return textTokens.has(tokenType);
 };
 
 });
 
-ace.define("ace/layer/text",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/layer/lines","ace/lib/event_emitter","ace/config","ace/layer/text_util"], function(require, exports$1, module){var oop = require("../lib/oop");
+ace.define("ace/layer/text",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/layer/lines","ace/lib/event_emitter","ace/config","ace/layer/text_util"], function(require, exports, module){var oop = require("../lib/oop");
 var dom = require("../lib/dom");
 var lang = require("../lib/lang");
 var Lines = require("./lines").Lines;
@@ -25231,11 +25231,11 @@ Text.prototype.$tabStrings = [];
 Text.prototype.destroy = {};
 Text.prototype.onChangeTabSize = Text.prototype.$computeTabString;
 oop.implement(Text.prototype, EventEmitter);
-exports$1.Text = Text;
+exports.Text = Text;
 
 });
 
-ace.define("ace/layer/cursor",["require","exports","module","ace/lib/dom"], function(require, exports$1, module){var dom = require("../lib/dom");
+ace.define("ace/layer/cursor",["require","exports","module","ace/lib/dom"], function(require, exports, module){var dom = require("../lib/dom");
 var Cursor = /** @class */ (function () {
     function Cursor(parentEl) {
         this.element = dom.createElement("div");
@@ -25428,11 +25428,11 @@ var Cursor = /** @class */ (function () {
 }());
 Cursor.prototype.$padding = 0;
 Cursor.prototype.drawCursor = null;
-exports$1.Cursor = Cursor;
+exports.Cursor = Cursor;
 
 });
 
-ace.define("ace/scrollbar",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/event","ace/lib/event_emitter"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/scrollbar",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/event","ace/lib/event_emitter"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -25562,15 +25562,15 @@ var HScrollBar = /** @class */ (function (_super) {
     };
     return HScrollBar;
 }(Scrollbar));
-exports$1.ScrollBar = VScrollBar; // backward compatibility
-exports$1.ScrollBarV = VScrollBar; // backward compatibility
-exports$1.ScrollBarH = HScrollBar; // backward compatibility
-exports$1.VScrollBar = VScrollBar;
-exports$1.HScrollBar = HScrollBar;
+exports.ScrollBar = VScrollBar; // backward compatibility
+exports.ScrollBarV = VScrollBar; // backward compatibility
+exports.ScrollBarH = HScrollBar; // backward compatibility
+exports.VScrollBar = VScrollBar;
+exports.HScrollBar = HScrollBar;
 
 });
 
-ace.define("ace/scrollbar_custom",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/event","ace/lib/event_emitter"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/scrollbar_custom",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/event","ace/lib/event_emitter"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -25800,15 +25800,15 @@ var HScrollBar = /** @class */ (function (_super) {
     return HScrollBar;
 }(ScrollBar));
 HScrollBar.prototype.setInnerWidth = HScrollBar.prototype.setScrollWidth;
-exports$1.ScrollBar = VScrollBar; // backward compatibility
-exports$1.ScrollBarV = VScrollBar; // backward compatibility
-exports$1.ScrollBarH = HScrollBar; // backward compatibility
-exports$1.VScrollBar = VScrollBar;
-exports$1.HScrollBar = HScrollBar;
+exports.ScrollBar = VScrollBar; // backward compatibility
+exports.ScrollBarV = VScrollBar; // backward compatibility
+exports.ScrollBarH = HScrollBar; // backward compatibility
+exports.VScrollBar = VScrollBar;
+exports.HScrollBar = HScrollBar;
 
 });
 
-ace.define("ace/renderloop",["require","exports","module","ace/lib/event"], function(require, exports$1, module){var event = require("./lib/event");
+ace.define("ace/renderloop",["require","exports","module","ace/lib/event"], function(require, exports, module){var event = require("./lib/event");
 var RenderLoop = /** @class */ (function () {
     function RenderLoop(onRender, win) {
         this.onRender = onRender;
@@ -25849,11 +25849,11 @@ var RenderLoop = /** @class */ (function () {
     };
     return RenderLoop;
 }());
-exports$1.RenderLoop = RenderLoop;
+exports.RenderLoop = RenderLoop;
 
 });
 
-ace.define("ace/layer/font_metrics",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/lib/event","ace/lib/useragent","ace/lib/event_emitter"], function(require, exports$1, module){var oop = require("../lib/oop");
+ace.define("ace/layer/font_metrics",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/lib/event","ace/lib/useragent","ace/lib/event_emitter"], function(require, exports, module){var oop = require("../lib/oop");
 var dom = require("../lib/dom");
 var lang = require("../lib/lang");
 var event = require("../lib/event");
@@ -26015,11 +26015,11 @@ var FontMetrics = /** @class */ (function () {
 }());
 FontMetrics.prototype.$characterSize = { width: 0, height: 0 };
 oop.implement(FontMetrics.prototype, EventEmitter);
-exports$1.FontMetrics = FontMetrics;
+exports.FontMetrics = FontMetrics;
 
 });
 
-ace.define("ace/css/editor-css",["require","exports","module"], function(require, exports$1, module){/*
+ace.define("ace/css/editor-css",["require","exports","module"], function(require, exports, module){/*
 styles = []
 for (var i = 1; i < 16; i++) {
     styles.push(".ace_br" + i + "{" + (
@@ -26034,7 +26034,7 @@ module.exports = "\n.ace_br1 {border-top-left-radius    : 3px;}\n.ace_br2 {borde
 
 });
 
-ace.define("ace/layer/decorators",["require","exports","module","ace/lib/dom","ace/lib/oop","ace/lib/event_emitter"], function(require, exports$1, module){var dom = require("../lib/dom");
+ace.define("ace/layer/decorators",["require","exports","module","ace/lib/dom","ace/lib/oop","ace/lib/event_emitter"], function(require, exports, module){var dom = require("../lib/dom");
 var oop = require("../lib/oop");
 var EventEmitter = require("../lib/event_emitter").EventEmitter;
 var Decorator = /** @class */ (function () {
@@ -26158,11 +26158,11 @@ var Decorator = /** @class */ (function () {
     return Decorator;
 }());
 oop.implement(Decorator.prototype, EventEmitter);
-exports$1.Decorator = Decorator;
+exports.Decorator = Decorator;
 
 });
 
-ace.define("ace/virtual_renderer",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/config","ace/layer/gutter","ace/layer/marker","ace/layer/text","ace/layer/cursor","ace/scrollbar","ace/scrollbar","ace/scrollbar_custom","ace/scrollbar_custom","ace/renderloop","ace/layer/font_metrics","ace/lib/event_emitter","ace/css/editor-css","ace/layer/decorators","ace/lib/useragent","ace/layer/text_util"], function(require, exports$1, module){var oop = require("./lib/oop");
+ace.define("ace/virtual_renderer",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/config","ace/layer/gutter","ace/layer/marker","ace/layer/text","ace/layer/cursor","ace/scrollbar","ace/scrollbar","ace/scrollbar_custom","ace/scrollbar_custom","ace/renderloop","ace/layer/font_metrics","ace/lib/event_emitter","ace/css/editor-css","ace/layer/decorators","ace/lib/useragent","ace/layer/text_util"], function(require, exports, module){var oop = require("./lib/oop");
 var dom = require("./lib/dom");
 var lang = require("./lib/lang");
 var config = require("./config");
@@ -27704,11 +27704,11 @@ config.defineOptions(VirtualRenderer.prototype, "renderer", {
         initialValue: !useragent.isMobile && !useragent.isIE
     }
 });
-exports$1.VirtualRenderer = VirtualRenderer;
+exports.VirtualRenderer = VirtualRenderer;
 
 });
 
-ace.define("ace/worker/worker_client",["require","exports","module","ace/lib/oop","ace/lib/net","ace/lib/event_emitter","ace/config"], function(require, exports$1, module) {
+ace.define("ace/worker/worker_client",["require","exports","module","ace/lib/oop","ace/lib/net","ace/lib/event_emitter","ace/config"], function(require, exports, module) {
 
 var oop = require("../lib/oop");
 var net = require("../lib/net");
@@ -27935,14 +27935,14 @@ var UIWorkerClient = function(topLevelNamespaces, mod, classname) {
     return workerClient;
 };
 
-exports$1.UIWorkerClient = UIWorkerClient;
-exports$1.WorkerClient = WorkerClient;
-exports$1.createWorker = createWorker;
+exports.UIWorkerClient = UIWorkerClient;
+exports.WorkerClient = WorkerClient;
+exports.createWorker = createWorker;
 
 
 });
 
-ace.define("ace/placeholder",["require","exports","module","ace/range","ace/lib/event_emitter","ace/lib/oop"], function(require, exports$1, module){var Range = require("./range").Range;
+ace.define("ace/placeholder",["require","exports","module","ace/range","ace/lib/event_emitter","ace/lib/oop"], function(require, exports, module){var Range = require("./range").Range;
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
 var oop = require("./lib/oop");
 var PlaceHolder = /** @class */ (function () {
@@ -28094,11 +28094,11 @@ var PlaceHolder = /** @class */ (function () {
     return PlaceHolder;
 }());
 oop.implement(PlaceHolder.prototype, EventEmitter);
-exports$1.PlaceHolder = PlaceHolder;
+exports.PlaceHolder = PlaceHolder;
 
 });
 
-ace.define("ace/mouse/multi_select_handler",["require","exports","module","ace/lib/event","ace/lib/useragent"], function(require, exports$1, module){var event = require("../lib/event");
+ace.define("ace/mouse/multi_select_handler",["require","exports","module","ace/lib/event","ace/lib/useragent"], function(require, exports, module){var event = require("../lib/event");
 var useragent = require("../lib/useragent");
 function isSamePoint(p1, p2) {
     return p1.row == p2.row && p1.column == p2.column;
@@ -28241,15 +28241,15 @@ function onMouseDown(e) {
         return e.preventDefault();
     }
 }
-exports$1.onMouseDown = onMouseDown;
+exports.onMouseDown = onMouseDown;
 
 });
 
-ace.define("ace/commands/multi_select_commands",["require","exports","module","ace/keyboard/hash_handler"], function(require, exports$1, module){/**
+ace.define("ace/commands/multi_select_commands",["require","exports","module","ace/keyboard/hash_handler"], function(require, exports, module){/**
  * commands to enter multiselect mode
  * @type {import("../../ace-internal").Ace.Command[]}
  */
-exports$1.defaultCommands = [{
+exports.defaultCommands = [{
         name: "addCursorAbove",
         description: "Add cursor above",
         exec: function (editor) { editor.selectMoreLines(-1); },
@@ -28335,7 +28335,7 @@ exports$1.defaultCommands = [{
         scrollIntoView: "cursor",
         readOnly: true
     }];
-exports$1.multiSelectCommands = [{
+exports.multiSelectCommands = [{
         name: "singleSelection",
         description: "Single selection",
         bindKey: "esc",
@@ -28345,11 +28345,11 @@ exports$1.multiSelectCommands = [{
         isAvailable: function (editor) { return editor && editor.inMultiSelectMode; }
     }];
 var HashHandler = require("../keyboard/hash_handler").HashHandler;
-exports$1.keyboardHandler = new HashHandler(exports$1.multiSelectCommands);
+exports.keyboardHandler = new HashHandler(exports.multiSelectCommands);
 
 });
 
-ace.define("ace/multi_select",["require","exports","module","ace/range_list","ace/range","ace/selection","ace/mouse/multi_select_handler","ace/lib/event","ace/lib/lang","ace/commands/multi_select_commands","ace/search","ace/edit_session","ace/editor","ace/config"], function(require, exports$1, module){/**
+ace.define("ace/multi_select",["require","exports","module","ace/range_list","ace/range","ace/selection","ace/mouse/multi_select_handler","ace/lib/event","ace/lib/lang","ace/commands/multi_select_commands","ace/search","ace/edit_session","ace/editor","ace/config"], function(require, exports, module){/**
  * @typedef {import("./anchor").Anchor} Anchor
  * @typedef {import("../ace-internal").Ace.Point} Point
  * @typedef {import("../ace-internal").Ace.ScreenCoordinates} ScreenCoordinates
@@ -28361,7 +28361,7 @@ var onMouseDown = require("./mouse/multi_select_handler").onMouseDown;
 var event = require("./lib/event");
 var lang = require("./lib/lang");
 var commands = require("./commands/multi_select_commands");
-exports$1.commands = commands.defaultCommands.concat(commands.multiSelectCommands);
+exports.commands = commands.defaultCommands.concat(commands.multiSelectCommands);
 var Search = require("./search").Search;
 var search = new Search();
 function find(session, needle, dir) {
@@ -28975,7 +28975,7 @@ var Editor = require("./editor").Editor;
 function isSamePoint(p1, p2) {
     return p1.row == p2.row && p1.column == p2.column;
 }
-exports$1.onSessionChange = function (e) {
+exports.onSessionChange = function (e) {
     var session = e.session;
     if (session && !session.multiSelect) {
         session.$selectionMarkers = [];
@@ -29014,7 +29014,7 @@ function MultiSelect(editor) {
     editor.$onRemoveRange = editor.$onRemoveRange.bind(editor);
     editor.$onMultiSelect = editor.$onMultiSelect.bind(editor);
     editor.$onSingleSelect = editor.$onSingleSelect.bind(editor);
-    editor.$multiselectOnSessionChange = exports$1.onSessionChange.bind(editor);
+    editor.$multiselectOnSessionChange = exports.onSessionChange.bind(editor);
     editor.$checkMultiselectChange = editor.$checkMultiselectChange.bind(editor);
     editor.$multiselectOnSessionChange(editor);
     editor.on("changeSession", editor.$multiselectOnSessionChange);
@@ -29048,7 +29048,7 @@ function addAltCursorListeners(editor) {
         }
     }
 }
-exports$1.MultiSelect = MultiSelect;
+exports.MultiSelect = MultiSelect;
 require("./config").defineOptions(Editor.prototype, "editor", {
     enableMultiselect: {
         set: function (val) {
@@ -29072,8 +29072,8 @@ require("./config").defineOptions(Editor.prototype, "editor", {
 
 });
 
-ace.define("ace/mode/folding/fold_mode",["require","exports","module","ace/range"], function(require, exports$1, module){var Range = require("../../range").Range;
-var FoldMode = exports$1.FoldMode = function () { };
+ace.define("ace/mode/folding/fold_mode",["require","exports","module","ace/range"], function(require, exports, module){var Range = require("../../range").Range;
+var FoldMode = exports.FoldMode = function () { };
 (function () {
     this.foldingStartMarker = null;
     this.foldingStopMarker = null;
@@ -29143,7 +29143,7 @@ var FoldMode = exports$1.FoldMode = function () { };
 
 });
 
-ace.define("ace/ext/error_marker",["require","exports","module","ace/lib/dom","ace/range","ace/config"], function(require, exports$1, module){/**
+ace.define("ace/ext/error_marker",["require","exports","module","ace/lib/dom","ace/range","ace/config"], function(require, exports, module){/**
  * ## Error Marker extension
  *
  * Provides inline error display functionality for Ace editor. Creates visual error markers that appear as tooltips
@@ -29199,7 +29199,7 @@ function findAnnotations(session, row, dir) {
     } while (annotation && annotation.row == row);
     return matched.length && matched;
 }
-exports$1.showErrorMarker = function (editor, dir) {
+exports.showErrorMarker = function (editor, dir) {
     var session = editor.session;
     var pos = editor.getCursorPosition();
     var row = pos.row;
@@ -29284,12 +29284,12 @@ dom.importCssString("\n    .error_widget_wrapper {\n        background: inherit;
 
 });
 
-ace.define("ace/ace",["require","exports","module","ace/lib/dom","ace/range","ace/editor","ace/edit_session","ace/undomanager","ace/virtual_renderer","ace/worker/worker_client","ace/keyboard/hash_handler","ace/placeholder","ace/multi_select","ace/mode/folding/fold_mode","ace/theme/textmate","ace/ext/error_marker","ace/config","ace/loader_build"], function(require, exports$1, module){/**
+ace.define("ace/ace",["require","exports","module","ace/lib/dom","ace/range","ace/editor","ace/edit_session","ace/undomanager","ace/virtual_renderer","ace/worker/worker_client","ace/keyboard/hash_handler","ace/placeholder","ace/multi_select","ace/mode/folding/fold_mode","ace/theme/textmate","ace/ext/error_marker","ace/config","ace/loader_build"], function(require, exports, module){/**
  * The main class required to set up an Ace instance in the browser.
  *
  * @namespace Ace
  **/
-require("./loader_build")(exports$1);
+require("./loader_build")(exports);
 var dom = require("./lib/dom");
 var Range = require("./range").Range;
 var Editor = require("./editor").Editor;
@@ -29303,8 +29303,8 @@ require("./multi_select");
 require("./mode/folding/fold_mode");
 require("./theme/textmate");
 require("./ext/error_marker");
-exports$1.config = require("./config");
-exports$1.edit = function (el, options) {
+exports.config = require("./config");
+exports.edit = function (el, options) {
     if (typeof el == "string") {
         var _id = el;
         el = document.getElementById(_id);
@@ -29324,7 +29324,7 @@ exports$1.edit = function (el, options) {
         value = el.textContent;
         el.innerHTML = "";
     }
-    var doc = exports$1.createEditSession(value);
+    var doc = exports.createEditSession(value);
     var editor = new Editor(new Renderer(el), doc, options);
     var env = {
         document: doc,
@@ -29339,18 +29339,18 @@ exports$1.edit = function (el, options) {
     editor.container.env = editor.env = env;
     return editor;
 };
-exports$1.createEditSession = function (text, mode) {
+exports.createEditSession = function (text, mode) {
     var doc = new EditSession(text, mode);
     doc.setUndoManager(new UndoManager());
     return doc;
 };
-exports$1.Range = Range;
-exports$1.Editor = Editor;
-exports$1.EditSession = EditSession;
-exports$1.UndoManager = UndoManager;
-exports$1.VirtualRenderer = Renderer;
-var version = exports$1.config.version;
-exports$1.version = version;
+exports.Range = Range;
+exports.Editor = Editor;
+exports.EditSession = EditSession;
+exports.UndoManager = UndoManager;
+exports.VirtualRenderer = Renderer;
+var version = exports.config.version;
+exports.version = version;
 
 });            (function() {
                 ace.require(["ace/ace"], function(a) {
@@ -29375,15 +29375,15 @@ exports$1.version = version;
                 });
             })();
 
-ace.define("ace/theme/sqlserver-css",["require","exports","module"], function(require, exports$1, module){module.exports = ".ace-sqlserver .ace_gutter {\n    background: #ebebeb;\n    color: #333;\n    overflow: hidden;\n}\n\n.ace-sqlserver .ace_print-margin {\n    width: 1px;\n    background: #e8e8e8;\n}\n\n.ace-sqlserver {\n    background-color: #FFFFFF;\n    color: black;\n}\n\n.ace-sqlserver .ace_identifier {\n    color: black;\n}\n\n.ace-sqlserver .ace_keyword {\n    color: #0000FF;\n}\n\n.ace-sqlserver .ace_numeric {\n    color: black;\n}\n\n.ace-sqlserver .ace_storage {\n    color: #11B7BE;\n}\n\n.ace-sqlserver .ace_keyword.ace_operator,\n.ace-sqlserver .ace_lparen,\n.ace-sqlserver .ace_rparen,\n.ace-sqlserver .ace_punctuation {\n    color: #808080;\n}\n\n.ace-sqlserver .ace_set.ace_statement {\n    color: #0000FF;\n    text-decoration: underline;\n}\n\n.ace-sqlserver .ace_cursor {\n    color: black;\n}\n\n.ace-sqlserver .ace_invisible {\n    color: rgb(191, 191, 191);\n}\n\n.ace-sqlserver .ace_constant.ace_buildin {\n    color: rgb(88, 72, 246);\n}\n\n.ace-sqlserver .ace_constant.ace_language {\n    color: #979797;\n}\n\n.ace-sqlserver .ace_constant.ace_library {\n    color: rgb(6, 150, 14);\n}\n\n.ace-sqlserver .ace_invalid {\n    background-color: rgb(153, 0, 0);\n    color: white;\n}\n\n.ace-sqlserver .ace_support.ace_function {\n    color: #FF00FF;\n}\n\n.ace-sqlserver .ace_support.ace_constant {\n    color: rgb(6, 150, 14);\n}\n\n.ace-sqlserver .ace_class {\n    color: #008080;\n}\n\n.ace-sqlserver .ace_support.ace_other {\n    color: #6D79DE;\n}\n\n.ace-sqlserver .ace_variable.ace_parameter {\n    font-style: italic;\n    color: #FD971F;\n}\n\n.ace-sqlserver .ace_comment {\n    color: #008000;\n}\n\n.ace-sqlserver .ace_constant.ace_numeric {\n    color: black;\n}\n\n.ace-sqlserver .ace_variable {\n    color: rgb(49, 132, 149);\n}\n\n.ace-sqlserver .ace_xml-pe {\n    color: rgb(104, 104, 91);\n}\n\n.ace-sqlserver .ace_support.ace_storedprocedure {\n    color: #800000;\n}\n\n.ace-sqlserver .ace_heading {\n    color: rgb(12, 7, 255);\n}\n\n.ace-sqlserver .ace_list {\n    color: rgb(185, 6, 144);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_selection {\n    background: rgb(181, 213, 255);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_step {\n    background: rgb(252, 255, 0);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_stack {\n    background: rgb(164, 229, 101);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_bracket {\n    margin: -1px 0 0 -1px;\n    border: 1px solid rgb(192, 192, 192);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_active-line {\n    background: rgba(0, 0, 0, 0.07);\n}\n\n.ace-sqlserver .ace_gutter-active-line {\n    background-color: #dcdcdc;\n}\n\n.ace-sqlserver .ace_marker-layer .ace_selected-word {\n    background: rgb(250, 250, 255);\n    border: 1px solid rgb(200, 200, 250);\n}\n\n.ace-sqlserver .ace_meta.ace_tag {\n    color: #0000FF;\n}\n\n.ace-sqlserver .ace_string.ace_regex {\n    color: #FF0000;\n}\n\n.ace-sqlserver .ace_string {\n    color: #FF0000;\n}\n\n.ace-sqlserver .ace_entity.ace_other.ace_attribute-name {\n    color: #994409;\n}\n\n.ace-sqlserver .ace_indent-guide {\n    background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y;\n}\n\n.ace-sqlserver .ace_indent-guide-active {\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC\") right repeat-y;\n} \n";
+ace.define("ace/theme/sqlserver-css",["require","exports","module"], function(require, exports, module){module.exports = ".ace-sqlserver .ace_gutter {\n    background: #ebebeb;\n    color: #333;\n    overflow: hidden;\n}\n\n.ace-sqlserver .ace_print-margin {\n    width: 1px;\n    background: #e8e8e8;\n}\n\n.ace-sqlserver {\n    background-color: #FFFFFF;\n    color: black;\n}\n\n.ace-sqlserver .ace_identifier {\n    color: black;\n}\n\n.ace-sqlserver .ace_keyword {\n    color: #0000FF;\n}\n\n.ace-sqlserver .ace_numeric {\n    color: black;\n}\n\n.ace-sqlserver .ace_storage {\n    color: #11B7BE;\n}\n\n.ace-sqlserver .ace_keyword.ace_operator,\n.ace-sqlserver .ace_lparen,\n.ace-sqlserver .ace_rparen,\n.ace-sqlserver .ace_punctuation {\n    color: #808080;\n}\n\n.ace-sqlserver .ace_set.ace_statement {\n    color: #0000FF;\n    text-decoration: underline;\n}\n\n.ace-sqlserver .ace_cursor {\n    color: black;\n}\n\n.ace-sqlserver .ace_invisible {\n    color: rgb(191, 191, 191);\n}\n\n.ace-sqlserver .ace_constant.ace_buildin {\n    color: rgb(88, 72, 246);\n}\n\n.ace-sqlserver .ace_constant.ace_language {\n    color: #979797;\n}\n\n.ace-sqlserver .ace_constant.ace_library {\n    color: rgb(6, 150, 14);\n}\n\n.ace-sqlserver .ace_invalid {\n    background-color: rgb(153, 0, 0);\n    color: white;\n}\n\n.ace-sqlserver .ace_support.ace_function {\n    color: #FF00FF;\n}\n\n.ace-sqlserver .ace_support.ace_constant {\n    color: rgb(6, 150, 14);\n}\n\n.ace-sqlserver .ace_class {\n    color: #008080;\n}\n\n.ace-sqlserver .ace_support.ace_other {\n    color: #6D79DE;\n}\n\n.ace-sqlserver .ace_variable.ace_parameter {\n    font-style: italic;\n    color: #FD971F;\n}\n\n.ace-sqlserver .ace_comment {\n    color: #008000;\n}\n\n.ace-sqlserver .ace_constant.ace_numeric {\n    color: black;\n}\n\n.ace-sqlserver .ace_variable {\n    color: rgb(49, 132, 149);\n}\n\n.ace-sqlserver .ace_xml-pe {\n    color: rgb(104, 104, 91);\n}\n\n.ace-sqlserver .ace_support.ace_storedprocedure {\n    color: #800000;\n}\n\n.ace-sqlserver .ace_heading {\n    color: rgb(12, 7, 255);\n}\n\n.ace-sqlserver .ace_list {\n    color: rgb(185, 6, 144);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_selection {\n    background: rgb(181, 213, 255);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_step {\n    background: rgb(252, 255, 0);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_stack {\n    background: rgb(164, 229, 101);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_bracket {\n    margin: -1px 0 0 -1px;\n    border: 1px solid rgb(192, 192, 192);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_active-line {\n    background: rgba(0, 0, 0, 0.07);\n}\n\n.ace-sqlserver .ace_gutter-active-line {\n    background-color: #dcdcdc;\n}\n\n.ace-sqlserver .ace_marker-layer .ace_selected-word {\n    background: rgb(250, 250, 255);\n    border: 1px solid rgb(200, 200, 250);\n}\n\n.ace-sqlserver .ace_meta.ace_tag {\n    color: #0000FF;\n}\n\n.ace-sqlserver .ace_string.ace_regex {\n    color: #FF0000;\n}\n\n.ace-sqlserver .ace_string {\n    color: #FF0000;\n}\n\n.ace-sqlserver .ace_entity.ace_other.ace_attribute-name {\n    color: #994409;\n}\n\n.ace-sqlserver .ace_indent-guide {\n    background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y;\n}\n\n.ace-sqlserver .ace_indent-guide-active {\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC\") right repeat-y;\n} \n";
 
 });
 
-ace.define("ace/theme/sqlserver",["require","exports","module","ace/theme/sqlserver-css","ace/lib/dom"], function(require, exports$1, module){exports$1.isDark = false;
-exports$1.cssClass = "ace-sqlserver";
-exports$1.cssText = require("./sqlserver-css");
+ace.define("ace/theme/sqlserver",["require","exports","module","ace/theme/sqlserver-css","ace/lib/dom"], function(require, exports, module){exports.isDark = false;
+exports.cssClass = "ace-sqlserver";
+exports.cssText = require("./sqlserver-css");
 var dom = require("../lib/dom");
-dom.importCssString(exports$1.cssText, exports$1.cssClass, false);
+dom.importCssString(exports.cssText, exports.cssClass, false);
 
 });                (function() {
                     ace.require(["ace/theme/sqlserver"], function(m) {
@@ -29393,7 +29393,7 @@ dom.importCssString(exports$1.cssText, exports$1.cssClass, false);
                     });
                 })();
 
-ace.define("ace/mode/xml_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(require, exports$1, module){var oop = require("../lib/oop");
+ace.define("ace/mode/xml_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(require, exports, module){var oop = require("../lib/oop");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var XmlHighlightRules = function (normalize) {
     var tagRegex = "[_:a-zA-Z\xc0-\uffff][-_:.a-zA-Z0-9\xc0-\uffff]*";
@@ -29568,11 +29568,11 @@ var XmlHighlightRules = function (normalize) {
     };
 }).call(TextHighlightRules.prototype);
 oop.inherits(XmlHighlightRules, TextHighlightRules);
-exports$1.XmlHighlightRules = XmlHighlightRules;
+exports.XmlHighlightRules = XmlHighlightRules;
 
 });
 
-ace.define("ace/mode/behaviour/xml",["require","exports","module","ace/lib/oop","ace/mode/behaviour","ace/token_iterator"], function(require, exports$1, module){var oop = require("../../lib/oop");
+ace.define("ace/mode/behaviour/xml",["require","exports","module","ace/lib/oop","ace/mode/behaviour","ace/token_iterator"], function(require, exports, module){var oop = require("../../lib/oop");
 var Behaviour = require("../behaviour").Behaviour;
 var TokenIterator = require("../../token_iterator").TokenIterator;
 function is(token, type) {
@@ -29714,14 +29714,14 @@ var XmlBehaviour = function () {
     });
 };
 oop.inherits(XmlBehaviour, Behaviour);
-exports$1.XmlBehaviour = XmlBehaviour;
+exports.XmlBehaviour = XmlBehaviour;
 
 });
 
-ace.define("ace/mode/folding/xml",["require","exports","module","ace/lib/oop","ace/range","ace/mode/folding/fold_mode"], function(require, exports$1, module){var oop = require("../../lib/oop");
+ace.define("ace/mode/folding/xml",["require","exports","module","ace/lib/oop","ace/range","ace/mode/folding/fold_mode"], function(require, exports, module){var oop = require("../../lib/oop");
 var Range = require("../../range").Range;
 var BaseFoldMode = require("./fold_mode").FoldMode;
-var FoldMode = exports$1.FoldMode = function (voidElements, optionalEndTags) {
+var FoldMode = exports.FoldMode = function (voidElements, optionalEndTags) {
     BaseFoldMode.call(this);
     this.voidElements = voidElements || {};
     this.optionalEndTags = oop.mixin({}, this.voidElements);
@@ -29827,7 +29827,7 @@ function is(token, type) {
 
 });
 
-ace.define("ace/mode/xml",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/mode/text","ace/mode/xml_highlight_rules","ace/mode/behaviour/xml","ace/mode/folding/xml","ace/worker/worker_client"], function(require, exports$1, module){var oop = require("../lib/oop");
+ace.define("ace/mode/xml",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/mode/text","ace/mode/xml_highlight_rules","ace/mode/behaviour/xml","ace/mode/folding/xml","ace/worker/worker_client"], function(require, exports, module){var oop = require("../lib/oop");
 var lang = require("../lib/lang");
 var TextMode = require("./text").Mode;
 var XmlHighlightRules = require("./xml_highlight_rules").XmlHighlightRules;
@@ -29856,7 +29856,7 @@ oop.inherits(Mode, TextMode);
     };
     this.$id = "ace/mode/xml";
 }).call(Mode.prototype);
-exports$1.Mode = Mode;
+exports.Mode = Mode;
 
 });                (function() {
                     ace.require(["ace/mode/xml"], function(m) {
@@ -29866,11 +29866,11 @@ exports$1.Mode = Mode;
                     });
                 })();
 
-ace.define("ace/ext/searchbox-css",["require","exports","module"], function(require, exports$1, module){module.exports = "\n\n/* ------------------------------------------------------------------------------------------\n * Editor Search Form\n * --------------------------------------------------------------------------------------- */\n.ace_search {\n    background-color: #ddd;\n    color: #666;\n    border: 1px solid #cbcbcb;\n    border-top: 0 none;\n    overflow: hidden;\n    margin: 0;\n    padding: 4px 6px 0 4px;\n    position: absolute;\n    top: 0;\n    z-index: 99;\n    white-space: normal;\n}\n.ace_search.left {\n    border-left: 0 none;\n    border-radius: 0px 0px 5px 0px;\n    left: 0;\n}\n.ace_search.right {\n    border-radius: 0px 0px 0px 5px;\n    border-right: 0 none;\n    right: 0;\n}\n\n.ace_search_form, .ace_replace_form {\n    margin: 0 20px 4px 0;\n    overflow: hidden;\n    line-height: 1.9;\n}\n.ace_replace_form {\n    margin-right: 0;\n}\n.ace_search_form.ace_nomatch {\n    outline: 1px solid red;\n}\n\n.ace_search_field {\n    border-radius: 3px 0 0 3px;\n    background-color: white;\n    color: black;\n    border: 1px solid #cbcbcb;\n    border-right: 0 none;\n    outline: 0;\n    padding: 0;\n    font-size: inherit;\n    margin: 0;\n    line-height: inherit;\n    padding: 0 6px;\n    min-width: 17em;\n    vertical-align: top;\n    min-height: 1.8em;\n    box-sizing: content-box;\n}\n.ace_searchbtn {\n    border: 1px solid #cbcbcb;\n    line-height: inherit;\n    display: inline-block;\n    padding: 0 6px;\n    background: #fff;\n    border-right: 0 none;\n    border-left: 1px solid #dcdcdc;\n    cursor: pointer;\n    margin: 0;\n    position: relative;\n    color: #666;\n}\n.ace_searchbtn:last-child {\n    border-radius: 0 3px 3px 0;\n    border-right: 1px solid #cbcbcb;\n}\n.ace_searchbtn:disabled {\n    background: none;\n    cursor: default;\n}\n.ace_searchbtn:hover {\n    background-color: #eef1f6;\n}\n.ace_searchbtn.prev, .ace_searchbtn.next {\n     padding: 0px 0.7em\n}\n.ace_searchbtn.prev:after, .ace_searchbtn.next:after {\n     content: \"\";\n     border: solid 2px #888;\n     width: 0.5em;\n     height: 0.5em;\n     border-width:  2px 0 0 2px;\n     display:inline-block;\n     transform: rotate(-45deg);\n}\n.ace_searchbtn.next:after {\n     border-width: 0 2px 2px 0 ;\n}\n.ace_searchbtn_close {\n    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAcCAYAAABRVo5BAAAAZ0lEQVR42u2SUQrAMAhDvazn8OjZBilCkYVVxiis8H4CT0VrAJb4WHT3C5xU2a2IQZXJjiQIRMdkEoJ5Q2yMqpfDIo+XY4k6h+YXOyKqTIj5REaxloNAd0xiKmAtsTHqW8sR2W5f7gCu5nWFUpVjZwAAAABJRU5ErkJggg==) no-repeat 50% 0;\n    border-radius: 50%;\n    border: 0 none;\n    color: #656565;\n    cursor: pointer;\n    font: 16px/16px Arial;\n    padding: 0;\n    height: 14px;\n    width: 14px;\n    top: 9px;\n    right: 7px;\n    position: absolute;\n}\n.ace_searchbtn_close:hover {\n    background-color: #656565;\n    background-position: 50% 100%;\n    color: white;\n}\n\n.ace_button {\n    margin-left: 2px;\n    cursor: pointer;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    overflow: hidden;\n    opacity: 0.7;\n    border: 1px solid rgba(100,100,100,0.23);\n    padding: 1px;\n    box-sizing:    border-box!important;\n    color: black;\n}\n\n.ace_button:hover {\n    background-color: #eee;\n    opacity:1;\n}\n.ace_button:active {\n    background-color: #ddd;\n}\n\n.ace_button.checked {\n    border-color: #3399ff;\n    opacity:1;\n}\n\n.ace_search_options{\n    margin-bottom: 3px;\n    text-align: right;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    clear: both;\n}\n\n.ace_search_counter {\n    float: left;\n    font-family: arial;\n    padding: 0 8px;\n}";
+ace.define("ace/ext/searchbox-css",["require","exports","module"], function(require, exports, module){module.exports = "\n\n/* ------------------------------------------------------------------------------------------\n * Editor Search Form\n * --------------------------------------------------------------------------------------- */\n.ace_search {\n    background-color: #ddd;\n    color: #666;\n    border: 1px solid #cbcbcb;\n    border-top: 0 none;\n    overflow: hidden;\n    margin: 0;\n    padding: 4px 6px 0 4px;\n    position: absolute;\n    top: 0;\n    z-index: 99;\n    white-space: normal;\n}\n.ace_search.left {\n    border-left: 0 none;\n    border-radius: 0px 0px 5px 0px;\n    left: 0;\n}\n.ace_search.right {\n    border-radius: 0px 0px 0px 5px;\n    border-right: 0 none;\n    right: 0;\n}\n\n.ace_search_form, .ace_replace_form {\n    margin: 0 20px 4px 0;\n    overflow: hidden;\n    line-height: 1.9;\n}\n.ace_replace_form {\n    margin-right: 0;\n}\n.ace_search_form.ace_nomatch {\n    outline: 1px solid red;\n}\n\n.ace_search_field {\n    border-radius: 3px 0 0 3px;\n    background-color: white;\n    color: black;\n    border: 1px solid #cbcbcb;\n    border-right: 0 none;\n    outline: 0;\n    padding: 0;\n    font-size: inherit;\n    margin: 0;\n    line-height: inherit;\n    padding: 0 6px;\n    min-width: 17em;\n    vertical-align: top;\n    min-height: 1.8em;\n    box-sizing: content-box;\n}\n.ace_searchbtn {\n    border: 1px solid #cbcbcb;\n    line-height: inherit;\n    display: inline-block;\n    padding: 0 6px;\n    background: #fff;\n    border-right: 0 none;\n    border-left: 1px solid #dcdcdc;\n    cursor: pointer;\n    margin: 0;\n    position: relative;\n    color: #666;\n}\n.ace_searchbtn:last-child {\n    border-radius: 0 3px 3px 0;\n    border-right: 1px solid #cbcbcb;\n}\n.ace_searchbtn:disabled {\n    background: none;\n    cursor: default;\n}\n.ace_searchbtn:hover {\n    background-color: #eef1f6;\n}\n.ace_searchbtn.prev, .ace_searchbtn.next {\n     padding: 0px 0.7em\n}\n.ace_searchbtn.prev:after, .ace_searchbtn.next:after {\n     content: \"\";\n     border: solid 2px #888;\n     width: 0.5em;\n     height: 0.5em;\n     border-width:  2px 0 0 2px;\n     display:inline-block;\n     transform: rotate(-45deg);\n}\n.ace_searchbtn.next:after {\n     border-width: 0 2px 2px 0 ;\n}\n.ace_searchbtn_close {\n    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAcCAYAAABRVo5BAAAAZ0lEQVR42u2SUQrAMAhDvazn8OjZBilCkYVVxiis8H4CT0VrAJb4WHT3C5xU2a2IQZXJjiQIRMdkEoJ5Q2yMqpfDIo+XY4k6h+YXOyKqTIj5REaxloNAd0xiKmAtsTHqW8sR2W5f7gCu5nWFUpVjZwAAAABJRU5ErkJggg==) no-repeat 50% 0;\n    border-radius: 50%;\n    border: 0 none;\n    color: #656565;\n    cursor: pointer;\n    font: 16px/16px Arial;\n    padding: 0;\n    height: 14px;\n    width: 14px;\n    top: 9px;\n    right: 7px;\n    position: absolute;\n}\n.ace_searchbtn_close:hover {\n    background-color: #656565;\n    background-position: 50% 100%;\n    color: white;\n}\n\n.ace_button {\n    margin-left: 2px;\n    cursor: pointer;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    overflow: hidden;\n    opacity: 0.7;\n    border: 1px solid rgba(100,100,100,0.23);\n    padding: 1px;\n    box-sizing:    border-box!important;\n    color: black;\n}\n\n.ace_button:hover {\n    background-color: #eee;\n    opacity:1;\n}\n.ace_button:active {\n    background-color: #ddd;\n}\n\n.ace_button.checked {\n    border-color: #3399ff;\n    opacity:1;\n}\n\n.ace_search_options{\n    margin-bottom: 3px;\n    text-align: right;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    clear: both;\n}\n\n.ace_search_counter {\n    float: left;\n    font-family: arial;\n    padding: 0 8px;\n}";
 
 });
 
-ace.define("ace/ext/searchbox",["require","exports","module","ace/ext/searchbox","ace/ext/searchbox","ace/lib/dom","ace/lib/lang","ace/lib/event","ace/ext/searchbox-css","ace/keyboard/hash_handler","ace/lib/keys","ace/config"], function(require, exports$1, module){/**
+ace.define("ace/ext/searchbox",["require","exports","module","ace/ext/searchbox","ace/ext/searchbox","ace/lib/dom","ace/lib/lang","ace/lib/event","ace/ext/searchbox-css","ace/keyboard/hash_handler","ace/lib/keys","ace/config"], function(require, exports, module){/**
  * ## Interactive search and replace UI extension for text editing
  *
  * Provides a floating search box interface with find/replace functionality including live search results, regex
@@ -30234,8 +30234,8 @@ var $closeSearchBarKb = new HashHandler([{
     }]);
 SearchBox.prototype.$searchBarKb = $searchBarKb;
 SearchBox.prototype.$closeSearchBarKb = $closeSearchBarKb;
-exports$1.SearchBox = SearchBox;
-exports$1.Search = function (editor, isReplace) {
+exports.SearchBox = SearchBox;
+exports.Search = function (editor, isReplace) {
     var sb = editor.searchBox || new SearchBox(editor);
     var range = editor.session.selection.getRange();
     var value = range.isMultiLine() ? "" : editor.session.getTextRange(range);
@@ -30396,11 +30396,11 @@ var lookup = function(parentId, moduleName) {
     if (!module) {
         module = define.payloads[moduleName];
         if (typeof module === 'function') {
-            var exports$1 = {};
+            var exports = {};
             var mod = {
                 id: moduleName,
                 uri: '',
-                exports: exports$1,
+                exports: exports,
                 packaged: true
             };
 
@@ -30408,12 +30408,12 @@ var lookup = function(parentId, moduleName) {
                 return _require(moduleName, module, callback);
             };
 
-            var returnValue = module(req, exports$1, mod);
-            exports$1 = returnValue || mod.exports;
-            define.modules[moduleName] = exports$1;
+            var returnValue = module(req, exports, mod);
+            exports = returnValue || mod.exports;
+            define.modules[moduleName] = exports;
             delete define.payloads[moduleName];
         }
-        module = define.modules[moduleName] = exports$1 || module;
+        module = define.modules[moduleName] = exports || module;
     }
     return module;
 };
@@ -30443,7 +30443,7 @@ exportAce(ACE_NAMESPACE);
 
 })();
 
-ace.define("ace/lib/fixoldbrowsers",["require","exports","module"], function(require, exports$1, module) {
+ace.define("ace/lib/fixoldbrowsers",["require","exports","module"], function(require, exports, module) {
 if (typeof Element != "undefined" && !Element.prototype.remove) {
     Object.defineProperty(Element.prototype, "remove", {
         enumerable: false,
@@ -30456,19 +30456,19 @@ if (typeof Element != "undefined" && !Element.prototype.remove) {
 
 });
 
-ace.define("ace/lib/useragent",["require","exports","module"], function(require, exports$1, module) {
-exports$1.OS = {
+ace.define("ace/lib/useragent",["require","exports","module"], function(require, exports, module) {
+exports.OS = {
     LINUX: "LINUX",
     MAC: "MAC",
     WINDOWS: "WINDOWS"
 };
-exports$1.getOS = function() {
-    if (exports$1.isMac) {
-        return exports$1.OS.MAC;
-    } else if (exports$1.isLinux) {
-        return exports$1.OS.LINUX;
+exports.getOS = function() {
+    if (exports.isMac) {
+        return exports.OS.MAC;
+    } else if (exports.isLinux) {
+        return exports.OS.LINUX;
     } else {
-        return exports$1.OS.WINDOWS;
+        return exports.OS.WINDOWS;
     }
 };
 var _navigator = typeof navigator == "object" ? navigator : {};
@@ -30476,43 +30476,43 @@ var _navigator = typeof navigator == "object" ? navigator : {};
 var os = (/mac|win|linux/i.exec(_navigator.platform) || ["other"])[0].toLowerCase();
 var ua = _navigator.userAgent || "";
 var appName = _navigator.appName || "";
-exports$1.isWin = (os == "win");
-exports$1.isMac = (os == "mac");
-exports$1.isLinux = (os == "linux");
-exports$1.isIE = 
+exports.isWin = (os == "win");
+exports.isMac = (os == "mac");
+exports.isLinux = (os == "linux");
+exports.isIE = 
     (appName == "Microsoft Internet Explorer" || appName.indexOf("MSAppHost") >= 0)
     ? parseFloat((ua.match(/(?:MSIE |Trident\/[0-9]+[\.0-9]+;.*rv:)([0-9]+[\.0-9]+)/)||[])[1])
     : parseFloat((ua.match(/(?:Trident\/[0-9]+[\.0-9]+;.*rv:)([0-9]+[\.0-9]+)/)||[])[1]); // for ie
     
-exports$1.isOldIE = exports$1.isIE && exports$1.isIE < 9;
-exports$1.isGecko = exports$1.isMozilla = ua.match(/ Gecko\/\d+/);
-exports$1.isOpera = typeof opera == "object" && Object.prototype.toString.call(window.opera) == "[object Opera]";
-exports$1.isWebKit = parseFloat(ua.split("WebKit/")[1]) || undefined;
+exports.isOldIE = exports.isIE && exports.isIE < 9;
+exports.isGecko = exports.isMozilla = ua.match(/ Gecko\/\d+/);
+exports.isOpera = typeof opera == "object" && Object.prototype.toString.call(window.opera) == "[object Opera]";
+exports.isWebKit = parseFloat(ua.split("WebKit/")[1]) || undefined;
 
-exports$1.isChrome = parseFloat(ua.split(" Chrome/")[1]) || undefined;
+exports.isChrome = parseFloat(ua.split(" Chrome/")[1]) || undefined;
 
-exports$1.isEdge = parseFloat(ua.split(" Edge/")[1]) || undefined;
+exports.isEdge = parseFloat(ua.split(" Edge/")[1]) || undefined;
 
-exports$1.isAIR = ua.indexOf("AdobeAIR") >= 0;
+exports.isAIR = ua.indexOf("AdobeAIR") >= 0;
 
-exports$1.isAndroid = ua.indexOf("Android") >= 0;
+exports.isAndroid = ua.indexOf("Android") >= 0;
 
-exports$1.isChromeOS = ua.indexOf(" CrOS ") >= 0;
+exports.isChromeOS = ua.indexOf(" CrOS ") >= 0;
 
-exports$1.isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+exports.isIOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
 
-if (exports$1.isIOS) exports$1.isMac = true;
+if (exports.isIOS) exports.isMac = true;
 
-exports$1.isMobile = exports$1.isIOS || exports$1.isAndroid;
+exports.isMobile = exports.isIOS || exports.isAndroid;
 
 });
 
-ace.define("ace/lib/dom",["require","exports","module","ace/lib/useragent"], function(require, exports$1, module) {
+ace.define("ace/lib/dom",["require","exports","module","ace/lib/useragent"], function(require, exports, module) {
 
 var useragent = require("./useragent"); 
 var XHTML_NS = "http://www.w3.org/1999/xhtml";
 
-exports$1.buildDom = function buildDom(arr, parent, refs) {
+exports.buildDom = function buildDom(arr, parent, refs) {
     if (typeof arr == "string" && arr) {
         var txt = document.createTextNode(arr);
         if (parent)
@@ -30560,42 +30560,42 @@ exports$1.buildDom = function buildDom(arr, parent, refs) {
     return el;
 };
 
-exports$1.getDocumentHead = function(doc) {
+exports.getDocumentHead = function(doc) {
     if (!doc)
         doc = document;
     return doc.head || doc.getElementsByTagName("head")[0] || doc.documentElement;
 };
 
-exports$1.createElement = function(tag, ns) {
+exports.createElement = function(tag, ns) {
     return document.createElementNS ?
            document.createElementNS(ns || XHTML_NS, tag) :
            document.createElement(tag);
 };
 
-exports$1.removeChildren = function(element) {
+exports.removeChildren = function(element) {
     element.innerHTML = "";
 };
 
-exports$1.createTextNode = function(textContent, element) {
+exports.createTextNode = function(textContent, element) {
     var doc = element ? element.ownerDocument : document;
     return doc.createTextNode(textContent);
 };
 
-exports$1.createFragment = function(element) {
+exports.createFragment = function(element) {
     var doc = element ? element.ownerDocument : document;
     return doc.createDocumentFragment();
 };
 
-exports$1.hasCssClass = function(el, name) {
+exports.hasCssClass = function(el, name) {
     var classes = (el.className + "").split(/\s+/g);
     return classes.indexOf(name) !== -1;
 };
-exports$1.addCssClass = function(el, name) {
-    if (!exports$1.hasCssClass(el, name)) {
+exports.addCssClass = function(el, name) {
+    if (!exports.hasCssClass(el, name)) {
         el.className += " " + name;
     }
 };
-exports$1.removeCssClass = function(el, name) {
+exports.removeCssClass = function(el, name) {
     var classes = el.className.split(/\s+/g);
     while (true) {
         var index = classes.indexOf(name);
@@ -30607,7 +30607,7 @@ exports$1.removeCssClass = function(el, name) {
     el.className = classes.join(" ");
 };
 
-exports$1.toggleCssClass = function(el, name) {
+exports.toggleCssClass = function(el, name) {
     var classes = el.className.split(/\s+/g), add = true;
     while (true) {
         var index = classes.indexOf(name);
@@ -30623,15 +30623,15 @@ exports$1.toggleCssClass = function(el, name) {
     el.className = classes.join(" ");
     return add;
 };
-exports$1.setCssClass = function(node, className, include) {
+exports.setCssClass = function(node, className, include) {
     if (include) {
-        exports$1.addCssClass(node, className);
+        exports.addCssClass(node, className);
     } else {
-        exports$1.removeCssClass(node, className);
+        exports.removeCssClass(node, className);
     }
 };
 
-exports$1.hasCssString = function(id, doc) {
+exports.hasCssString = function(id, doc) {
     var index = 0, sheets;
     doc = doc || document;
     if ((sheets = doc.querySelectorAll("style"))) {
@@ -30641,7 +30641,7 @@ exports$1.hasCssString = function(id, doc) {
     }
 };
 
-exports$1.importCssString = function importCssString(cssText, id, target) {
+exports.importCssString = function importCssString(cssText, id, target) {
     var container = target;
     if (!target || !target.getRootNode) {
         container = document;
@@ -30652,33 +30652,33 @@ exports$1.importCssString = function importCssString(cssText, id, target) {
     }
     
     var doc = container.ownerDocument || container;
-    if (id && exports$1.hasCssString(id, container))
+    if (id && exports.hasCssString(id, container))
         return null;
     
     if (id)
         cssText += "\n/*# sourceURL=ace/css/" + id + " */";
     
-    var style = exports$1.createElement("style");
+    var style = exports.createElement("style");
     style.appendChild(doc.createTextNode(cssText));
     if (id)
         style.id = id;
 
     if (container == doc)
-        container = exports$1.getDocumentHead(doc);
+        container = exports.getDocumentHead(doc);
     container.insertBefore(style, container.firstChild);
 };
 
-exports$1.importCssStylsheet = function(uri, doc) {
-    exports$1.buildDom(["link", {rel: "stylesheet", href: uri}], exports$1.getDocumentHead(doc));
+exports.importCssStylsheet = function(uri, doc) {
+    exports.buildDom(["link", {rel: "stylesheet", href: uri}], exports.getDocumentHead(doc));
 };
-exports$1.scrollbarWidth = function(document) {
-    var inner = exports$1.createElement("ace_inner");
+exports.scrollbarWidth = function(document) {
+    var inner = exports.createElement("ace_inner");
     inner.style.width = "100%";
     inner.style.minWidth = "0px";
     inner.style.height = "200px";
     inner.style.display = "block";
 
-    var outer = exports$1.createElement("ace_outer");
+    var outer = exports.createElement("ace_outer");
     var style = outer.style;
 
     style.position = "absolute";
@@ -30709,40 +30709,40 @@ exports$1.scrollbarWidth = function(document) {
 };
 
 if (typeof document == "undefined") {
-    exports$1.importCssString = function() {};
+    exports.importCssString = function() {};
 }
 
-exports$1.computedStyle = function(element, style) {
+exports.computedStyle = function(element, style) {
     return window.getComputedStyle(element, "") || {};
 };
 
-exports$1.setStyle = function(styles, property, value) {
+exports.setStyle = function(styles, property, value) {
     if (styles[property] !== value) {
         styles[property] = value;
     }
 };
 
-exports$1.HAS_CSS_ANIMATION = false;
-exports$1.HAS_CSS_TRANSFORMS = false;
-exports$1.HI_DPI = useragent.isWin
+exports.HAS_CSS_ANIMATION = false;
+exports.HAS_CSS_TRANSFORMS = false;
+exports.HI_DPI = useragent.isWin
     ? typeof window !== "undefined" && window.devicePixelRatio >= 1.5
     : true;
 
 if (typeof document !== "undefined") {
     var div = document.createElement("div");
-    if (exports$1.HI_DPI && div.style.transform  !== undefined)
-        exports$1.HAS_CSS_TRANSFORMS = true;
+    if (exports.HI_DPI && div.style.transform  !== undefined)
+        exports.HAS_CSS_TRANSFORMS = true;
     if (!useragent.isEdge && typeof div.style.animationName !== "undefined")
-        exports$1.HAS_CSS_ANIMATION = true;
+        exports.HAS_CSS_ANIMATION = true;
     div = null;
 }
 
-if (exports$1.HAS_CSS_TRANSFORMS) {
-    exports$1.translate = function(element, tx, ty) {
+if (exports.HAS_CSS_TRANSFORMS) {
+    exports.translate = function(element, tx, ty) {
         element.style.transform = "translate(" + Math.round(tx) + "px, " + Math.round(ty) +"px)";
     };
 } else {
-    exports$1.translate = function(element, tx, ty) {
+    exports.translate = function(element, tx, ty) {
         element.style.top = Math.round(ty) + "px";
         element.style.left = Math.round(tx) + "px";
     };
@@ -30750,9 +30750,9 @@ if (exports$1.HAS_CSS_TRANSFORMS) {
 
 });
 
-ace.define("ace/lib/oop",["require","exports","module"], function(require, exports$1, module) {
+ace.define("ace/lib/oop",["require","exports","module"], function(require, exports, module) {
 
-exports$1.inherits = function(ctor, superCtor) {
+exports.inherits = function(ctor, superCtor) {
     ctor.super_ = superCtor;
     ctor.prototype = Object.create(superCtor.prototype, {
         constructor: {
@@ -30764,20 +30764,20 @@ exports$1.inherits = function(ctor, superCtor) {
     });
 };
 
-exports$1.mixin = function(obj, mixin) {
+exports.mixin = function(obj, mixin) {
     for (var key in mixin) {
         obj[key] = mixin[key];
     }
     return obj;
 };
 
-exports$1.implement = function(proto, mixin) {
-    exports$1.mixin(proto, mixin);
+exports.implement = function(proto, mixin) {
+    exports.mixin(proto, mixin);
 };
 
 });
 
-ace.define("ace/lib/keys",["require","exports","module","ace/lib/oop"], function(require, exports$1, module) {
+ace.define("ace/lib/keys",["require","exports","module","ace/lib/oop"], function(require, exports, module) {
 
 var oop = require("./oop");
 var Keys = (function() {
@@ -30880,9 +30880,9 @@ var Keys = (function() {
 
     return ret;
 })();
-oop.mixin(exports$1, Keys);
+oop.mixin(exports, Keys);
 
-exports$1.keyCodeToString = function(keyCode) {
+exports.keyCodeToString = function(keyCode) {
     var keyString = Keys[keyCode];
     if (typeof keyString != "string")
         keyString = String.fromCharCode(keyCode);
@@ -30891,7 +30891,7 @@ exports$1.keyCodeToString = function(keyCode) {
 
 });
 
-ace.define("ace/lib/event",["require","exports","module","ace/lib/keys","ace/lib/useragent"], function(require, exports$1, module) {
+ace.define("ace/lib/event",["require","exports","module","ace/lib/keys","ace/lib/useragent"], function(require, exports, module) {
 
 var keys = require("./keys");
 var useragent = require("./useragent");
@@ -30927,31 +30927,31 @@ EventListener.prototype.destroy = function() {
     this.elem = this.type = this.callback = undefined;
 };
 
-var addListener = exports$1.addListener = function(elem, type, callback, destroyer) {
+var addListener = exports.addListener = function(elem, type, callback, destroyer) {
     elem.addEventListener(type, callback, getListenerOptions());
     if (destroyer)
         destroyer.$toDestroy.push(new EventListener(elem, type, callback));
 };
 
-var removeListener = exports$1.removeListener = function(elem, type, callback) {
+var removeListener = exports.removeListener = function(elem, type, callback) {
     elem.removeEventListener(type, callback, getListenerOptions());
 };
-exports$1.stopEvent = function(e) {
-    exports$1.stopPropagation(e);
-    exports$1.preventDefault(e);
+exports.stopEvent = function(e) {
+    exports.stopPropagation(e);
+    exports.preventDefault(e);
     return false;
 };
 
-exports$1.stopPropagation = function(e) {
+exports.stopPropagation = function(e) {
     if (e.stopPropagation)
         e.stopPropagation();
 };
 
-exports$1.preventDefault = function(e) {
+exports.preventDefault = function(e) {
     if (e.preventDefault)
         e.preventDefault();
 };
-exports$1.getButton = function(e) {
+exports.getButton = function(e) {
     if (e.type == "dblclick")
         return 0;
     if (e.type == "contextmenu" || (useragent.isMac && (e.ctrlKey && !e.altKey && !e.shiftKey)))
@@ -30959,7 +30959,7 @@ exports$1.getButton = function(e) {
     return e.button;
 };
 
-exports$1.capture = function(el, eventHandler, releaseCaptureHandler) {
+exports.capture = function(el, eventHandler, releaseCaptureHandler) {
     var ownerDocument = el && el.ownerDocument || document;
     function onMouseUp(e) {
         eventHandler && eventHandler(e);
@@ -30977,7 +30977,7 @@ exports$1.capture = function(el, eventHandler, releaseCaptureHandler) {
     return onMouseUp;
 };
 
-exports$1.addMouseWheelListener = function(el, callback, destroyer) {
+exports.addMouseWheelListener = function(el, callback, destroyer) {
     if ("onmousewheel" in el) {
         addListener(el, "mousewheel", function(e) {
             var factor = 8;
@@ -31021,7 +31021,7 @@ exports$1.addMouseWheelListener = function(el, callback, destroyer) {
     }
 };
 
-exports$1.addMultiMouseDownListener = function(elements, timeouts, eventHandler, callbackName, destroyer) {
+exports.addMultiMouseDownListener = function(elements, timeouts, eventHandler, callbackName, destroyer) {
     var clicks = 0;
     var startX, startY, timer; 
     var eventNames = {
@@ -31031,7 +31031,7 @@ exports$1.addMultiMouseDownListener = function(elements, timeouts, eventHandler,
     };
 
     function onMousedown(e) {
-        if (exports$1.getButton(e) !== 0) {
+        if (exports.getButton(e) !== 0) {
             clicks = 0;
         } else if (e.detail > 1) {
             clicks++;
@@ -31074,7 +31074,7 @@ var getModifierHash = function(e) {
     return 0 | (e.ctrlKey ? 1 : 0) | (e.altKey ? 2 : 0) | (e.shiftKey ? 4 : 0) | (e.metaKey ? 8 : 0);
 };
 
-exports$1.getModifierString = function(e) {
+exports.getModifierString = function(e) {
     return keys.KEY_MODS[getModifierHash(e)];
 };
 
@@ -31131,7 +31131,7 @@ function normalizeCommandKeys(callback, e, keyCode) {
 }
 
 
-exports$1.addCommandKeyListener = function(el, callback, destroyer) {
+exports.addCommandKeyListener = function(el, callback, destroyer) {
     if (useragent.isOldGecko || (useragent.isOpera && !("KeyboardEvent" in window))) {
         var lastKeyDownKeyCode = null;
         addListener(el, "keydown", function(e) {
@@ -31152,7 +31152,7 @@ exports$1.addCommandKeyListener = function(el, callback, destroyer) {
 
         addListener(el, "keypress", function(e) {
             if (lastDefaultPrevented && (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey)) {
-                exports$1.stopEvent(e);
+                exports.stopEvent(e);
                 lastDefaultPrevented = null;
             }
         }, destroyer);
@@ -31173,13 +31173,13 @@ function resetPressedKeys() {
 
 if (typeof window == "object" && window.postMessage && !useragent.isOldIE) {
     var postMessageId = 1;
-    exports$1.nextTick = function(callback, win) {
+    exports.nextTick = function(callback, win) {
         win = win || window;
         var messageName = "zero-timeout-message-" + (postMessageId++);
         
         var listener = function(e) {
             if (e.data == messageName) {
-                exports$1.stopPropagation(e);
+                exports.stopPropagation(e);
                 removeListener(win, "message", listener);
                 callback();
             }
@@ -31190,10 +31190,10 @@ if (typeof window == "object" && window.postMessage && !useragent.isOldIE) {
     };
 }
 
-exports$1.$idleBlocked = false;
-exports$1.onIdle = function(cb, timeout) {
+exports.$idleBlocked = false;
+exports.onIdle = function(cb, timeout) {
     return setTimeout(function handler() {
-        if (!exports$1.$idleBlocked) {
+        if (!exports.$idleBlocked) {
             cb();
         } else {
             setTimeout(handler, 100);
@@ -31201,32 +31201,32 @@ exports$1.onIdle = function(cb, timeout) {
     }, timeout);
 };
 
-exports$1.$idleBlockId = null;
-exports$1.blockIdle = function(delay) {
-    if (exports$1.$idleBlockId)
-        clearTimeout(exports$1.$idleBlockId);
+exports.$idleBlockId = null;
+exports.blockIdle = function(delay) {
+    if (exports.$idleBlockId)
+        clearTimeout(exports.$idleBlockId);
         
-    exports$1.$idleBlocked = true;
-    exports$1.$idleBlockId = setTimeout(function() {
-        exports$1.$idleBlocked = false;
+    exports.$idleBlocked = true;
+    exports.$idleBlockId = setTimeout(function() {
+        exports.$idleBlocked = false;
     }, delay || 100);
 };
 
-exports$1.nextFrame = typeof window == "object" && (window.requestAnimationFrame
+exports.nextFrame = typeof window == "object" && (window.requestAnimationFrame
     || window.mozRequestAnimationFrame
     || window.webkitRequestAnimationFrame
     || window.msRequestAnimationFrame
     || window.oRequestAnimationFrame);
 
-if (exports$1.nextFrame)
-    exports$1.nextFrame = exports$1.nextFrame.bind(window);
+if (exports.nextFrame)
+    exports.nextFrame = exports.nextFrame.bind(window);
 else
-    exports$1.nextFrame = function(callback) {
+    exports.nextFrame = function(callback) {
         setTimeout(callback, 17);
     };
 });
 
-ace.define("ace/range",["require","exports","module"], function(require, exports$1, module) {
+ace.define("ace/range",["require","exports","module"], function(require, exports, module) {
 var comparePoints = function(p1, p2) {
     return p1.row - p2.row || p1.column - p2.column;
 };
@@ -31461,20 +31461,20 @@ Range.comparePoints = function(p1, p2) {
 };
 
 
-exports$1.Range = Range;
+exports.Range = Range;
 });
 
-ace.define("ace/lib/lang",["require","exports","module"], function(require, exports$1, module) {
+ace.define("ace/lib/lang",["require","exports","module"], function(require, exports, module) {
 
-exports$1.last = function(a) {
+exports.last = function(a) {
     return a[a.length - 1];
 };
 
-exports$1.stringReverse = function(string) {
+exports.stringReverse = function(string) {
     return string.split("").reverse().join("");
 };
 
-exports$1.stringRepeat = function (string, count) {
+exports.stringRepeat = function (string, count) {
     var result = '';
     while (count > 0) {
         if (count & 1)
@@ -31489,15 +31489,15 @@ exports$1.stringRepeat = function (string, count) {
 var trimBeginRegexp = /^\s\s*/;
 var trimEndRegexp = /\s\s*$/;
 
-exports$1.stringTrimLeft = function (string) {
+exports.stringTrimLeft = function (string) {
     return string.replace(trimBeginRegexp, '');
 };
 
-exports$1.stringTrimRight = function (string) {
+exports.stringTrimRight = function (string) {
     return string.replace(trimEndRegexp, '');
 };
 
-exports$1.copyObject = function(obj) {
+exports.copyObject = function(obj) {
     var copy = {};
     for (var key in obj) {
         copy[key] = obj[key];
@@ -31505,7 +31505,7 @@ exports$1.copyObject = function(obj) {
     return copy;
 };
 
-exports$1.copyArray = function(array){
+exports.copyArray = function(array){
     var copy = [];
     for (var i=0, l=array.length; i<l; i++) {
         if (array[i] && typeof array[i] == "object")
@@ -31516,7 +31516,7 @@ exports$1.copyArray = function(array){
     return copy;
 };
 
-exports$1.deepCopy = function deepCopy(obj) {
+exports.deepCopy = function deepCopy(obj) {
     if (typeof obj !== "object" || !obj)
         return obj;
     var copy;
@@ -31536,7 +31536,7 @@ exports$1.deepCopy = function deepCopy(obj) {
     return copy;
 };
 
-exports$1.arrayToMap = function(arr) {
+exports.arrayToMap = function(arr) {
     var map = {};
     for (var i=0; i<arr.length; i++) {
         map[arr[i]] = 1;
@@ -31545,14 +31545,14 @@ exports$1.arrayToMap = function(arr) {
 
 };
 
-exports$1.createMap = function(props) {
+exports.createMap = function(props) {
     var map = Object.create(null);
     for (var i in props) {
         map[i] = props[i];
     }
     return map;
 };
-exports$1.arrayRemove = function(array, value) {
+exports.arrayRemove = function(array, value) {
   for (var i = 0; i <= array.length; i++) {
     if (value === array[i]) {
       array.splice(i, 1);
@@ -31560,15 +31560,15 @@ exports$1.arrayRemove = function(array, value) {
   }
 };
 
-exports$1.escapeRegExp = function(str) {
+exports.escapeRegExp = function(str) {
     return str.replace(/([.*+?^${}()|[\]\/\\])/g, '\\$1');
 };
 
-exports$1.escapeHTML = function(str) {
+exports.escapeHTML = function(str) {
     return ("" + str).replace(/&/g, "&#38;").replace(/"/g, "&#34;").replace(/'/g, "&#39;").replace(/</g, "&#60;");
 };
 
-exports$1.getMatchOffsets = function(string, regExp) {
+exports.getMatchOffsets = function(string, regExp) {
     var matches = [];
 
     string.replace(regExp, function(str) {
@@ -31580,7 +31580,7 @@ exports$1.getMatchOffsets = function(string, regExp) {
 
     return matches;
 };
-exports$1.deferredCall = function(fcn) {
+exports.deferredCall = function(fcn) {
     var timer = null;
     var callback = function() {
         timer = null;
@@ -31615,7 +31615,7 @@ exports$1.deferredCall = function(fcn) {
 };
 
 
-exports$1.delayedCall = function(fcn, defaultTimeout) {
+exports.delayedCall = function(fcn, defaultTimeout) {
     var timer = null;
     var callback = function() {
         timer = null;
@@ -31651,7 +31651,7 @@ exports$1.delayedCall = function(fcn, defaultTimeout) {
 };
 });
 
-ace.define("ace/clipboard",["require","exports","module"], function(require, exports$1, module) {
+ace.define("ace/clipboard",["require","exports","module"], function(require, exports, module) {
 
 var $cancelT;
 module.exports = { 
@@ -31668,7 +31668,7 @@ module.exports = {
 
 });
 
-ace.define("ace/keyboard/textinput",["require","exports","module","ace/lib/event","ace/lib/useragent","ace/lib/dom","ace/lib/lang","ace/clipboard","ace/lib/keys"], function(require, exports$1, module) {
+ace.define("ace/keyboard/textinput",["require","exports","module","ace/lib/event","ace/lib/useragent","ace/lib/dom","ace/lib/lang","ace/clipboard","ace/lib/keys"], function(require, exports, module) {
 
 var event = require("../lib/event");
 var useragent = require("../lib/useragent");
@@ -32352,14 +32352,14 @@ var TextInput = function(parentNode, host) {
     }
 };
 
-exports$1.TextInput = TextInput;
-exports$1.$setUserAgentForTests = function(_isMobile, _isIOS) {
+exports.TextInput = TextInput;
+exports.$setUserAgentForTests = function(_isMobile, _isIOS) {
     isMobile = _isMobile;
     isIOS = _isIOS;
 };
 });
 
-ace.define("ace/mouse/default_handlers",["require","exports","module","ace/lib/useragent"], function(require, exports$1, module) {
+ace.define("ace/mouse/default_handlers",["require","exports","module","ace/lib/useragent"], function(require, exports, module) {
 
 var useragent = require("../lib/useragent");
 
@@ -32376,10 +32376,10 @@ function DefaultHandlers(mouseHandler) {
     editor.setDefaultHandler("quadclick", this.onQuadClick.bind(mouseHandler));
     editor.setDefaultHandler("mousewheel", this.onMouseWheel.bind(mouseHandler));
 
-    var exports$1 = ["select", "startSelect", "selectEnd", "selectAllEnd", "selectByWordsEnd",
+    var exports = ["select", "startSelect", "selectEnd", "selectAllEnd", "selectByWordsEnd",
         "selectByLinesEnd", "dragWait", "dragWaitEnd", "focusWait"];
 
-    exports$1.forEach(function(x) {
+    exports.forEach(function(x) {
         mouseHandler[x] = this[x];
     }, this);
 
@@ -32611,7 +32611,7 @@ function DefaultHandlers(mouseHandler) {
 
 }).call(DefaultHandlers.prototype);
 
-exports$1.DefaultHandlers = DefaultHandlers;
+exports.DefaultHandlers = DefaultHandlers;
 
 function calcDistance(ax, ay, bx, by) {
     return Math.sqrt(Math.pow(bx - ax, 2) + Math.pow(by - ay, 2));
@@ -32633,7 +32633,7 @@ function calcRangeOrientation(range, cursor) {
 
 });
 
-ace.define("ace/tooltip",["require","exports","module","ace/lib/oop","ace/lib/dom"], function(require, exports$1, module) {
+ace.define("ace/tooltip",["require","exports","module","ace/lib/oop","ace/lib/dom"], function(require, exports, module) {
 
 require("./lib/oop");
 var dom = require("./lib/dom");
@@ -32700,10 +32700,10 @@ function Tooltip (parentNode) {
 
 }).call(Tooltip.prototype);
 
-exports$1.Tooltip = Tooltip;
+exports.Tooltip = Tooltip;
 });
 
-ace.define("ace/mouse/default_gutter_handler",["require","exports","module","ace/lib/dom","ace/lib/oop","ace/lib/event","ace/tooltip"], function(require, exports$1, module) {
+ace.define("ace/mouse/default_gutter_handler",["require","exports","module","ace/lib/dom","ace/lib/oop","ace/lib/event","ace/tooltip"], function(require, exports, module) {
 var dom = require("../lib/dom");
 var oop = require("../lib/oop");
 var event = require("../lib/event");
@@ -32852,15 +32852,15 @@ oop.inherits(GutterTooltip, Tooltip);
 
 
 
-exports$1.GutterHandler = GutterHandler;
+exports.GutterHandler = GutterHandler;
 
 });
 
-ace.define("ace/mouse/mouse_event",["require","exports","module","ace/lib/event","ace/lib/useragent"], function(require, exports$1, module) {
+ace.define("ace/mouse/mouse_event",["require","exports","module","ace/lib/event","ace/lib/useragent"], function(require, exports, module) {
 
 var event = require("../lib/event");
 var useragent = require("../lib/useragent");
-var MouseEvent = exports$1.MouseEvent = function(domEvent, editor) {
+var MouseEvent = exports.MouseEvent = function(domEvent, editor) {
     this.domEvent = domEvent;
     this.editor = editor;
     
@@ -32929,7 +32929,7 @@ var MouseEvent = exports$1.MouseEvent = function(domEvent, editor) {
 
 });
 
-ace.define("ace/mouse/dragdrop_handler",["require","exports","module","ace/lib/dom","ace/lib/event","ace/lib/useragent"], function(require, exports$1, module) {
+ace.define("ace/mouse/dragdrop_handler",["require","exports","module","ace/lib/dom","ace/lib/event","ace/lib/useragent"], function(require, exports, module) {
 
 var dom = require("../lib/dom");
 var event = require("../lib/event");
@@ -32948,9 +32948,9 @@ function DragdropHandler(mouseHandler) {
     if (useragent.isOpera)
         blankImage.style.cssText = "width:1px;height:1px;position:fixed;top:0;left:0;z-index:2147483647;opacity:0;";
 
-    var exports$1 = ["dragWait", "dragWaitEnd", "startDrag", "dragReadyEnd", "onMouseDrag"];
+    var exports = ["dragWait", "dragWaitEnd", "startDrag", "dragReadyEnd", "onMouseDrag"];
 
-     exports$1.forEach(function(x) {
+     exports.forEach(function(x) {
          mouseHandler[x] = this[x];
     }, this);
     editor.on("mousedown", this.onMouseDown.bind(mouseHandler));
@@ -33302,17 +33302,17 @@ function calcDistance(ax, ay, bx, by) {
     return Math.sqrt(Math.pow(bx - ax, 2) + Math.pow(by - ay, 2));
 }
 
-exports$1.DragdropHandler = DragdropHandler;
+exports.DragdropHandler = DragdropHandler;
 
 });
 
-ace.define("ace/mouse/touch_handler",["require","exports","module","ace/mouse/mouse_event","ace/lib/event","ace/lib/dom"], function(require, exports$1, module) {
+ace.define("ace/mouse/touch_handler",["require","exports","module","ace/mouse/mouse_event","ace/lib/event","ace/lib/dom"], function(require, exports, module) {
 
 var MouseEvent = require("./mouse_event").MouseEvent;
 var event = require("../lib/event");
 var dom = require("../lib/dom");
 
-exports$1.addTouchListeners = function(el, editor) {
+exports.addTouchListeners = function(el, editor) {
     var mode = "scroll";
     var startX;
     var startY;
@@ -33622,10 +33622,10 @@ exports$1.addTouchListeners = function(el, editor) {
 
 });
 
-ace.define("ace/lib/net",["require","exports","module","ace/lib/dom"], function(require, exports$1, module) {
+ace.define("ace/lib/net",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 var dom = require("./dom");
 
-exports$1.get = function (url, callback) {
+exports.get = function (url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.onreadystatechange = function () {
@@ -33636,7 +33636,7 @@ exports$1.get = function (url, callback) {
     xhr.send(null);
 };
 
-exports$1.loadScript = function(path, callback) {
+exports.loadScript = function(path, callback) {
     var head = dom.getDocumentHead();
     var s = document.createElement('script');
 
@@ -33651,7 +33651,7 @@ exports$1.loadScript = function(path, callback) {
         }
     };
 };
-exports$1.qualifyURL = function(url) {
+exports.qualifyURL = function(url) {
     var a = document.createElement('a');
     a.href = url;
     return a.href;
@@ -33659,7 +33659,7 @@ exports$1.qualifyURL = function(url) {
 
 });
 
-ace.define("ace/lib/event_emitter",["require","exports","module"], function(require, exports$1, module) {
+ace.define("ace/lib/event_emitter",["require","exports","module"], function(require, exports, module) {
 
 var EventEmitter = {};
 var stopPropagation = function() { this.propagationStopped = true; };
@@ -33786,11 +33786,11 @@ EventEmitter.removeAllListeners = function(eventName) {
     if (this._defaultHandlers) this._defaultHandlers[eventName] = undefined;
 };
 
-exports$1.EventEmitter = EventEmitter;
+exports.EventEmitter = EventEmitter;
 
 });
 
-ace.define("ace/lib/app_config",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports$1, module) {
+ace.define("ace/lib/app_config",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports, module) {
 "no use strict";
 
 var oop = require("./oop");
@@ -33918,11 +33918,11 @@ var AppConfig = function() {
     
 }).call(AppConfig.prototype);
 
-exports$1.AppConfig = AppConfig;
+exports.AppConfig = AppConfig;
 
 });
 
-ace.define("ace/config",["require","exports","module","ace/lib/lang","ace/lib/oop","ace/lib/net","ace/lib/app_config"], function(require, exports$1, module) {
+ace.define("ace/config",["require","exports","module","ace/lib/lang","ace/lib/oop","ace/lib/net","ace/lib/app_config"], function(require, exports, module) {
 "no use strict";
 
 var lang = require("./lib/lang");
@@ -33930,7 +33930,7 @@ require("./lib/oop");
 var net = require("./lib/net");
 var AppConfig = require("./lib/app_config").AppConfig;
 
-module.exports = exports$1 = new AppConfig();
+module.exports = exports = new AppConfig();
 
 var global = (function() {
     return this || typeof window != "undefined" && window;
@@ -33948,26 +33948,26 @@ var options = {
     sharedPopups: false
 };
 
-exports$1.get = function(key) {
+exports.get = function(key) {
     if (!options.hasOwnProperty(key))
         throw new Error("Unknown config key: " + key);
 
     return options[key];
 };
 
-exports$1.set = function(key, value) {
+exports.set = function(key, value) {
     if (options.hasOwnProperty(key))
         options[key] = value;
     else if (this.setDefaultValue("", key, value) == false)
         throw new Error("Unknown config key: " + key);
 };
 
-exports$1.all = function() {
+exports.all = function() {
     return lang.copyObject(options);
 };
 
-exports$1.$modes = {};
-exports$1.moduleUrl = function(name, component) {
+exports.$modes = {};
+exports.moduleUrl = function(name, component) {
     if (options.$moduleUrls[name])
         return options.$moduleUrls[name];
 
@@ -33993,12 +33993,12 @@ exports$1.moduleUrl = function(name, component) {
     return path + component + sep + base + this.get("suffix");
 };
 
-exports$1.setModuleUrl = function(name, subst) {
+exports.setModuleUrl = function(name, subst) {
     return options.$moduleUrls[name] = subst;
 };
 
-exports$1.$loading = {};
-exports$1.loadModule = function(moduleName, onLoad) {
+exports.$loading = {};
+exports.loadModule = function(moduleName, onLoad) {
     var module, moduleType;
     if (Array.isArray(moduleName)) {
         moduleType = moduleName[0];
@@ -34008,32 +34008,32 @@ exports$1.loadModule = function(moduleName, onLoad) {
     try {
         module = require(moduleName);
     } catch (e) {}
-    if (module && !exports$1.$loading[moduleName])
+    if (module && !exports.$loading[moduleName])
         return onLoad && onLoad(module);
 
-    if (!exports$1.$loading[moduleName])
-        exports$1.$loading[moduleName] = [];
+    if (!exports.$loading[moduleName])
+        exports.$loading[moduleName] = [];
 
-    exports$1.$loading[moduleName].push(onLoad);
+    exports.$loading[moduleName].push(onLoad);
 
-    if (exports$1.$loading[moduleName].length > 1)
+    if (exports.$loading[moduleName].length > 1)
         return;
 
     var afterLoad = function() {
         require([moduleName], function(module) {
-            exports$1._emit("load.module", {name: moduleName, module: module});
-            var listeners = exports$1.$loading[moduleName];
-            exports$1.$loading[moduleName] = null;
+            exports._emit("load.module", {name: moduleName, module: module});
+            var listeners = exports.$loading[moduleName];
+            exports.$loading[moduleName] = null;
             listeners.forEach(function(onLoad) {
                 onLoad && onLoad(module);
             });
         });
     };
 
-    if (!exports$1.get("packaged"))
+    if (!exports.get("packaged"))
         return afterLoad();
     
-    net.loadScript(exports$1.moduleUrl(moduleName, moduleType), afterLoad);
+    net.loadScript(exports.moduleUrl(moduleName, moduleType), afterLoad);
     reportErrorIfPathIsNotConfigured();
 };
 
@@ -34097,20 +34097,20 @@ init(true);function init(packaged) {
 
     for (var key in scriptOptions)
         if (typeof scriptOptions[key] !== "undefined")
-            exports$1.set(key, scriptOptions[key]);
+            exports.set(key, scriptOptions[key]);
 }
 
-exports$1.init = init;
+exports.init = init;
 
 function deHyphenate(str) {
     return str.replace(/-(.)/g, function(m, m1) { return m1.toUpperCase(); });
 }
 
-exports$1.version = "1.4.12";
+exports.version = "1.4.12";
 
 });
 
-ace.define("ace/mouse/mouse_handler",["require","exports","module","ace/lib/event","ace/lib/useragent","ace/mouse/default_handlers","ace/mouse/default_gutter_handler","ace/mouse/mouse_event","ace/mouse/dragdrop_handler","ace/mouse/touch_handler","ace/config"], function(require, exports$1, module) {
+ace.define("ace/mouse/mouse_handler",["require","exports","module","ace/lib/event","ace/lib/useragent","ace/mouse/default_handlers","ace/mouse/default_gutter_handler","ace/mouse/mouse_event","ace/mouse/dragdrop_handler","ace/mouse/touch_handler","ace/config"], function(require, exports, module) {
 
 var event = require("../lib/event");
 var useragent = require("../lib/useragent");
@@ -34291,10 +34291,10 @@ config.defineOptions(MouseHandler.prototype, "mouseHandler", {
 });
 
 
-exports$1.MouseHandler = MouseHandler;
+exports.MouseHandler = MouseHandler;
 });
 
-ace.define("ace/mouse/fold_handler",["require","exports","module","ace/lib/dom"], function(require, exports$1, module) {
+ace.define("ace/mouse/fold_handler",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 var dom = require("../lib/dom");
 
 function FoldHandler(editor) {
@@ -34360,11 +34360,11 @@ function FoldHandler(editor) {
     });
 }
 
-exports$1.FoldHandler = FoldHandler;
+exports.FoldHandler = FoldHandler;
 
 });
 
-ace.define("ace/keyboard/keybinding",["require","exports","module","ace/lib/keys","ace/lib/event"], function(require, exports$1, module) {
+ace.define("ace/keyboard/keybinding",["require","exports","module","ace/lib/keys","ace/lib/event"], function(require, exports, module) {
 
 var keyUtil  = require("../lib/keys");
 var event = require("../lib/event");
@@ -34480,10 +34480,10 @@ var KeyBinding = function(editor) {
 
 }).call(KeyBinding.prototype);
 
-exports$1.KeyBinding = KeyBinding;
+exports.KeyBinding = KeyBinding;
 });
 
-ace.define("ace/lib/bidiutil",["require","exports","module"], function(require, exports$1, module) {
+ace.define("ace/lib/bidiutil",["require","exports","module"], function(require, exports, module) {
 var dir = 0, hiLevel = 0;
 var lastArabic = false, hasUBAT_B = false,  hasUBAT_S = false;
 
@@ -34738,17 +34738,17 @@ function _getCharacterType( ch ) {
 	}		
 	return ON;	
 }
-exports$1.L = L;
-exports$1.R = R;
-exports$1.EN = EN;
-exports$1.ON_R = 3;
-exports$1.AN = 4;
-exports$1.R_H = 5;
-exports$1.B = 6;
-exports$1.RLE = 7;
+exports.L = L;
+exports.R = R;
+exports.EN = EN;
+exports.ON_R = 3;
+exports.AN = 4;
+exports.R_H = 5;
+exports.B = 6;
+exports.RLE = 7;
 
-exports$1.DOT = "\xB7";
-exports$1.doBidiReorder = function(text, textCharTypes, isRtl) {
+exports.DOT = "\xB7";
+exports.doBidiReorder = function(text, textCharTypes, isRtl) {
 	if (text.length < 2)
 		return {};
 		
@@ -34766,20 +34766,20 @@ exports$1.doBidiReorder = function(text, textCharTypes, isRtl) {
 
 	for (var i = 0; i < logicalFromVisual.length - 1; i++) { //fix levels to reflect character width
 		if (textCharTypes[i] === AN) {
-			levels[i] = exports$1.AN;
+			levels[i] = exports.AN;
 		} else if (levels[i] === R && ((textCharTypes[i] > AL && textCharTypes[i] < LRE) 
 			|| textCharTypes[i] === ON || textCharTypes[i] === BN)) {
-			levels[i] = exports$1.ON_R;
+			levels[i] = exports.ON_R;
 		} else if ((i > 0 && chars[i - 1] === '\u0644') && /\u0622|\u0623|\u0625|\u0627/.test(chars[i])) {
-			levels[i - 1] = levels[i] = exports$1.R_H;
+			levels[i - 1] = levels[i] = exports.R_H;
 			i++;
 		}
 	}
-	if (chars[chars.length - 1] === exports$1.DOT)
-		levels[chars.length - 1] = exports$1.B;
+	if (chars[chars.length - 1] === exports.DOT)
+		levels[chars.length - 1] = exports.B;
 				
 	if (chars[0] === '\u202B')
-		levels[0] = exports$1.RLE;
+		levels[0] = exports.RLE;
 				
 	for (var i = 0; i < logicalFromVisual.length; i++) {
 		bidiLevels[i] = levels[logicalFromVisual[i]];
@@ -34787,7 +34787,7 @@ exports$1.doBidiReorder = function(text, textCharTypes, isRtl) {
 
 	return {'logicalFromVisual': logicalFromVisual, 'bidiLevels': bidiLevels};
 };
-exports$1.hasBidiCharacters = function(text, textCharTypes){
+exports.hasBidiCharacters = function(text, textCharTypes){
 	var ret = false;
 	for (var i = 0; i < text.length; i++){
 		textCharTypes[i] = _getCharacterType(text.charAt(i));
@@ -34796,7 +34796,7 @@ exports$1.hasBidiCharacters = function(text, textCharTypes){
 	}
 	return ret;
 };	
-exports$1.getVisualFromLogicalIdx = function(logIdx, rowMap) {
+exports.getVisualFromLogicalIdx = function(logIdx, rowMap) {
 	for (var i = 0; i < rowMap.logicalFromVisual.length; i++) {
 		if (rowMap.logicalFromVisual[i] == logIdx)
 			return i;
@@ -34806,7 +34806,7 @@ exports$1.getVisualFromLogicalIdx = function(logIdx, rowMap) {
 
 });
 
-ace.define("ace/bidihandler",["require","exports","module","ace/lib/bidiutil","ace/lib/lang"], function(require, exports$1, module) {
+ace.define("ace/bidihandler",["require","exports","module","ace/lib/bidiutil","ace/lib/lang"], function(require, exports, module) {
 
 var bidiUtil = require("./lib/bidiutil");
 var lang = require("./lib/lang");
@@ -35096,10 +35096,10 @@ var BidiHandler = function(session) {
 
 }).call(BidiHandler.prototype);
 
-exports$1.BidiHandler = BidiHandler;
+exports.BidiHandler = BidiHandler;
 });
 
-ace.define("ace/selection",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/lib/event_emitter","ace/range"], function(require, exports$1, module) {
+ace.define("ace/selection",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/lib/event_emitter","ace/range"], function(require, exports, module) {
 
 var oop = require("./lib/oop");
 var lang = require("./lib/lang");
@@ -35719,10 +35719,10 @@ var Selection = function(session) {
 
 }).call(Selection.prototype);
 
-exports$1.Selection = Selection;
+exports.Selection = Selection;
 });
 
-ace.define("ace/tokenizer",["require","exports","module","ace/config"], function(require, exports$1, module) {
+ace.define("ace/tokenizer",["require","exports","module","ace/config"], function(require, exports, module) {
 
 var config = require("./config");
 var MAX_TOKEN_COUNT = 2000;
@@ -36030,10 +36030,10 @@ var Tokenizer = function(rules) {
     
 }).call(Tokenizer.prototype);
 
-exports$1.Tokenizer = Tokenizer;
+exports.Tokenizer = Tokenizer;
 });
 
-ace.define("ace/mode/text_highlight_rules",["require","exports","module","ace/lib/lang"], function(require, exports$1, module) {
+ace.define("ace/mode/text_highlight_rules",["require","exports","module","ace/lib/lang"], function(require, exports, module) {
 
 var lang = require("../lib/lang");
 
@@ -36231,10 +36231,10 @@ var TextHighlightRules = function() {
 
 }).call(TextHighlightRules.prototype);
 
-exports$1.TextHighlightRules = TextHighlightRules;
+exports.TextHighlightRules = TextHighlightRules;
 });
 
-ace.define("ace/mode/behaviour",["require","exports","module"], function(require, exports$1, module) {
+ace.define("ace/mode/behaviour",["require","exports","module"], function(require, exports, module) {
 
 var Behaviour = function() {
    this.$behaviours = {};
@@ -36291,10 +36291,10 @@ var Behaviour = function() {
 
 }).call(Behaviour.prototype);
 
-exports$1.Behaviour = Behaviour;
+exports.Behaviour = Behaviour;
 });
 
-ace.define("ace/token_iterator",["require","exports","module","ace/range"], function(require, exports$1, module) {
+ace.define("ace/token_iterator",["require","exports","module","ace/range"], function(require, exports, module) {
 
 var Range = require("./range").Range;
 var TokenIterator = function(session, initialRow, initialColumn) {
@@ -36373,10 +36373,10 @@ var TokenIterator = function(session, initialRow, initialColumn) {
     
 }).call(TokenIterator.prototype);
 
-exports$1.TokenIterator = TokenIterator;
+exports.TokenIterator = TokenIterator;
 });
 
-ace.define("ace/mode/behaviour/cstyle",["require","exports","module","ace/lib/oop","ace/mode/behaviour","ace/token_iterator","ace/lib/lang"], function(require, exports$1, module) {
+ace.define("ace/mode/behaviour/cstyle",["require","exports","module","ace/lib/oop","ace/mode/behaviour","ace/token_iterator","ace/lib/lang"], function(require, exports, module) {
 
 var oop = require("../../lib/oop");
 var Behaviour = require("../behaviour").Behaviour;
@@ -36743,10 +36743,10 @@ CstyleBehaviour.clearMaybeInsertedClosing = function() {
 
 oop.inherits(CstyleBehaviour, Behaviour);
 
-exports$1.CstyleBehaviour = CstyleBehaviour;
+exports.CstyleBehaviour = CstyleBehaviour;
 });
 
-ace.define("ace/unicode",["require","exports","module"], function(require, exports$1, module) {
+ace.define("ace/unicode",["require","exports","module"], function(require, exports, module) {
 var wordChars = [48,9,8,25,5,0,2,25,48,0,11,0,5,0,6,22,2,30,2,457,5,11,15,4,8,0,2,0,18,116,2,1,3,3,9,0,2,2,2,0,2,19,2,82,2,138,2,4,3,155,12,37,3,0,8,38,10,44,2,0,2,1,2,1,2,0,9,26,6,2,30,10,7,61,2,9,5,101,2,7,3,9,2,18,3,0,17,58,3,100,15,53,5,0,6,45,211,57,3,18,2,5,3,11,3,9,2,1,7,6,2,2,2,7,3,1,3,21,2,6,2,0,4,3,3,8,3,1,3,3,9,0,5,1,2,4,3,11,16,2,2,5,5,1,3,21,2,6,2,1,2,1,2,1,3,0,2,4,5,1,3,2,4,0,8,3,2,0,8,15,12,2,2,8,2,2,2,21,2,6,2,1,2,4,3,9,2,2,2,2,3,0,16,3,3,9,18,2,2,7,3,1,3,21,2,6,2,1,2,4,3,8,3,1,3,2,9,1,5,1,2,4,3,9,2,0,17,1,2,5,4,2,2,3,4,1,2,0,2,1,4,1,4,2,4,11,5,4,4,2,2,3,3,0,7,0,15,9,18,2,2,7,2,2,2,22,2,9,2,4,4,7,2,2,2,3,8,1,2,1,7,3,3,9,19,1,2,7,2,2,2,22,2,9,2,4,3,8,2,2,2,3,8,1,8,0,2,3,3,9,19,1,2,7,2,2,2,22,2,15,4,7,2,2,2,3,10,0,9,3,3,9,11,5,3,1,2,17,4,23,2,8,2,0,3,6,4,0,5,5,2,0,2,7,19,1,14,57,6,14,2,9,40,1,2,0,3,1,2,0,3,0,7,3,2,6,2,2,2,0,2,0,3,1,2,12,2,2,3,4,2,0,2,5,3,9,3,1,35,0,24,1,7,9,12,0,2,0,2,0,5,9,2,35,5,19,2,5,5,7,2,35,10,0,58,73,7,77,3,37,11,42,2,0,4,328,2,3,3,6,2,0,2,3,3,40,2,3,3,32,2,3,3,6,2,0,2,3,3,14,2,56,2,3,3,66,5,0,33,15,17,84,13,619,3,16,2,25,6,74,22,12,2,6,12,20,12,19,13,12,2,2,2,1,13,51,3,29,4,0,5,1,3,9,34,2,3,9,7,87,9,42,6,69,11,28,4,11,5,11,11,39,3,4,12,43,5,25,7,10,38,27,5,62,2,28,3,10,7,9,14,0,89,75,5,9,18,8,13,42,4,11,71,55,9,9,4,48,83,2,2,30,14,230,23,280,3,5,3,37,3,5,3,7,2,0,2,0,2,0,2,30,3,52,2,6,2,0,4,2,2,6,4,3,3,5,5,12,6,2,2,6,67,1,20,0,29,0,14,0,17,4,60,12,5,0,4,11,18,0,5,0,3,9,2,0,4,4,7,0,2,0,2,0,2,3,2,10,3,3,6,4,5,0,53,1,2684,46,2,46,2,132,7,6,15,37,11,53,10,0,17,22,10,6,2,6,2,6,2,6,2,6,2,6,2,6,2,6,2,31,48,0,470,1,36,5,2,4,6,1,5,85,3,1,3,2,2,89,2,3,6,40,4,93,18,23,57,15,513,6581,75,20939,53,1164,68,45,3,268,4,27,21,31,3,13,13,1,2,24,9,69,11,1,38,8,3,102,3,1,111,44,25,51,13,68,12,9,7,23,4,0,5,45,3,35,13,28,4,64,15,10,39,54,10,13,3,9,7,22,4,1,5,66,25,2,227,42,2,1,3,9,7,11171,13,22,5,48,8453,301,3,61,3,105,39,6,13,4,6,11,2,12,2,4,2,0,2,1,2,1,2,107,34,362,19,63,3,53,41,11,5,15,17,6,13,1,25,2,33,4,2,134,20,9,8,25,5,0,2,25,12,88,4,5,3,5,3,5,3,2];
 
 var code = 0;
@@ -36757,11 +36757,11 @@ for (var i = 0; i < wordChars.length; i += 2) {
         str.push(45, code += wordChars[i + 1]);
 }
 
-exports$1.wordChars = String.fromCharCode.apply(null, str);
+exports.wordChars = String.fromCharCode.apply(null, str);
 
 });
 
-ace.define("ace/mode/text",["require","exports","module","ace/config","ace/tokenizer","ace/mode/text_highlight_rules","ace/mode/behaviour/cstyle","ace/unicode","ace/lib/lang","ace/token_iterator","ace/range"], function(require, exports$1, module) {
+ace.define("ace/mode/text",["require","exports","module","ace/config","ace/tokenizer","ace/mode/text_highlight_rules","ace/mode/behaviour/cstyle","ace/unicode","ace/lib/lang","ace/token_iterator","ace/range"], function(require, exports, module) {
 var config = require("../config");
 
 var Tokenizer = require("../tokenizer").Tokenizer;
@@ -37115,12 +37115,12 @@ var Mode = function() {
     this.$id = "ace/mode/text";
 }).call(Mode.prototype);
 
-exports$1.Mode = Mode;
+exports.Mode = Mode;
 });
 
-ace.define("ace/apply_delta",["require","exports","module"], function(require, exports$1, module) {
+ace.define("ace/apply_delta",["require","exports","module"], function(require, exports, module) {
 
-exports$1.applyDelta = function(docLines, delta, doNotValidate) {
+exports.applyDelta = function(docLines, delta, doNotValidate) {
     
     var row = delta.start.row;
     var startColumn = delta.start.column;
@@ -37153,12 +37153,12 @@ exports$1.applyDelta = function(docLines, delta, doNotValidate) {
 };
 });
 
-ace.define("ace/anchor",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports$1, module) {
+ace.define("ace/anchor",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports, module) {
 
 var oop = require("./lib/oop");
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
 
-var Anchor = exports$1.Anchor = function(doc, row, column) {
+var Anchor = exports.Anchor = function(doc, row, column) {
     this.$onChange = this.onChange.bind(this);
     this.attach(doc);
     
@@ -37277,7 +37277,7 @@ var Anchor = exports$1.Anchor = function(doc, row, column) {
 
 });
 
-ace.define("ace/document",["require","exports","module","ace/lib/oop","ace/apply_delta","ace/lib/event_emitter","ace/range","ace/anchor"], function(require, exports$1, module) {
+ace.define("ace/document",["require","exports","module","ace/lib/oop","ace/apply_delta","ace/lib/event_emitter","ace/range","ace/anchor"], function(require, exports, module) {
 
 var oop = require("./lib/oop");
 var applyDelta = require("./apply_delta").applyDelta;
@@ -37638,10 +37638,10 @@ var Document = function(textOrLines) {
 
 }).call(Document.prototype);
 
-exports$1.Document = Document;
+exports.Document = Document;
 });
 
-ace.define("ace/background_tokenizer",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports$1, module) {
+ace.define("ace/background_tokenizer",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports, module) {
 
 var oop = require("./lib/oop");
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
@@ -37784,10 +37784,10 @@ var BackgroundTokenizer = function(tokenizer, editor) {
 
 }).call(BackgroundTokenizer.prototype);
 
-exports$1.BackgroundTokenizer = BackgroundTokenizer;
+exports.BackgroundTokenizer = BackgroundTokenizer;
 });
 
-ace.define("ace/search_highlight",["require","exports","module","ace/lib/lang","ace/lib/oop","ace/range"], function(require, exports$1, module) {
+ace.define("ace/search_highlight",["require","exports","module","ace/lib/lang","ace/lib/oop","ace/range"], function(require, exports, module) {
 
 var lang = require("./lib/lang");
 require("./lib/oop");
@@ -37835,10 +37835,10 @@ var SearchHighlight = function(regExp, clazz, type) {
 
 }).call(SearchHighlight.prototype);
 
-exports$1.SearchHighlight = SearchHighlight;
+exports.SearchHighlight = SearchHighlight;
 });
 
-ace.define("ace/edit_session/fold_line",["require","exports","module","ace/range"], function(require, exports$1, module) {
+ace.define("ace/edit_session/fold_line",["require","exports","module","ace/range"], function(require, exports, module) {
 
 var Range = require("../range").Range;
 function FoldLine(foldData, folds) {
@@ -38053,10 +38053,10 @@ function FoldLine(foldData, folds) {
     };
 }).call(FoldLine.prototype);
 
-exports$1.FoldLine = FoldLine;
+exports.FoldLine = FoldLine;
 });
 
-ace.define("ace/range_list",["require","exports","module","ace/range"], function(require, exports$1, module) {
+ace.define("ace/range_list",["require","exports","module","ace/range"], function(require, exports, module) {
 var Range = require("./range").Range;
 var comparePoints = Range.comparePoints;
 
@@ -38316,14 +38316,14 @@ var RangeList = function() {
 
 }).call(RangeList.prototype);
 
-exports$1.RangeList = RangeList;
+exports.RangeList = RangeList;
 });
 
-ace.define("ace/edit_session/fold",["require","exports","module","ace/range_list","ace/lib/oop"], function(require, exports$1, module) {
+ace.define("ace/edit_session/fold",["require","exports","module","ace/range_list","ace/lib/oop"], function(require, exports, module) {
 
 var RangeList = require("../range_list").RangeList;
 var oop = require("../lib/oop");
-var Fold = exports$1.Fold = function(range, placeholder) {
+var Fold = exports.Fold = function(range, placeholder) {
     this.foldLine = null;
     this.placeholder = placeholder;
     this.range = range;
@@ -38423,7 +38423,7 @@ function restoreRange(range, anchor) {
 
 });
 
-ace.define("ace/edit_session/folding",["require","exports","module","ace/range","ace/edit_session/fold_line","ace/edit_session/fold","ace/token_iterator"], function(require, exports$1, module) {
+ace.define("ace/edit_session/folding",["require","exports","module","ace/range","ace/edit_session/fold_line","ace/edit_session/fold","ace/token_iterator"], function(require, exports, module) {
 
 var Range = require("../range").Range;
 var FoldLine = require("./fold_line").FoldLine;
@@ -39181,11 +39181,11 @@ function Folding() {
     };
 }
 
-exports$1.Folding = Folding;
+exports.Folding = Folding;
 
 });
 
-ace.define("ace/edit_session/bracket_match",["require","exports","module","ace/token_iterator","ace/range"], function(require, exports$1, module) {
+ace.define("ace/edit_session/bracket_match",["require","exports","module","ace/token_iterator","ace/range"], function(require, exports, module) {
 
 var TokenIterator = require("../token_iterator").TokenIterator;
 var Range = require("../range").Range;
@@ -39387,11 +39387,11 @@ function BracketMatch() {
         return null;
     };
 }
-exports$1.BracketMatch = BracketMatch;
+exports.BracketMatch = BracketMatch;
 
 });
 
-ace.define("ace/edit_session",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/bidihandler","ace/config","ace/lib/event_emitter","ace/selection","ace/mode/text","ace/range","ace/document","ace/background_tokenizer","ace/search_highlight","ace/edit_session/folding","ace/edit_session/bracket_match"], function(require, exports$1, module) {
+ace.define("ace/edit_session",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/bidihandler","ace/config","ace/lib/event_emitter","ace/selection","ace/mode/text","ace/range","ace/document","ace/background_tokenizer","ace/search_highlight","ace/edit_session/folding","ace/edit_session/bracket_match"], function(require, exports, module) {
 
 var oop = require("./lib/oop");
 var lang = require("./lib/lang");
@@ -41122,10 +41122,10 @@ config.defineOptions(EditSession.prototype, "session", {
     }
 });
 
-exports$1.EditSession = EditSession;
+exports.EditSession = EditSession;
 });
 
-ace.define("ace/search",["require","exports","module","ace/lib/lang","ace/lib/oop","ace/range"], function(require, exports$1, module) {
+ace.define("ace/search",["require","exports","module","ace/lib/lang","ace/lib/oop","ace/range"], function(require, exports, module) {
 
 var lang = require("./lib/lang");
 var oop = require("./lib/oop");
@@ -41429,10 +41429,10 @@ function addWordBoundary(needle, options) {
         + wordBoundary(needle[needle.length - 1]);
 }
 
-exports$1.Search = Search;
+exports.Search = Search;
 });
 
-ace.define("ace/keyboard/hash_handler",["require","exports","module","ace/lib/keys","ace/lib/useragent"], function(require, exports$1, module) {
+ace.define("ace/keyboard/hash_handler",["require","exports","module","ace/lib/keys","ace/lib/useragent"], function(require, exports, module) {
 
 var keyUtil = require("../lib/keys");
 var useragent = require("../lib/useragent");
@@ -41648,11 +41648,11 @@ MultiHashHandler.prototype = HashHandler.prototype;
 
 }).call(HashHandler.prototype);
 
-exports$1.HashHandler = HashHandler;
-exports$1.MultiHashHandler = MultiHashHandler;
+exports.HashHandler = HashHandler;
+exports.MultiHashHandler = MultiHashHandler;
 });
 
-ace.define("ace/commands/command_manager",["require","exports","module","ace/lib/oop","ace/keyboard/hash_handler","ace/lib/event_emitter"], function(require, exports$1, module) {
+ace.define("ace/commands/command_manager",["require","exports","module","ace/lib/oop","ace/keyboard/hash_handler","ace/lib/event_emitter"], function(require, exports, module) {
 
 var oop = require("../lib/oop");
 var MultiHashHandler = require("../keyboard/hash_handler").MultiHashHandler;
@@ -41757,11 +41757,11 @@ oop.inherits(CommandManager, MultiHashHandler);
 
 }).call(CommandManager.prototype);
 
-exports$1.CommandManager = CommandManager;
+exports.CommandManager = CommandManager;
 
 });
 
-ace.define("ace/commands/default_commands",["require","exports","module","ace/lib/lang","ace/config","ace/range"], function(require, exports$1, module) {
+ace.define("ace/commands/default_commands",["require","exports","module","ace/lib/lang","ace/config","ace/range"], function(require, exports, module) {
 
 var lang = require("../lib/lang");
 var config = require("../config");
@@ -41770,7 +41770,7 @@ var Range = require("../range").Range;
 function bindKey(win, mac) {
     return {win: win, mac: mac};
 }
-exports$1.commands = [{
+exports.commands = [{
     name: "showSettingsMenu",
     bindKey: bindKey("Ctrl-,", "Command-,"),
     exec: function(editor) {
@@ -42608,7 +42608,7 @@ exports$1.commands = [{
 }];
 
 for (var i = 1; i < 9; i++) {
-    exports$1.commands.push({
+    exports.commands.push({
         name: "foldToLevel" + i,
         description: "Fold To Level " + i,
         level: i,
@@ -42620,7 +42620,7 @@ for (var i = 1; i < 9; i++) {
 
 });
 
-ace.define("ace/editor",["require","exports","module","ace/lib/fixoldbrowsers","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/lib/useragent","ace/keyboard/textinput","ace/mouse/mouse_handler","ace/mouse/fold_handler","ace/keyboard/keybinding","ace/edit_session","ace/search","ace/range","ace/lib/event_emitter","ace/commands/command_manager","ace/commands/default_commands","ace/config","ace/token_iterator","ace/clipboard"], function(require, exports$1, module) {
+ace.define("ace/editor",["require","exports","module","ace/lib/fixoldbrowsers","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/lib/useragent","ace/keyboard/textinput","ace/mouse/mouse_handler","ace/mouse/fold_handler","ace/keyboard/keybinding","ace/edit_session","ace/search","ace/range","ace/lib/event_emitter","ace/commands/command_manager","ace/commands/default_commands","ace/config","ace/token_iterator","ace/clipboard"], function(require, exports, module) {
 
 require("./lib/fixoldbrowsers");
 
@@ -44796,10 +44796,10 @@ var relativeNumberRenderer = {
     }
 };
 
-exports$1.Editor = Editor;
+exports.Editor = Editor;
 });
 
-ace.define("ace/undomanager",["require","exports","module","ace/range"], function(require, exports$1, module) {
+ace.define("ace/undomanager",["require","exports","module","ace/range"], function(require, exports, module) {
 var UndoManager = function() {
     this.$maxRev = 0;
     this.$fromUndo = false;
@@ -45235,11 +45235,11 @@ function rebaseRedoStack(redoStack, deltaSets) {
     }
 }
 
-exports$1.UndoManager = UndoManager;
+exports.UndoManager = UndoManager;
 
 });
 
-ace.define("ace/layer/lines",["require","exports","module","ace/lib/dom"], function(require, exports$1, module) {
+ace.define("ace/layer/lines",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 
 var dom = require("../lib/dom");
 
@@ -45361,11 +45361,11 @@ var Lines = function(element, canvasHeight) {
     
 }).call(Lines.prototype);
 
-exports$1.Lines = Lines;
+exports.Lines = Lines;
 
 });
 
-ace.define("ace/layer/gutter",["require","exports","module","ace/lib/dom","ace/lib/oop","ace/lib/lang","ace/lib/event_emitter","ace/layer/lines"], function(require, exports$1, module) {
+ace.define("ace/layer/gutter",["require","exports","module","ace/lib/dom","ace/lib/oop","ace/lib/lang","ace/lib/event_emitter","ace/layer/lines"], function(require, exports, module) {
 
 var dom = require("../lib/dom");
 var oop = require("../lib/oop");
@@ -45778,11 +45778,11 @@ function onCreateCell(element) {
     return element;
 }
 
-exports$1.Gutter = Gutter;
+exports.Gutter = Gutter;
 
 });
 
-ace.define("ace/layer/marker",["require","exports","module","ace/range","ace/lib/dom"], function(require, exports$1, module) {
+ace.define("ace/layer/marker",["require","exports","module","ace/range","ace/lib/dom"], function(require, exports, module) {
 
 var Range = require("../range").Range;
 var dom = require("../lib/dom");
@@ -46002,11 +46002,11 @@ var Marker = function(parentEl) {
 
 }).call(Marker.prototype);
 
-exports$1.Marker = Marker;
+exports.Marker = Marker;
 
 });
 
-ace.define("ace/layer/text",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/layer/lines","ace/lib/event_emitter"], function(require, exports$1, module) {
+ace.define("ace/layer/text",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/layer/lines","ace/lib/event_emitter"], function(require, exports, module) {
 
 var oop = require("../lib/oop");
 var dom = require("../lib/dom");
@@ -46612,11 +46612,11 @@ var Text = function(parentEl) {
     this.destroy = function() {};
 }).call(Text.prototype);
 
-exports$1.Text = Text;
+exports.Text = Text;
 
 });
 
-ace.define("ace/layer/cursor",["require","exports","module","ace/lib/dom"], function(require, exports$1, module) {
+ace.define("ace/layer/cursor",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 
 var dom = require("../lib/dom");
 
@@ -46840,11 +46840,11 @@ var Cursor = function(parentEl) {
 
 }).call(Cursor.prototype);
 
-exports$1.Cursor = Cursor;
+exports.Cursor = Cursor;
 
 });
 
-ace.define("ace/scrollbar",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/event","ace/lib/event_emitter"], function(require, exports$1, module) {
+ace.define("ace/scrollbar",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/event","ace/lib/event_emitter"], function(require, exports, module) {
 
 var oop = require("./lib/oop");
 var dom = require("./lib/dom");
@@ -46973,15 +46973,15 @@ oop.inherits(HScrollBar, ScrollBar);
 }).call(HScrollBar.prototype);
 
 
-exports$1.ScrollBar = VScrollBar; // backward compatibility
-exports$1.ScrollBarV = VScrollBar; // backward compatibility
-exports$1.ScrollBarH = HScrollBar; // backward compatibility
+exports.ScrollBar = VScrollBar; // backward compatibility
+exports.ScrollBarV = VScrollBar; // backward compatibility
+exports.ScrollBarH = HScrollBar; // backward compatibility
 
-exports$1.VScrollBar = VScrollBar;
-exports$1.HScrollBar = HScrollBar;
+exports.VScrollBar = VScrollBar;
+exports.HScrollBar = HScrollBar;
 });
 
-ace.define("ace/renderloop",["require","exports","module","ace/lib/event"], function(require, exports$1, module) {
+ace.define("ace/renderloop",["require","exports","module","ace/lib/event"], function(require, exports, module) {
 
 var event = require("./lib/event");
 
@@ -47030,10 +47030,10 @@ var RenderLoop = function(onRender, win) {
 
 }).call(RenderLoop.prototype);
 
-exports$1.RenderLoop = RenderLoop;
+exports.RenderLoop = RenderLoop;
 });
 
-ace.define("ace/layer/font_metrics",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/lib/event","ace/lib/useragent","ace/lib/event_emitter"], function(require, exports$1, module) {
+ace.define("ace/layer/font_metrics",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/lib/event","ace/lib/useragent","ace/lib/event_emitter"], function(require, exports, module) {
 
 var oop = require("../lib/oop");
 var dom = require("../lib/dom");
@@ -47046,7 +47046,7 @@ var CHAR_COUNT = 256;
 var USE_OBSERVER = typeof ResizeObserver == "function";
 var L = 200;
 
-var FontMetrics = exports$1.FontMetrics = function(parentEl) {
+var FontMetrics = exports.FontMetrics = function(parentEl) {
     this.el = dom.createElement("div");
     this.$setMeasureNodeStyles(this.el.style, true);
     
@@ -47229,7 +47229,7 @@ var FontMetrics = exports$1.FontMetrics = function(parentEl) {
 
 });
 
-ace.define("ace/virtual_renderer",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/config","ace/layer/gutter","ace/layer/marker","ace/layer/text","ace/layer/cursor","ace/scrollbar","ace/scrollbar","ace/renderloop","ace/layer/font_metrics","ace/lib/event_emitter","ace/lib/useragent"], function(require, exports$1, module) {
+ace.define("ace/virtual_renderer",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/config","ace/layer/gutter","ace/layer/marker","ace/layer/text","ace/layer/cursor","ace/scrollbar","ace/scrollbar","ace/renderloop","ace/layer/font_metrics","ace/lib/event_emitter","ace/lib/useragent"], function(require, exports, module) {
 
 var oop = require("./lib/oop");
 var dom = require("./lib/dom");
@@ -49124,10 +49124,10 @@ config.defineOptions(VirtualRenderer.prototype, "renderer", {
     }
 });
 
-exports$1.VirtualRenderer = VirtualRenderer;
+exports.VirtualRenderer = VirtualRenderer;
 });
 
-ace.define("ace/worker/worker_client",["require","exports","module","ace/lib/oop","ace/lib/net","ace/lib/event_emitter","ace/config"], function(require, exports$1, module) {
+ace.define("ace/worker/worker_client",["require","exports","module","ace/lib/oop","ace/lib/net","ace/lib/event_emitter","ace/config"], function(require, exports, module) {
 
 var oop = require("../lib/oop");
 var net = require("../lib/net");
@@ -49351,14 +49351,14 @@ var UIWorkerClient = function(topLevelNamespaces, mod, classname) {
     return workerClient;
 };
 
-exports$1.UIWorkerClient = UIWorkerClient;
-exports$1.WorkerClient = WorkerClient;
-exports$1.createWorker = createWorker;
+exports.UIWorkerClient = UIWorkerClient;
+exports.WorkerClient = WorkerClient;
+exports.createWorker = createWorker;
 
 
 });
 
-ace.define("ace/placeholder",["require","exports","module","ace/range","ace/lib/event_emitter","ace/lib/oop"], function(require, exports$1, module) {
+ace.define("ace/placeholder",["require","exports","module","ace/range","ace/lib/event_emitter","ace/lib/oop"], function(require, exports, module) {
 
 var Range = require("./range").Range;
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
@@ -49522,10 +49522,10 @@ var PlaceHolder = function(session, length, pos, others, mainClass, othersClass)
 }).call(PlaceHolder.prototype);
 
 
-exports$1.PlaceHolder = PlaceHolder;
+exports.PlaceHolder = PlaceHolder;
 });
 
-ace.define("ace/mouse/multi_select_handler",["require","exports","module","ace/lib/event","ace/lib/useragent"], function(require, exports$1, module) {
+ace.define("ace/mouse/multi_select_handler",["require","exports","module","ace/lib/event","ace/lib/useragent"], function(require, exports, module) {
 
 var event = require("../lib/event");
 var useragent = require("../lib/useragent");
@@ -49693,12 +49693,12 @@ function onMouseDown(e) {
 }
 
 
-exports$1.onMouseDown = onMouseDown;
+exports.onMouseDown = onMouseDown;
 
 });
 
-ace.define("ace/commands/multi_select_commands",["require","exports","module","ace/keyboard/hash_handler"], function(require, exports$1, module) {
-exports$1.defaultCommands = [{
+ace.define("ace/commands/multi_select_commands",["require","exports","module","ace/keyboard/hash_handler"], function(require, exports, module) {
+exports.defaultCommands = [{
     name: "addCursorAbove",
     description: "Add cursor above",
     exec: function(editor) { editor.selectMoreLines(-1); },
@@ -49784,7 +49784,7 @@ exports$1.defaultCommands = [{
     scrollIntoView: "cursor",
     readOnly: true
 }];
-exports$1.multiSelectCommands = [{
+exports.multiSelectCommands = [{
     name: "singleSelection",
     description: "Single selection",
     bindKey: "esc",
@@ -49795,11 +49795,11 @@ exports$1.multiSelectCommands = [{
 }];
 
 var HashHandler = require("../keyboard/hash_handler").HashHandler;
-exports$1.keyboardHandler = new HashHandler(exports$1.multiSelectCommands);
+exports.keyboardHandler = new HashHandler(exports.multiSelectCommands);
 
 });
 
-ace.define("ace/multi_select",["require","exports","module","ace/range_list","ace/range","ace/selection","ace/mouse/multi_select_handler","ace/lib/event","ace/lib/lang","ace/commands/multi_select_commands","ace/search","ace/edit_session","ace/editor","ace/config"], function(require, exports$1, module) {
+ace.define("ace/multi_select",["require","exports","module","ace/range_list","ace/range","ace/selection","ace/mouse/multi_select_handler","ace/lib/event","ace/lib/lang","ace/commands/multi_select_commands","ace/search","ace/edit_session","ace/editor","ace/config"], function(require, exports, module) {
 
 var RangeList = require("./range_list").RangeList;
 var Range = require("./range").Range;
@@ -49808,7 +49808,7 @@ var onMouseDown = require("./mouse/multi_select_handler").onMouseDown;
 var event = require("./lib/event");
 var lang = require("./lib/lang");
 var commands = require("./commands/multi_select_commands");
-exports$1.commands = commands.defaultCommands.concat(commands.multiSelectCommands);
+exports.commands = commands.defaultCommands.concat(commands.multiSelectCommands);
 var Search = require("./search").Search;
 var search = new Search();
 
@@ -50490,7 +50490,7 @@ var Editor = require("./editor").Editor;
 function isSamePoint(p1, p2) {
     return p1.row == p2.row && p1.column == p2.column;
 }
-exports$1.onSessionChange = function(e) {
+exports.onSessionChange = function(e) {
     var session = e.session;
     if (session && !session.multiSelect) {
         session.$selectionMarkers = [];
@@ -50532,7 +50532,7 @@ function MultiSelect(editor) {
     editor.$onRemoveRange = editor.$onRemoveRange.bind(editor);
     editor.$onMultiSelect = editor.$onMultiSelect.bind(editor);
     editor.$onSingleSelect = editor.$onSingleSelect.bind(editor);
-    editor.$multiselectOnSessionChange = exports$1.onSessionChange.bind(editor);
+    editor.$multiselectOnSessionChange = exports.onSessionChange.bind(editor);
     editor.$checkMultiselectChange = editor.$checkMultiselectChange.bind(editor);
 
     editor.$multiselectOnSessionChange(editor);
@@ -50570,7 +50570,7 @@ function addAltCursorListeners(editor){
     }
 }
 
-exports$1.MultiSelect = MultiSelect;
+exports.MultiSelect = MultiSelect;
 
 
 require("./config").defineOptions(Editor.prototype, "editor", {
@@ -50599,11 +50599,11 @@ require("./config").defineOptions(Editor.prototype, "editor", {
 
 });
 
-ace.define("ace/mode/folding/fold_mode",["require","exports","module","ace/range"], function(require, exports$1, module) {
+ace.define("ace/mode/folding/fold_mode",["require","exports","module","ace/range"], function(require, exports, module) {
 
 var Range = require("../../range").Range;
 
-var FoldMode = exports$1.FoldMode = function() {};
+var FoldMode = exports.FoldMode = function() {};
 
 (function() {
 
@@ -50690,11 +50690,11 @@ var FoldMode = exports$1.FoldMode = function() {};
 
 });
 
-ace.define("ace/theme/textmate",["require","exports","module","ace/lib/dom"], function(require, exports$1, module) {
+ace.define("ace/theme/textmate",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 
-exports$1.isDark = false;
-exports$1.cssClass = "ace-tm";
-exports$1.cssText = ".ace-tm .ace_gutter {\
+exports.isDark = false;
+exports.cssClass = "ace-tm";
+exports.cssText = ".ace-tm .ace_gutter {\
 background: #f0f0f0;\
 color: #333;\
 }\
@@ -50814,13 +50814,13 @@ border: 1px solid rgb(200, 200, 250);\
 background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y;\
 }\
 ";
-exports$1.$id = "ace/theme/textmate";
+exports.$id = "ace/theme/textmate";
 
 var dom = require("../lib/dom");
-dom.importCssString(exports$1.cssText, exports$1.cssClass);
+dom.importCssString(exports.cssText, exports.cssClass);
 });
 
-ace.define("ace/line_widgets",["require","exports","module","ace/lib/dom"], function(require, exports$1, module) {
+ace.define("ace/line_widgets",["require","exports","module","ace/lib/dom"], function(require, exports, module) {
 
 var dom = require("./lib/dom");
 
@@ -51176,11 +51176,11 @@ function LineWidgets(session) {
 }).call(LineWidgets.prototype);
 
 
-exports$1.LineWidgets = LineWidgets;
+exports.LineWidgets = LineWidgets;
 
 });
 
-ace.define("ace/ext/error_marker",["require","exports","module","ace/line_widgets","ace/lib/dom","ace/range"], function(require, exports$1, module) {
+ace.define("ace/ext/error_marker",["require","exports","module","ace/line_widgets","ace/lib/dom","ace/range"], function(require, exports, module) {
 var LineWidgets = require("../line_widgets").LineWidgets;
 var dom = require("../lib/dom");
 var Range = require("../range").Range;
@@ -51238,7 +51238,7 @@ function findAnnotations(session, row, dir) {
     return matched.length && matched;
 }
 
-exports$1.showErrorMarker = function(editor, dir) {
+exports.showErrorMarker = function(editor, dir) {
     var session = editor.session;
     if (!session.widgetManager) {
         session.widgetManager = new LineWidgets(session);
@@ -51365,7 +51365,7 @@ dom.importCssString("\
 
 });
 
-ace.define("ace/ace",["require","exports","module","ace/lib/fixoldbrowsers","ace/lib/dom","ace/lib/event","ace/range","ace/editor","ace/edit_session","ace/undomanager","ace/virtual_renderer","ace/worker/worker_client","ace/keyboard/hash_handler","ace/placeholder","ace/multi_select","ace/mode/folding/fold_mode","ace/theme/textmate","ace/ext/error_marker","ace/config"], function(require, exports$1, module) {
+ace.define("ace/ace",["require","exports","module","ace/lib/fixoldbrowsers","ace/lib/dom","ace/lib/event","ace/range","ace/editor","ace/edit_session","ace/undomanager","ace/virtual_renderer","ace/worker/worker_client","ace/keyboard/hash_handler","ace/placeholder","ace/multi_select","ace/mode/folding/fold_mode","ace/theme/textmate","ace/ext/error_marker","ace/config"], function(require, exports, module) {
 
 require("./lib/fixoldbrowsers");
 
@@ -51385,12 +51385,12 @@ require("./mode/folding/fold_mode");
 require("./theme/textmate");
 require("./ext/error_marker");
 
-exports$1.config = require("./config");
-exports$1.require = require;
+exports.config = require("./config");
+exports.require = require;
 
 if (typeof define === "function")
-    exports$1.define = define;
-exports$1.edit = function(el, options) {
+    exports.define = define;
+exports.edit = function(el, options) {
     if (typeof el == "string") {
         var _id = el;
         el = document.getElementById(_id);
@@ -51412,7 +51412,7 @@ exports$1.edit = function(el, options) {
         el.innerHTML = "";
     }
 
-    var doc = exports$1.createEditSession(value);
+    var doc = exports.createEditSession(value);
 
     var editor = new Editor(new Renderer(el), doc, options);
 
@@ -51430,17 +51430,17 @@ exports$1.edit = function(el, options) {
     editor.container.env = editor.env = env;
     return editor;
 };
-exports$1.createEditSession = function(text, mode) {
+exports.createEditSession = function(text, mode) {
     var doc = new EditSession(text, mode);
     doc.setUndoManager(new UndoManager());
     return doc;
 };
-exports$1.Range = Range;
-exports$1.Editor = Editor;
-exports$1.EditSession = EditSession;
-exports$1.UndoManager = UndoManager;
-exports$1.VirtualRenderer = Renderer;
-exports$1.version = exports$1.config.version;
+exports.Range = Range;
+exports.Editor = Editor;
+exports.EditSession = EditSession;
+exports.UndoManager = UndoManager;
+exports.VirtualRenderer = Renderer;
+exports.version = exports.config.version;
 });            (function() {
                 ace.require(["ace/ace"], function(a) {
                     if (a) {
@@ -52680,11 +52680,11 @@ var lookup = function(parentId, moduleName) {
     if (!module) {
         module = define.payloads[moduleName];
         if (typeof module === 'function') {
-            var exports$1 = {};
+            var exports = {};
             var mod = {
                 id: moduleName,
                 uri: '',
-                exports: exports$1,
+                exports: exports,
                 packaged: true
             };
 
@@ -52692,12 +52692,12 @@ var lookup = function(parentId, moduleName) {
                 return _require(moduleName, module, callback);
             };
 
-            var returnValue = module(req, exports$1, mod);
-            exports$1 = returnValue || mod.exports;
-            define.modules[moduleName] = exports$1;
+            var returnValue = module(req, exports, mod);
+            exports = returnValue || mod.exports;
+            define.modules[moduleName] = exports;
             delete define.payloads[moduleName];
         }
-        module = define.modules[moduleName] = exports$1 || module;
+        module = define.modules[moduleName] = exports || module;
     }
     return module;
 };
@@ -52727,7 +52727,7 @@ exportAce(ACE_NAMESPACE);
 
 })();
 
-ace.define("ace/lib/es6-shim",["require","exports","module"], function(require, exports$1, module){function defineProp(obj, name, val) {
+ace.define("ace/lib/es6-shim",["require","exports","module"], function(require, exports, module){function defineProp(obj, name, val) {
     Object.defineProperty(obj, name, {
         value: val,
         enumerable: false,
@@ -52852,12 +52852,12 @@ if (!Array.of) {
 
 });
 
-ace.define("ace/lib/fixoldbrowsers",["require","exports","module","ace/lib/es6-shim"], function(require, exports$1, module){// vim:set ts=4 sts=4 sw=4 st:
+ace.define("ace/lib/fixoldbrowsers",["require","exports","module","ace/lib/es6-shim"], function(require, exports, module){// vim:set ts=4 sts=4 sw=4 st:
 require("./es6-shim");
 
 });
 
-ace.define("ace/lib/deep_copy",["require","exports","module"], function(require, exports$1, module){exports$1.deepCopy = function deepCopy(obj) {
+ace.define("ace/lib/deep_copy",["require","exports","module"], function(require, exports, module){exports.deepCopy = function deepCopy(obj) {
     if (typeof obj !== "object" || !obj)
         return obj;
     var copy;
@@ -52878,13 +52878,13 @@ ace.define("ace/lib/deep_copy",["require","exports","module"], function(require,
 
 });
 
-ace.define("ace/lib/lang",["require","exports","module","ace/lib/deep_copy"], function(require, exports$1, module){exports$1.last = function (a) {
+ace.define("ace/lib/lang",["require","exports","module","ace/lib/deep_copy"], function(require, exports, module){exports.last = function (a) {
     return a[a.length - 1];
 };
-exports$1.stringReverse = function (string) {
+exports.stringReverse = function (string) {
     return string.split("").reverse().join("");
 };
-exports$1.stringRepeat = function (string, count) {
+exports.stringRepeat = function (string, count) {
     var result = '';
     while (count > 0) {
         if (count & 1)
@@ -52896,20 +52896,20 @@ exports$1.stringRepeat = function (string, count) {
 };
 var trimBeginRegexp = /^\s\s*/;
 var trimEndRegexp = /\s\s*$/;
-exports$1.stringTrimLeft = function (string) {
+exports.stringTrimLeft = function (string) {
     return string.replace(trimBeginRegexp, '');
 };
-exports$1.stringTrimRight = function (string) {
+exports.stringTrimRight = function (string) {
     return string.replace(trimEndRegexp, '');
 };
-exports$1.copyObject = function (obj) {
+exports.copyObject = function (obj) {
     var copy = {};
     for (var key in obj) {
         copy[key] = obj[key];
     }
     return copy;
 };
-exports$1.copyArray = function (array) {
+exports.copyArray = function (array) {
     var copy = [];
     for (var i = 0, l = array.length; i < l; i++) {
         if (array[i] && typeof array[i] == "object")
@@ -52919,35 +52919,35 @@ exports$1.copyArray = function (array) {
     }
     return copy;
 };
-exports$1.deepCopy = require("./deep_copy").deepCopy;
-exports$1.arrayToMap = function (arr) {
+exports.deepCopy = require("./deep_copy").deepCopy;
+exports.arrayToMap = function (arr) {
     var map = {};
     for (var i = 0; i < arr.length; i++) {
         map[arr[i]] = 1;
     }
     return map;
 };
-exports$1.createMap = function (props) {
+exports.createMap = function (props) {
     var map = Object.create(null);
     for (var i in props) {
         map[i] = props[i];
     }
     return map;
 };
-exports$1.arrayRemove = function (array, value) {
+exports.arrayRemove = function (array, value) {
     for (var i = 0; i <= array.length; i++) {
         if (value === array[i]) {
             array.splice(i, 1);
         }
     }
 };
-exports$1.escapeRegExp = function (str) {
+exports.escapeRegExp = function (str) {
     return str.replace(/([.*+?^${}()|[\]\/\\])/g, '\\$1');
 };
-exports$1.escapeHTML = function (str) {
+exports.escapeHTML = function (str) {
     return ("" + str).replace(/&/g, "&#38;").replace(/"/g, "&#34;").replace(/'/g, "&#39;").replace(/</g, "&#60;");
 };
-exports$1.getMatchOffsets = function (string, regExp) {
+exports.getMatchOffsets = function (string, regExp) {
     var matches = [];
     string.replace(regExp, function (str) {
         matches.push({
@@ -52957,7 +52957,7 @@ exports$1.getMatchOffsets = function (string, regExp) {
     });
     return matches;
 };
-exports$1.deferredCall = function (fcn) {
+exports.deferredCall = function (fcn) {
     var timer = null;
     var callback = function () {
         timer = null;
@@ -52984,7 +52984,7 @@ exports$1.deferredCall = function (fcn) {
     };
     return deferred;
 };
-exports$1.delayedCall = function (fcn, defaultTimeout) {
+exports.delayedCall = function (fcn, defaultTimeout) {
     var timer = null;
     var callback = function () {
         timer = null;
@@ -53012,7 +53012,7 @@ exports$1.delayedCall = function (fcn, defaultTimeout) {
     };
     return _self;
 };
-exports$1.supportsLookbehind = function () {
+exports.supportsLookbehind = function () {
     try {
         new RegExp('(?<=.)');
     }
@@ -53021,59 +53021,59 @@ exports$1.supportsLookbehind = function () {
     }
     return true;
 };
-exports$1.skipEmptyMatch = function (line, last, supportsUnicodeFlag) {
+exports.skipEmptyMatch = function (line, last, supportsUnicodeFlag) {
     return supportsUnicodeFlag && line.codePointAt(last) > 0xffff ? 2 : 1;
 };
 
 });
 
-ace.define("ace/lib/useragent",["require","exports","module"], function(require, exports$1, module){exports$1.OS = {
+ace.define("ace/lib/useragent",["require","exports","module"], function(require, exports, module){exports.OS = {
     LINUX: "LINUX",
     MAC: "MAC",
     WINDOWS: "WINDOWS"
 };
-exports$1.getOS = function () {
-    if (exports$1.isMac) {
-        return exports$1.OS.MAC;
+exports.getOS = function () {
+    if (exports.isMac) {
+        return exports.OS.MAC;
     }
-    else if (exports$1.isLinux) {
-        return exports$1.OS.LINUX;
+    else if (exports.isLinux) {
+        return exports.OS.LINUX;
     }
     else {
-        return exports$1.OS.WINDOWS;
+        return exports.OS.WINDOWS;
     }
 };
 var _navigator = typeof navigator == "object" ? navigator : {};
 var os = (/mac|win|linux/i.exec(_navigator.platform) || ["other"])[0].toLowerCase();
 var ua = _navigator.userAgent || "";
 var appName = _navigator.appName || "";
-exports$1.isWin = (os == "win");
-exports$1.isMac = (os == "mac");
-exports$1.isLinux = (os == "linux");
-exports$1.isIE =
+exports.isWin = (os == "win");
+exports.isMac = (os == "mac");
+exports.isLinux = (os == "linux");
+exports.isIE =
     (appName == "Microsoft Internet Explorer" || appName.indexOf("MSAppHost") >= 0)
         ? parseFloat((ua.match(/(?:MSIE |Trident\/[0-9]+[\.0-9]+;.*rv:)([0-9]+[\.0-9]+)/) || [])[1])
         : parseFloat((ua.match(/(?:Trident\/[0-9]+[\.0-9]+;.*rv:)([0-9]+[\.0-9]+)/) || [])[1]); // for ie
-exports$1.isOldIE = exports$1.isIE && exports$1.isIE < 9;
-exports$1.isGecko = exports$1.isMozilla = ua.match(/ Gecko\/\d+/);
-exports$1.isOpera = typeof opera == "object" && Object.prototype.toString.call(window["opera"]) == "[object Opera]";
-exports$1.isWebKit = parseFloat(ua.split("WebKit/")[1]) || undefined;
-exports$1.isChrome = parseFloat(ua.split(" Chrome/")[1]) || undefined;
-exports$1.isSafari = parseFloat(ua.split(" Safari/")[1]) && !exports$1.isChrome || undefined;
-exports$1.isEdge = parseFloat(ua.split(" Edge/")[1]) || undefined;
-exports$1.isAIR = ua.indexOf("AdobeAIR") >= 0;
-exports$1.isAndroid = ua.indexOf("Android") >= 0;
-exports$1.isChromeOS = ua.indexOf(" CrOS ") >= 0;
-exports$1.isIOS = /iPad|iPhone|iPod/.test(ua) && !window["MSStream"];
-if (exports$1.isIOS)
-    exports$1.isMac = true;
-exports$1.isMobile = exports$1.isIOS || exports$1.isAndroid;
+exports.isOldIE = exports.isIE && exports.isIE < 9;
+exports.isGecko = exports.isMozilla = ua.match(/ Gecko\/\d+/);
+exports.isOpera = typeof opera == "object" && Object.prototype.toString.call(window["opera"]) == "[object Opera]";
+exports.isWebKit = parseFloat(ua.split("WebKit/")[1]) || undefined;
+exports.isChrome = parseFloat(ua.split(" Chrome/")[1]) || undefined;
+exports.isSafari = parseFloat(ua.split(" Safari/")[1]) && !exports.isChrome || undefined;
+exports.isEdge = parseFloat(ua.split(" Edge/")[1]) || undefined;
+exports.isAIR = ua.indexOf("AdobeAIR") >= 0;
+exports.isAndroid = ua.indexOf("Android") >= 0;
+exports.isChromeOS = ua.indexOf(" CrOS ") >= 0;
+exports.isIOS = /iPad|iPhone|iPod/.test(ua) && !window["MSStream"];
+if (exports.isIOS)
+    exports.isMac = true;
+exports.isMobile = exports.isIOS || exports.isAndroid;
 
 });
 
-ace.define("ace/lib/dom",["require","exports","module","ace/lib/useragent"], function(require, exports$1, module){var useragent = require("./useragent");
+ace.define("ace/lib/dom",["require","exports","module","ace/lib/useragent"], function(require, exports, module){var useragent = require("./useragent");
 var XHTML_NS = "http://www.w3.org/1999/xhtml";
-exports$1.buildDom = function buildDom(arr, parent, refs) {
+exports.buildDom = function buildDom(arr, parent, refs) {
     if (typeof arr == "string" && arr) {
         var txt = document.createTextNode(arr);
         if (parent)
@@ -53126,35 +53126,35 @@ exports$1.buildDom = function buildDom(arr, parent, refs) {
         parent.appendChild(el);
     return el;
 };
-exports$1.getDocumentHead = function (doc) {
+exports.getDocumentHead = function (doc) {
     if (!doc)
         doc = document;
     return doc.head || doc.getElementsByTagName("head")[0] || doc.documentElement;
 };
-exports$1.createElement = function (tag, ns) {
+exports.createElement = function (tag, ns) {
     return document.createElementNS ? document.createElementNS(ns || XHTML_NS, tag) : document.createElement(tag);
 };
-exports$1.removeChildren = function (element) {
+exports.removeChildren = function (element) {
     element.innerHTML = "";
 };
-exports$1.createTextNode = function (textContent, element) {
+exports.createTextNode = function (textContent, element) {
     var doc = element ? element.ownerDocument : document;
     return doc.createTextNode(textContent);
 };
-exports$1.createFragment = function (element) {
+exports.createFragment = function (element) {
     var doc = element ? element.ownerDocument : document;
     return doc.createDocumentFragment();
 };
-exports$1.hasCssClass = function (el, name) {
+exports.hasCssClass = function (el, name) {
     var classes = (el.className + "").split(/\s+/g);
     return classes.indexOf(name) !== -1;
 };
-exports$1.addCssClass = function (el, name) {
-    if (!exports$1.hasCssClass(el, name)) {
+exports.addCssClass = function (el, name) {
+    if (!exports.hasCssClass(el, name)) {
         el.className += " " + name;
     }
 };
-exports$1.removeCssClass = function (el, name) {
+exports.removeCssClass = function (el, name) {
     var classes = el.className.split(/\s+/g);
     while (true) {
         var index = classes.indexOf(name);
@@ -53165,7 +53165,7 @@ exports$1.removeCssClass = function (el, name) {
     }
     el.className = classes.join(" ");
 };
-exports$1.toggleCssClass = function (el, name) {
+exports.toggleCssClass = function (el, name) {
     var classes = el.className.split(/\s+/g), add = true;
     while (true) {
         var index = classes.indexOf(name);
@@ -53180,15 +53180,15 @@ exports$1.toggleCssClass = function (el, name) {
     el.className = classes.join(" ");
     return add;
 };
-exports$1.setCssClass = function (node, className, include) {
+exports.setCssClass = function (node, className, include) {
     if (include) {
-        exports$1.addCssClass(node, className);
+        exports.addCssClass(node, className);
     }
     else {
-        exports$1.removeCssClass(node, className);
+        exports.removeCssClass(node, className);
     }
 };
-exports$1.hasCssString = function (id, doc) {
+exports.hasCssString = function (id, doc) {
     var index = 0, sheets;
     doc = doc || document;
     if ((sheets = doc.querySelectorAll("style"))) {
@@ -53199,7 +53199,7 @@ exports$1.hasCssString = function (id, doc) {
         }
     }
 };
-exports$1.removeElementById = function (id, doc) {
+exports.removeElementById = function (id, doc) {
     doc = doc || document;
     if (doc.getElementById(id)) {
         doc.getElementById(id).remove();
@@ -53207,7 +53207,7 @@ exports$1.removeElementById = function (id, doc) {
 };
 var strictCSP;
 var cssCache = [];
-exports$1.useStrictCSP = function (value) {
+exports.useStrictCSP = function (value) {
     strictCSP = value;
     if (value == false)
         insertPendingStyles();
@@ -53244,23 +53244,23 @@ function importCssString(cssText, id, target) {
             container = document;
     }
     var doc = container.ownerDocument || container;
-    if (id && exports$1.hasCssString(id, container))
+    if (id && exports.hasCssString(id, container))
         return null;
     if (id)
         cssText += "\n/*# sourceURL=ace/css/" + id + " */";
-    var style = exports$1.createElement("style");
+    var style = exports.createElement("style");
     style.appendChild(doc.createTextNode(cssText));
     if (id)
         style.id = id;
     if (container == doc)
-        container = exports$1.getDocumentHead(doc);
+        container = exports.getDocumentHead(doc);
     container.insertBefore(style, container.firstChild);
 }
-exports$1.importCssString = importCssString;
-exports$1.importCssStylsheet = function (uri, doc) {
-    exports$1.buildDom(["link", { rel: "stylesheet", href: uri }], exports$1.getDocumentHead(doc));
+exports.importCssString = importCssString;
+exports.importCssStylsheet = function (uri, doc) {
+    exports.buildDom(["link", { rel: "stylesheet", href: uri }], exports.getDocumentHead(doc));
 };
-exports$1.$fixPositionBug = function (el) {
+exports.$fixPositionBug = function (el) {
     var rect = el.getBoundingClientRect();
     if (el.style.left) {
         var target = parseFloat(el.style.left);
@@ -53291,13 +53291,13 @@ exports$1.$fixPositionBug = function (el) {
         }
     }
 };
-exports$1.scrollbarWidth = function (doc) {
-    var inner = exports$1.createElement("ace_inner");
+exports.scrollbarWidth = function (doc) {
+    var inner = exports.createElement("ace_inner");
     inner.style.width = "100%";
     inner.style.minWidth = "0px";
     inner.style.height = "200px";
     inner.style.display = "block";
-    var outer = exports$1.createElement("ace_outer");
+    var outer = exports.createElement("ace_outer");
     var style = outer.style;
     style.position = "absolute";
     style.left = "-10000px";
@@ -53320,36 +53320,36 @@ exports$1.scrollbarWidth = function (doc) {
     body.removeChild(outer);
     return noScrollbar - withScrollbar;
 };
-exports$1.computedStyle = function (element, style) {
+exports.computedStyle = function (element, style) {
     return window.getComputedStyle(element, "") || {};
 };
-exports$1.setStyle = function (styles, property, value) {
+exports.setStyle = function (styles, property, value) {
     if (styles[property] !== value) {
         styles[property] = value;
     }
 };
-exports$1.HAS_CSS_ANIMATION = false;
-exports$1.HAS_CSS_TRANSFORMS = false;
-exports$1.HI_DPI = useragent.isWin
+exports.HAS_CSS_ANIMATION = false;
+exports.HAS_CSS_TRANSFORMS = false;
+exports.HI_DPI = useragent.isWin
     ? typeof window !== "undefined" && window.devicePixelRatio >= 1.5
     : true;
 if (useragent.isChromeOS)
-    exports$1.HI_DPI = false;
+    exports.HI_DPI = false;
 if (typeof document !== "undefined") {
     var div = document.createElement("div");
-    if (exports$1.HI_DPI && div.style.transform !== undefined)
-        exports$1.HAS_CSS_TRANSFORMS = true;
+    if (exports.HI_DPI && div.style.transform !== undefined)
+        exports.HAS_CSS_TRANSFORMS = true;
     if (!useragent.isEdge && typeof div.style.animationName !== "undefined")
-        exports$1.HAS_CSS_ANIMATION = true;
+        exports.HAS_CSS_ANIMATION = true;
     div = null;
 }
-if (exports$1.HAS_CSS_TRANSFORMS) {
-    exports$1.translate = function (element, tx, ty) {
+if (exports.HAS_CSS_TRANSFORMS) {
+    exports.translate = function (element, tx, ty) {
         element.style.transform = "translate(" + Math.round(tx) + "px, " + Math.round(ty) + "px)";
     };
 }
 else {
-    exports$1.translate = function (element, tx, ty) {
+    exports.translate = function (element, tx, ty) {
         element.style.top = Math.round(ty) + "px";
         element.style.left = Math.round(tx) + "px";
     };
@@ -53357,7 +53357,7 @@ else {
 
 });
 
-ace.define("ace/lib/net",["require","exports","module","ace/lib/dom"], function(require, exports$1, module){/*
+ace.define("ace/lib/net",["require","exports","module","ace/lib/dom"], function(require, exports, module){/*
  * based on code from:
  *
  * @license RequireJS text 0.25.0 Copyright (c) 2010-2011, The Dojo Foundation All Rights Reserved.
@@ -53365,7 +53365,7 @@ ace.define("ace/lib/net",["require","exports","module","ace/lib/dom"], function(
  * see: http://github.com/jrburke/requirejs for details
  */
 var dom = require("./dom");
-exports$1.get = function (url, callback) {
+exports.get = function (url, callback) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', url, true);
     xhr.onreadystatechange = function () {
@@ -53375,7 +53375,7 @@ exports$1.get = function (url, callback) {
     };
     xhr.send(null);
 };
-exports$1.loadScript = function (path, callback) {
+exports.loadScript = function (path, callback) {
     var head = dom.getDocumentHead();
     var s = document.createElement('script');
     s.src = path;
@@ -53388,7 +53388,7 @@ exports$1.loadScript = function (path, callback) {
         }
     };
 };
-exports$1.qualifyURL = function (url) {
+exports.qualifyURL = function (url) {
     var a = document.createElement('a');
     a.href = url;
     return a.href;
@@ -53396,7 +53396,7 @@ exports$1.qualifyURL = function (url) {
 
 });
 
-ace.define("ace/lib/oop",["require","exports","module"], function(require, exports$1, module){exports$1.inherits = function (ctor, superCtor) {
+ace.define("ace/lib/oop",["require","exports","module"], function(require, exports, module){exports.inherits = function (ctor, superCtor) {
     ctor.super_ = superCtor;
     ctor.prototype = Object.create(superCtor.prototype, {
         constructor: {
@@ -53407,19 +53407,19 @@ ace.define("ace/lib/oop",["require","exports","module"], function(require, expor
         }
     });
 };
-exports$1.mixin = function (obj, mixin) {
+exports.mixin = function (obj, mixin) {
     for (var key in mixin) {
         obj[key] = mixin[key];
     }
     return obj;
 };
-exports$1.implement = function (proto, mixin) {
-    exports$1.mixin(proto, mixin);
+exports.implement = function (proto, mixin) {
+    exports.mixin(proto, mixin);
 };
 
 });
 
-ace.define("ace/lib/event_emitter",["require","exports","module"], function(require, exports$1, module){var EventEmitter = {};
+ace.define("ace/lib/event_emitter",["require","exports","module"], function(require, exports, module){var EventEmitter = {};
 var stopPropagation = function () { this.propagationStopped = true; };
 var preventDefault = function () { this.defaultPrevented = true; };
 EventEmitter._emit =
@@ -53527,11 +53527,11 @@ EventEmitter.removeAllListeners = function (eventName) {
     if (this._defaultHandlers)
         this._defaultHandlers[eventName] = undefined;
 };
-exports$1.EventEmitter = EventEmitter;
+exports.EventEmitter = EventEmitter;
 
 });
 
-ace.define("ace/lib/report_error",["require","exports","module"], function(require, exports$1, module){exports$1.reportError = function reportError(msg, data) {
+ace.define("ace/lib/report_error",["require","exports","module"], function(require, exports, module){exports.reportError = function reportError(msg, data) {
     var e = new Error(msg);
     e["data"] = data;
     if (typeof console == "object" && console.error)
@@ -53541,7 +53541,7 @@ ace.define("ace/lib/report_error",["require","exports","module"], function(requi
 
 });
 
-ace.define("ace/lib/default_english_messages",["require","exports","module"], function(require, exports$1, module){var defaultEnglishMessages = {
+ace.define("ace/lib/default_english_messages",["require","exports","module"], function(require, exports, module){var defaultEnglishMessages = {
     "autocomplete.popup.aria-roledescription": "Autocomplete suggestions",
     "autocomplete.popup.aria-label": "Autocomplete suggestions",
     "autocomplete.popup.item.aria-roledescription": "item",
@@ -53590,11 +53590,11 @@ ace.define("ace/lib/default_english_messages",["require","exports","module"], fu
     "gutter-tooltip.aria-label.hint.plural": "suggestions",
     "editor.tooltip.disable-editing": "Editing is disabled"
 };
-exports$1.defaultEnglishMessages = defaultEnglishMessages;
+exports.defaultEnglishMessages = defaultEnglishMessages;
 
 });
 
-ace.define("ace/lib/app_config",["require","exports","module","ace/lib/oop","ace/lib/event_emitter","ace/lib/report_error","ace/lib/default_english_messages"], function(require, exports$1, module){"no use strict";
+ace.define("ace/lib/app_config",["require","exports","module","ace/lib/oop","ace/lib/event_emitter","ace/lib/report_error","ace/lib/default_english_messages"], function(require, exports, module){"no use strict";
 var oop = require("./oop");
 var EventEmitter = require("./event_emitter").EventEmitter;
 var reportError = require("./report_error").reportError;
@@ -53735,29 +53735,29 @@ var AppConfig = /** @class */ (function () {
 AppConfig.prototype.warn = warn;
 AppConfig.prototype.reportError = reportError;
 oop.implement(AppConfig.prototype, EventEmitter);
-exports$1.AppConfig = AppConfig;
+exports.AppConfig = AppConfig;
 
 });
 
-ace.define("ace/theme/textmate-css",["require","exports","module"], function(require, exports$1, module){module.exports = ".ace-tm .ace_gutter {\n  background: #f0f0f0;\n  color: #333;\n}\n\n.ace-tm .ace_print-margin {\n  width: 1px;\n  background: #e8e8e8;\n}\n\n.ace-tm .ace_fold {\n    background-color: #6B72E6;\n}\n\n.ace-tm {\n  background-color: #FFFFFF;\n  color: black;\n}\n\n.ace-tm .ace_cursor {\n  color: black;\n}\n        \n.ace-tm .ace_invisible {\n  color: rgb(191, 191, 191);\n}\n\n.ace-tm .ace_storage,\n.ace-tm .ace_keyword {\n  color: blue;\n}\n\n.ace-tm .ace_constant {\n  color: rgb(197, 6, 11);\n}\n\n.ace-tm .ace_constant.ace_buildin {\n  color: rgb(88, 72, 246);\n}\n\n.ace-tm .ace_constant.ace_language {\n  color: rgb(88, 92, 246);\n}\n\n.ace-tm .ace_constant.ace_library {\n  color: rgb(6, 150, 14);\n}\n\n.ace-tm .ace_invalid {\n  background-color: rgba(255, 0, 0, 0.1);\n  color: red;\n}\n\n.ace-tm .ace_support.ace_function {\n  color: rgb(60, 76, 114);\n}\n\n.ace-tm .ace_support.ace_constant {\n  color: rgb(6, 150, 14);\n}\n\n.ace-tm .ace_support.ace_type,\n.ace-tm .ace_support.ace_class {\n  color: rgb(109, 121, 222);\n}\n\n.ace-tm .ace_keyword.ace_operator {\n  color: rgb(104, 118, 135);\n}\n\n.ace-tm .ace_string {\n  color: rgb(3, 106, 7);\n}\n\n.ace-tm .ace_comment {\n  color: rgb(76, 136, 107);\n}\n\n.ace-tm .ace_comment.ace_doc {\n  color: rgb(0, 102, 255);\n}\n\n.ace-tm .ace_comment.ace_doc.ace_tag {\n  color: rgb(128, 159, 191);\n}\n\n.ace-tm .ace_constant.ace_numeric {\n  color: rgb(0, 0, 205);\n}\n\n.ace-tm .ace_variable {\n  color: rgb(49, 132, 149);\n}\n\n.ace-tm .ace_xml-pe {\n  color: rgb(104, 104, 91);\n}\n\n.ace-tm .ace_entity.ace_name.ace_function {\n  color: #0000A2;\n}\n\n\n.ace-tm .ace_heading {\n  color: rgb(12, 7, 255);\n}\n\n.ace-tm .ace_list {\n  color:rgb(185, 6, 144);\n}\n\n.ace-tm .ace_meta.ace_tag {\n  color:rgb(0, 22, 142);\n}\n\n.ace-tm .ace_string.ace_regex {\n  color: rgb(255, 0, 0)\n}\n\n.ace-tm .ace_marker-layer .ace_selection {\n  background: rgb(181, 213, 255);\n}\n.ace-tm.ace_multiselect .ace_selection.ace_start {\n  box-shadow: 0 0 3px 0px white;\n}\n.ace-tm .ace_marker-layer .ace_step {\n  background: rgb(252, 255, 0);\n}\n\n.ace-tm .ace_marker-layer .ace_stack {\n  background: rgb(164, 229, 101);\n}\n\n.ace-tm .ace_marker-layer .ace_bracket {\n  margin: -1px 0 0 -1px;\n  border: 1px solid rgb(192, 192, 192);\n}\n\n.ace-tm .ace_marker-layer .ace_active-line {\n  background: rgba(0, 0, 0, 0.07);\n}\n\n.ace-tm .ace_gutter-active-line {\n    background-color : #dcdcdc;\n}\n\n.ace-tm .ace_marker-layer .ace_selected-word {\n  background: rgb(250, 250, 255);\n  border: 1px solid rgb(200, 200, 250);\n}\n\n.ace-tm .ace_indent-guide {\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y;\n}\n\n.ace-tm .ace_indent-guide-active {\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC\") right repeat-y;\n}\n";
+ace.define("ace/theme/textmate-css",["require","exports","module"], function(require, exports, module){module.exports = ".ace-tm .ace_gutter {\n  background: #f0f0f0;\n  color: #333;\n}\n\n.ace-tm .ace_print-margin {\n  width: 1px;\n  background: #e8e8e8;\n}\n\n.ace-tm .ace_fold {\n    background-color: #6B72E6;\n}\n\n.ace-tm {\n  background-color: #FFFFFF;\n  color: black;\n}\n\n.ace-tm .ace_cursor {\n  color: black;\n}\n        \n.ace-tm .ace_invisible {\n  color: rgb(191, 191, 191);\n}\n\n.ace-tm .ace_storage,\n.ace-tm .ace_keyword {\n  color: blue;\n}\n\n.ace-tm .ace_constant {\n  color: rgb(197, 6, 11);\n}\n\n.ace-tm .ace_constant.ace_buildin {\n  color: rgb(88, 72, 246);\n}\n\n.ace-tm .ace_constant.ace_language {\n  color: rgb(88, 92, 246);\n}\n\n.ace-tm .ace_constant.ace_library {\n  color: rgb(6, 150, 14);\n}\n\n.ace-tm .ace_invalid {\n  background-color: rgba(255, 0, 0, 0.1);\n  color: red;\n}\n\n.ace-tm .ace_support.ace_function {\n  color: rgb(60, 76, 114);\n}\n\n.ace-tm .ace_support.ace_constant {\n  color: rgb(6, 150, 14);\n}\n\n.ace-tm .ace_support.ace_type,\n.ace-tm .ace_support.ace_class {\n  color: rgb(109, 121, 222);\n}\n\n.ace-tm .ace_keyword.ace_operator {\n  color: rgb(104, 118, 135);\n}\n\n.ace-tm .ace_string {\n  color: rgb(3, 106, 7);\n}\n\n.ace-tm .ace_comment {\n  color: rgb(76, 136, 107);\n}\n\n.ace-tm .ace_comment.ace_doc {\n  color: rgb(0, 102, 255);\n}\n\n.ace-tm .ace_comment.ace_doc.ace_tag {\n  color: rgb(128, 159, 191);\n}\n\n.ace-tm .ace_constant.ace_numeric {\n  color: rgb(0, 0, 205);\n}\n\n.ace-tm .ace_variable {\n  color: rgb(49, 132, 149);\n}\n\n.ace-tm .ace_xml-pe {\n  color: rgb(104, 104, 91);\n}\n\n.ace-tm .ace_entity.ace_name.ace_function {\n  color: #0000A2;\n}\n\n\n.ace-tm .ace_heading {\n  color: rgb(12, 7, 255);\n}\n\n.ace-tm .ace_list {\n  color:rgb(185, 6, 144);\n}\n\n.ace-tm .ace_meta.ace_tag {\n  color:rgb(0, 22, 142);\n}\n\n.ace-tm .ace_string.ace_regex {\n  color: rgb(255, 0, 0)\n}\n\n.ace-tm .ace_marker-layer .ace_selection {\n  background: rgb(181, 213, 255);\n}\n.ace-tm.ace_multiselect .ace_selection.ace_start {\n  box-shadow: 0 0 3px 0px white;\n}\n.ace-tm .ace_marker-layer .ace_step {\n  background: rgb(252, 255, 0);\n}\n\n.ace-tm .ace_marker-layer .ace_stack {\n  background: rgb(164, 229, 101);\n}\n\n.ace-tm .ace_marker-layer .ace_bracket {\n  margin: -1px 0 0 -1px;\n  border: 1px solid rgb(192, 192, 192);\n}\n\n.ace-tm .ace_marker-layer .ace_active-line {\n  background: rgba(0, 0, 0, 0.07);\n}\n\n.ace-tm .ace_gutter-active-line {\n    background-color : #dcdcdc;\n}\n\n.ace-tm .ace_marker-layer .ace_selected-word {\n  background: rgb(250, 250, 255);\n  border: 1px solid rgb(200, 200, 250);\n}\n\n.ace-tm .ace_indent-guide {\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y;\n}\n\n.ace-tm .ace_indent-guide-active {\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC\") right repeat-y;\n}\n";
 
 });
 
-ace.define("ace/theme/textmate",["require","exports","module","ace/theme/textmate-css","ace/lib/dom"], function(require, exports$1, module){exports$1.isDark = false;
-exports$1.cssClass = "ace-tm";
-exports$1.cssText = require("./textmate-css");
-exports$1.$id = "ace/theme/textmate";
+ace.define("ace/theme/textmate",["require","exports","module","ace/theme/textmate-css","ace/lib/dom"], function(require, exports, module){exports.isDark = false;
+exports.cssClass = "ace-tm";
+exports.cssText = require("./textmate-css");
+exports.$id = "ace/theme/textmate";
 var dom = require("../lib/dom");
-dom.importCssString(exports$1.cssText, exports$1.cssClass, false);
+dom.importCssString(exports.cssText, exports.cssClass, false);
 
 });
 
-ace.define("ace/config",["require","exports","module","ace/lib/lang","ace/lib/net","ace/lib/dom","ace/lib/app_config","ace/theme/textmate"], function(require, exports$1, module){"no use strict";
+ace.define("ace/config",["require","exports","module","ace/lib/lang","ace/lib/net","ace/lib/dom","ace/lib/app_config","ace/theme/textmate"], function(require, exports, module){"no use strict";
 var lang = require("./lib/lang");
 var net = require("./lib/net");
 var dom = require("./lib/dom");
 var AppConfig = require("./lib/app_config").AppConfig;
-module.exports = exports$1 = new AppConfig();
+module.exports = exports = new AppConfig();
 var options = {
     packaged: false,
     workerPath: null,
@@ -53770,12 +53770,12 @@ var options = {
     sharedPopups: false,
     useStrictCSP: null
 };
-exports$1.get = function (key) {
+exports.get = function (key) {
     if (!options.hasOwnProperty(key))
         throw new Error("Unknown config key: " + key);
     return options[key];
 };
-exports$1.set = function (key, value) {
+exports.set = function (key, value) {
     if (options.hasOwnProperty(key))
         options[key] = value;
     else if (this.setDefaultValue("", key, value) == false)
@@ -53783,11 +53783,11 @@ exports$1.set = function (key, value) {
     if (key == "useStrictCSP")
         dom.useStrictCSP(value);
 };
-exports$1.all = function () {
+exports.all = function () {
     return lang.copyObject(options);
 };
-exports$1.$modes = {};
-exports$1.moduleUrl = function (name, component) {
+exports.$modes = {};
+exports.moduleUrl = function (name, component) {
     if (options.$moduleUrls[name])
         return options.$moduleUrls[name];
     var parts = name.split("/");
@@ -53811,7 +53811,7 @@ exports$1.moduleUrl = function (name, component) {
         path += "/";
     return path + component + sep + base + this.get("suffix");
 };
-exports$1.setModuleUrl = function (name, subst) {
+exports.setModuleUrl = function (name, subst) {
     return options.$moduleUrls[name] = subst;
 };
 var loader = function (moduleName, cb) {
@@ -53822,13 +53822,13 @@ var loader = function (moduleName, cb) {
     console.error("loader is not configured");
 };
 var customLoader;
-exports$1.setLoader = function (cb) {
+exports.setLoader = function (cb) {
     customLoader = cb;
 };
-exports$1.dynamicModules = Object.create(null);
-exports$1.$loading = {};
-exports$1.$loaded = {};
-exports$1.loadModule = function (moduleId, onLoad) {
+exports.dynamicModules = Object.create(null);
+exports.$loading = {};
+exports.$loaded = {};
+exports.loadModule = function (moduleId, onLoad) {
     var loadedModule;
     if (Array.isArray(moduleId)) {
         var moduleType = moduleId[0];
@@ -53838,32 +53838,32 @@ exports$1.loadModule = function (moduleId, onLoad) {
         var moduleName = moduleId;
     }
     var load = function (module) {
-        if (module && !exports$1.$loading[moduleName])
+        if (module && !exports.$loading[moduleName])
             return onLoad && onLoad(module);
-        if (!exports$1.$loading[moduleName])
-            exports$1.$loading[moduleName] = [];
-        exports$1.$loading[moduleName].push(onLoad);
-        if (exports$1.$loading[moduleName].length > 1)
+        if (!exports.$loading[moduleName])
+            exports.$loading[moduleName] = [];
+        exports.$loading[moduleName].push(onLoad);
+        if (exports.$loading[moduleName].length > 1)
             return;
         var afterLoad = function () {
             loader(moduleName, function (err, module) {
                 if (module)
-                    exports$1.$loaded[moduleName] = module;
-                exports$1._emit("load.module", { name: moduleName, module: module });
-                var listeners = exports$1.$loading[moduleName];
-                exports$1.$loading[moduleName] = null;
+                    exports.$loaded[moduleName] = module;
+                exports._emit("load.module", { name: moduleName, module: module });
+                var listeners = exports.$loading[moduleName];
+                exports.$loading[moduleName] = null;
                 listeners.forEach(function (onLoad) {
                     onLoad && onLoad(module);
                 });
             });
         };
-        if (!exports$1.get("packaged"))
+        if (!exports.get("packaged"))
             return afterLoad();
-        net.loadScript(exports$1.moduleUrl(moduleName, moduleType), afterLoad);
+        net.loadScript(exports.moduleUrl(moduleName, moduleType), afterLoad);
         reportErrorIfPathIsNotConfigured();
     };
-    if (exports$1.dynamicModules[moduleName]) {
-        exports$1.dynamicModules[moduleName]().then(function (module) {
+    if (exports.dynamicModules[moduleName]) {
+        exports.dynamicModules[moduleName]().then(function (module) {
             if (module.default) {
                 load(module.default);
             }
@@ -53877,17 +53877,17 @@ exports$1.loadModule = function (moduleId, onLoad) {
             loadedModule = this.$require(moduleName);
         }
         catch (e) { }
-        load(loadedModule || exports$1.$loaded[moduleName]);
+        load(loadedModule || exports.$loaded[moduleName]);
     }
 };
-exports$1.$require = function (moduleName) {
+exports.$require = function (moduleName) {
     if (typeof module["require"] == "function") {
         var req = "require";
         return module[req](moduleName);
     }
 };
-exports$1.setModuleLoader = function (moduleName, onLoad) {
-    exports$1.dynamicModules[moduleName] = onLoad;
+exports.setModuleLoader = function (moduleName, onLoad) {
+    exports.dynamicModules[moduleName] = onLoad;
 };
 var reportErrorIfPathIsNotConfigured = function () {
     if (!options.basePath && !options.workerPath
@@ -53897,11 +53897,11 @@ var reportErrorIfPathIsNotConfigured = function () {
         reportErrorIfPathIsNotConfigured = function () { };
     }
 };
-exports$1.version = "1.43.6";
+exports.version = "1.43.6";
 
 });
 
-ace.define("ace/loader_build",["require","exports","module","ace/lib/fixoldbrowsers","ace/config"], function(require, exports$1, module) {
+ace.define("ace/loader_build",["require","exports","module","ace/lib/fixoldbrowsers","ace/config"], function(require, exports, module) {
 
 require("./lib/fixoldbrowsers");
 var config = require("./config");
@@ -53981,7 +53981,7 @@ function deHyphenate(str) {
 }
 });
 
-ace.define("ace/range",["require","exports","module"], function(require, exports$1, module){var Range = /** @class */ (function () {
+ace.define("ace/range",["require","exports","module"], function(require, exports, module){var Range = /** @class */ (function () {
     function Range(startRow, startColumn, endRow, endColumn) {
         this.start = {
             row: startRow,
@@ -54203,11 +54203,11 @@ Range.fromPoints = function (start, end) {
 Range.comparePoints = function (p1, p2) {
     return p1.row - p2.row || p1.column - p2.column;
 };
-exports$1.Range = Range;
+exports.Range = Range;
 
 });
 
-ace.define("ace/lib/keys",["require","exports","module","ace/lib/oop"], function(require, exports$1, module){var oop = require("./oop");
+ace.define("ace/lib/keys",["require","exports","module","ace/lib/oop"], function(require, exports, module){var oop = require("./oop");
 var Keys = {
     MODIFIER_KEYS: {
         16: 'Shift', 17: 'Ctrl', 18: 'Alt', 224: 'Meta',
@@ -54307,7 +54307,7 @@ for (var mod in modifiers) {
     codeToKeyCode[mod] = codeToKeyCode[mod + "Left"]
         = codeToKeyCode[mod + "Right"] = modifiers[mod];
 }
-exports$1.$codeToKeyCode = codeToKeyCode;
+exports.$codeToKeyCode = codeToKeyCode;
 Keys.PRINTABLE_KEYS[173] = '-';
 for (var j in Keys.FUNCTION_KEYS) {
     var name = Keys.FUNCTION_KEYS[j].toLowerCase();
@@ -54333,9 +54333,9 @@ Keys.del = Keys["delete"];
 })();
 Keys.KEY_MODS[0] = "";
 Keys.KEY_MODS[-1] = "input-";
-oop.mixin(exports$1, Keys);
-exports$1.default = exports$1;
-exports$1.keyCodeToString = function (keyCode) {
+oop.mixin(exports, Keys);
+exports.default = exports;
+exports.keyCodeToString = function (keyCode) {
     var keyString = Keys[keyCode];
     if (typeof keyString != "string")
         keyString = String.fromCharCode(keyCode);
@@ -54344,7 +54344,7 @@ exports$1.keyCodeToString = function (keyCode) {
 
 });
 
-ace.define("ace/lib/event",["require","exports","module","ace/lib/keys","ace/lib/useragent"], function(require, exports$1, module){ var keys = require("./keys");
+ace.define("ace/lib/event",["require","exports","module","ace/lib/keys","ace/lib/useragent"], function(require, exports, module){ var keys = require("./keys");
 var useragent = require("./useragent");
 var pressedKeys = null;
 var ts = 0;
@@ -54375,35 +54375,35 @@ EventListener.prototype.destroy = function () {
     removeListener(this.elem, this.type, this.callback);
     this.elem = this.type = this.callback = undefined;
 };
-var addListener = exports$1.addListener = function (elem, type, callback, destroyer) {
+var addListener = exports.addListener = function (elem, type, callback, destroyer) {
     elem.addEventListener(type, callback, getListenerOptions());
     if (destroyer)
         destroyer.$toDestroy.push(new EventListener(elem, type, callback));
 };
-var removeListener = exports$1.removeListener = function (elem, type, callback) {
+var removeListener = exports.removeListener = function (elem, type, callback) {
     elem.removeEventListener(type, callback, getListenerOptions());
 };
-exports$1.stopEvent = function (e) {
-    exports$1.stopPropagation(e);
-    exports$1.preventDefault(e);
+exports.stopEvent = function (e) {
+    exports.stopPropagation(e);
+    exports.preventDefault(e);
     return false;
 };
-exports$1.stopPropagation = function (e) {
+exports.stopPropagation = function (e) {
     if (e.stopPropagation)
         e.stopPropagation();
 };
-exports$1.preventDefault = function (e) {
+exports.preventDefault = function (e) {
     if (e.preventDefault)
         e.preventDefault();
 };
-exports$1.getButton = function (e) {
+exports.getButton = function (e) {
     if (e.type == "dblclick")
         return 0;
     if (e.type == "contextmenu" || (useragent.isMac && (e.ctrlKey && !e.altKey && !e.shiftKey)))
         return 2;
     return e.button;
 };
-exports$1.capture = function (el, eventHandler, releaseCaptureHandler) {
+exports.capture = function (el, eventHandler, releaseCaptureHandler) {
     var ownerDocument = el && el.ownerDocument || document;
     function onMouseUp(e) {
         eventHandler && eventHandler(e);
@@ -54417,7 +54417,7 @@ exports$1.capture = function (el, eventHandler, releaseCaptureHandler) {
     addListener(ownerDocument, "dragstart", onMouseUp);
     return onMouseUp;
 };
-exports$1.addMouseWheelListener = function (el, callback, destroyer) {
+exports.addMouseWheelListener = function (el, callback, destroyer) {
     addListener(el, "wheel", function (e) {
         var factor = 0.15;
         var deltaX = e.deltaX || 0;
@@ -54441,7 +54441,7 @@ exports$1.addMouseWheelListener = function (el, callback, destroyer) {
         callback(e);
     }, destroyer);
 };
-exports$1.addMultiMouseDownListener = function (elements, timeouts, eventHandler, callbackName, destroyer) {
+exports.addMultiMouseDownListener = function (elements, timeouts, eventHandler, callbackName, destroyer) {
     var clicks = 0;
     var startX, startY, timer;
     var eventNames = {
@@ -54450,7 +54450,7 @@ exports$1.addMultiMouseDownListener = function (elements, timeouts, eventHandler
         4: "quadclick"
     };
     function onMousedown(e) {
-        if (exports$1.getButton(e) !== 0) {
+        if (exports.getButton(e) !== 0) {
             clicks = 0;
         }
         else if (e.detail > 1) {
@@ -54489,7 +54489,7 @@ exports$1.addMultiMouseDownListener = function (elements, timeouts, eventHandler
 function getModifierHash(e) {
     return 0 | (e.ctrlKey ? 1 : 0) | (e.altKey ? 2 : 0) | (e.shiftKey ? 4 : 0) | (e.metaKey ? 8 : 0);
 }
-exports$1.getModifierString = function (e) {
+exports.getModifierString = function (e) {
     return keys.KEY_MODS[getModifierHash(e)];
 };
 function normalizeCommandKeys(callback, e, keyCode) {
@@ -54541,7 +54541,7 @@ function normalizeCommandKeys(callback, e, keyCode) {
     }
     return callback(e, hashId, keyCode);
 }
-exports$1.addCommandKeyListener = function (el, callback, destroyer) {
+exports.addCommandKeyListener = function (el, callback, destroyer) {
     var lastDefaultPrevented = null;
     addListener(el, "keydown", function (e) {
         pressedKeys[e.keyCode] = (pressedKeys[e.keyCode] || 0) + 1;
@@ -54551,7 +54551,7 @@ exports$1.addCommandKeyListener = function (el, callback, destroyer) {
     }, destroyer);
     addListener(el, "keypress", function (e) {
         if (lastDefaultPrevented && (e.ctrlKey || e.altKey || e.shiftKey || e.metaKey)) {
-            exports$1.stopEvent(e);
+            exports.stopEvent(e);
             lastDefaultPrevented = null;
         }
     }, destroyer);
@@ -54568,12 +54568,12 @@ function resetPressedKeys() {
 }
 if (typeof window == "object" && window.postMessage && !useragent.isOldIE) {
     var postMessageId = 1;
-    exports$1.nextTick = function (callback, win) {
+    exports.nextTick = function (callback, win) {
         win = win || window;
         var messageName = "zero-timeout-message-" + (postMessageId++);
         var listener = function (e) {
             if (e.data == messageName) {
-                exports$1.stopPropagation(e);
+                exports.stopPropagation(e);
                 removeListener(win, "message", listener);
                 callback();
             }
@@ -54582,10 +54582,10 @@ if (typeof window == "object" && window.postMessage && !useragent.isOldIE) {
         win.postMessage(messageName, "*");
     };
 }
-exports$1.$idleBlocked = false;
-exports$1.onIdle = function (cb, timeout) {
+exports.$idleBlocked = false;
+exports.onIdle = function (cb, timeout) {
     return setTimeout(function handler() {
-        if (!exports$1.$idleBlocked) {
+        if (!exports.$idleBlocked) {
             cb();
         }
         else {
@@ -54593,30 +54593,30 @@ exports$1.onIdle = function (cb, timeout) {
         }
     }, timeout);
 };
-exports$1.$idleBlockId = null;
-exports$1.blockIdle = function (delay) {
-    if (exports$1.$idleBlockId)
-        clearTimeout(exports$1.$idleBlockId);
-    exports$1.$idleBlocked = true;
-    exports$1.$idleBlockId = setTimeout(function () {
-        exports$1.$idleBlocked = false;
+exports.$idleBlockId = null;
+exports.blockIdle = function (delay) {
+    if (exports.$idleBlockId)
+        clearTimeout(exports.$idleBlockId);
+    exports.$idleBlocked = true;
+    exports.$idleBlockId = setTimeout(function () {
+        exports.$idleBlocked = false;
     }, delay || 100);
 };
-exports$1.nextFrame = typeof window == "object" && (window.requestAnimationFrame
+exports.nextFrame = typeof window == "object" && (window.requestAnimationFrame
     || window["mozRequestAnimationFrame"]
     || window["webkitRequestAnimationFrame"]
     || window["msRequestAnimationFrame"]
     || window["oRequestAnimationFrame"]);
-if (exports$1.nextFrame)
-    exports$1.nextFrame = exports$1.nextFrame.bind(window);
+if (exports.nextFrame)
+    exports.nextFrame = exports.nextFrame.bind(window);
 else
-    exports$1.nextFrame = function (callback) {
+    exports.nextFrame = function (callback) {
         setTimeout(callback, 17);
     };
 
 });
 
-ace.define("ace/clipboard",["require","exports","module"], function(require, exports$1, module){var $cancelT;
+ace.define("ace/clipboard",["require","exports","module"], function(require, exports, module){var $cancelT;
 module.exports = {
     lineMode: false,
     pasteCancelled: function () {
@@ -54631,7 +54631,7 @@ module.exports = {
 
 });
 
-ace.define("ace/keyboard/textinput",["require","exports","module","ace/lib/event","ace/config","ace/lib/useragent","ace/lib/dom","ace/lib/lang","ace/clipboard","ace/lib/keys"], function(require, exports$1, module){var event = require("../lib/event");
+ace.define("ace/keyboard/textinput",["require","exports","module","ace/lib/event","ace/config","ace/lib/useragent","ace/lib/dom","ace/lib/lang","ace/clipboard","ace/lib/keys"], function(require, exports, module){var event = require("../lib/event");
 var nls = require("../config").nls;
 var useragent = require("../lib/useragent");
 var dom = require("../lib/dom");
@@ -55355,15 +55355,15 @@ var TextInput = /** @class */ (function () {
     };
     return TextInput;
 }());
-exports$1.TextInput = TextInput;
-exports$1.$setUserAgentForTests = function (_isMobile, _isIOS) {
+exports.TextInput = TextInput;
+exports.$setUserAgentForTests = function (_isMobile, _isIOS) {
     isMobile = _isMobile;
     isIOS = _isIOS;
 };
 
 });
 
-ace.define("ace/mouse/default_handlers",["require","exports","module","ace/lib/useragent"], function(require, exports$1, module){var useragent = require("../lib/useragent");
+ace.define("ace/mouse/default_handlers",["require","exports","module","ace/lib/useragent"], function(require, exports, module){var useragent = require("../lib/useragent");
 var DRAG_OFFSET = 0; // pixels
 var SCROLL_COOLDOWN_T = 550; // milliseconds
 var DefaultHandlers = /** @class */ (function () {
@@ -55375,9 +55375,9 @@ var DefaultHandlers = /** @class */ (function () {
         editor.setDefaultHandler("tripleclick", this.onTripleClick.bind(mouseHandler));
         editor.setDefaultHandler("quadclick", this.onQuadClick.bind(mouseHandler));
         editor.setDefaultHandler("mousewheel", this.onMouseWheel.bind(mouseHandler));
-        var exports$1 = ["select", "startSelect", "selectEnd", "selectAllEnd", "selectByWordsEnd",
+        var exports = ["select", "startSelect", "selectEnd", "selectAllEnd", "selectByWordsEnd",
             "selectByLinesEnd", "dragWait", "dragWaitEnd", "focusWait"];
-        exports$1.forEach(function (x) {
+        exports.forEach(function (x) {
             mouseHandler[x] = this[x];
         }, this);
         mouseHandler["selectByLines"] = this.extendSelectionBy.bind(mouseHandler, "getLineRange");
@@ -55581,7 +55581,7 @@ var DefaultHandlers = /** @class */ (function () {
 DefaultHandlers.prototype.selectEnd = DefaultHandlers.prototype.selectByLinesEnd;
 DefaultHandlers.prototype.selectAllEnd = DefaultHandlers.prototype.selectByLinesEnd;
 DefaultHandlers.prototype.selectByWordsEnd = DefaultHandlers.prototype.selectByLinesEnd;
-exports$1.DefaultHandlers = DefaultHandlers;
+exports.DefaultHandlers = DefaultHandlers;
 function calcDistance(ax, ay, bx, by) {
     return Math.sqrt(Math.pow(bx - ax, 2) + Math.pow(by - ay, 2));
 }
@@ -55600,7 +55600,7 @@ function calcRangeOrientation(range, cursor, session) {
 
 });
 
-ace.define("ace/mouse/mouse_event",["require","exports","module","ace/lib/event","ace/lib/useragent"], function(require, exports$1, module){var event = require("../lib/event");
+ace.define("ace/mouse/mouse_event",["require","exports","module","ace/lib/event","ace/lib/useragent"], function(require, exports, module){var event = require("../lib/event");
 var useragent = require("../lib/useragent");
 var MouseEvent = /** @class */ (function () {
     function MouseEvent(domEvent, editor) { this.speed; this.wheelX; this.wheelY;
@@ -55661,11 +55661,11 @@ var MouseEvent = /** @class */ (function () {
     };
     return MouseEvent;
 }());
-exports$1.MouseEvent = MouseEvent;
+exports.MouseEvent = MouseEvent;
 
 });
 
-ace.define("ace/lib/scroll",["require","exports","module"], function(require, exports$1, module){exports$1.preventParentScroll = function preventParentScroll(event) {
+ace.define("ace/lib/scroll",["require","exports","module"], function(require, exports, module){exports.preventParentScroll = function preventParentScroll(event) {
     event.stopPropagation();
     var target = event.currentTarget;
     var contentOverflows = target.scrollHeight > target.clientHeight;
@@ -55676,7 +55676,7 @@ ace.define("ace/lib/scroll",["require","exports","module"], function(require, ex
 
 });
 
-ace.define("ace/tooltip",["require","exports","module","ace/lib/dom","ace/lib/event","ace/range","ace/lib/scroll"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/tooltip",["require","exports","module","ace/lib/dom","ace/lib/event","ace/range","ace/lib/scroll"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -55847,8 +55847,8 @@ var PopupManager = /** @class */ (function () {
     return PopupManager;
 }());
 var popupManager = new PopupManager();
-exports$1.popupManager = popupManager;
-exports$1.Tooltip = Tooltip;
+exports.popupManager = popupManager;
+exports.Tooltip = Tooltip;
 var HoverTooltip = /** @class */ (function (_super) {
     __extends(HoverTooltip, _super);
     function HoverTooltip(parentNode) {
@@ -56043,11 +56043,11 @@ var HoverTooltip = /** @class */ (function (_super) {
     };
     return HoverTooltip;
 }(Tooltip));
-exports$1.HoverTooltip = HoverTooltip;
+exports.HoverTooltip = HoverTooltip;
 
 });
 
-ace.define("ace/mouse/default_gutter_handler",["require","exports","module","ace/lib/dom","ace/mouse/mouse_event","ace/tooltip","ace/config","ace/range"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/mouse/default_gutter_handler",["require","exports","module","ace/lib/dom","ace/mouse/mouse_event","ace/tooltip","ace/config","ace/range"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -56109,7 +56109,7 @@ function GutterHandler(mouseHandler) {
         return e.preventDefault();
     });
 }
-exports$1.GutterHandler = GutterHandler;
+exports.GutterHandler = GutterHandler;
 var GutterTooltip = /** @class */ (function (_super) {
     __extends(GutterTooltip, _super);
     function GutterTooltip(editor) {
@@ -56326,11 +56326,11 @@ var GutterTooltip = /** @class */ (function (_super) {
     return GutterTooltip;
 }(HoverTooltip));
 GutterTooltip.$uid = 0;
-exports$1.GutterTooltip = GutterTooltip;
+exports.GutterTooltip = GutterTooltip;
 
 });
 
-ace.define("ace/mouse/dragdrop_handler",["require","exports","module","ace/lib/dom","ace/lib/event","ace/lib/useragent"], function(require, exports$1, module){var dom = require("../lib/dom");
+ace.define("ace/mouse/dragdrop_handler",["require","exports","module","ace/lib/dom","ace/lib/event","ace/lib/useragent"], function(require, exports, module){var dom = require("../lib/dom");
 var event = require("../lib/event");
 var useragent = require("../lib/useragent");
 var AUTOSCROLL_DELAY = 200;
@@ -56341,8 +56341,8 @@ function DragdropHandler(mouseHandler) {
     var dragImage = dom.createElement("div");
     dragImage.style.cssText = "top:-100px;position:absolute;z-index:2147483647;opacity:0.5";
     dragImage.textContent = "\xa0";
-    var exports$1 = ["dragWait", "dragWaitEnd", "startDrag", "dragReadyEnd", "onMouseDrag"];
-    exports$1.forEach(function (x) {
+    var exports = ["dragWait", "dragWaitEnd", "startDrag", "dragReadyEnd", "onMouseDrag"];
+    exports.forEach(function (x) {
         mouseHandler[x] = this[x];
     }, this);
     editor.on("mousedown", this.onMouseDown.bind(mouseHandler));
@@ -56664,14 +56664,14 @@ function DragdropHandler(mouseHandler) {
 function calcDistance(ax, ay, bx, by) {
     return Math.sqrt(Math.pow(bx - ax, 2) + Math.pow(by - ay, 2));
 }
-exports$1.DragdropHandler = DragdropHandler;
+exports.DragdropHandler = DragdropHandler;
 
 });
 
-ace.define("ace/mouse/touch_handler",["require","exports","module","ace/mouse/mouse_event","ace/lib/event","ace/lib/dom"], function(require, exports$1, module){var MouseEvent = require("./mouse_event").MouseEvent;
+ace.define("ace/mouse/touch_handler",["require","exports","module","ace/mouse/mouse_event","ace/lib/event","ace/lib/dom"], function(require, exports, module){var MouseEvent = require("./mouse_event").MouseEvent;
 var event = require("../lib/event");
 var dom = require("../lib/dom");
-exports$1.addTouchListeners = function (el, editor) {
+exports.addTouchListeners = function (el, editor) {
     var mode = "scroll";
     var startX;
     var startY;
@@ -56978,7 +56978,7 @@ exports$1.addTouchListeners = function (el, editor) {
 
 });
 
-ace.define("ace/mouse/mouse_handler",["require","exports","module","ace/lib/event","ace/lib/useragent","ace/mouse/default_handlers","ace/mouse/default_gutter_handler","ace/mouse/mouse_event","ace/mouse/dragdrop_handler","ace/mouse/touch_handler","ace/config"], function(require, exports$1, module){var event = require("../lib/event");
+ace.define("ace/mouse/mouse_handler",["require","exports","module","ace/lib/event","ace/lib/useragent","ace/mouse/default_handlers","ace/mouse/default_gutter_handler","ace/mouse/mouse_event","ace/mouse/dragdrop_handler","ace/mouse/touch_handler","ace/config"], function(require, exports, module){var event = require("../lib/event");
 var useragent = require("../lib/useragent");
 var DefaultHandlers = require("./default_handlers").DefaultHandlers;
 var DefaultGutterHandler = require("./default_gutter_handler").GutterHandler;
@@ -57150,11 +57150,11 @@ config.defineOptions(MouseHandler.prototype, "mouseHandler", {
     dragEnabled: { initialValue: true },
     focusTimeout: { initialValue: 0 },
 });
-exports$1.MouseHandler = MouseHandler;
+exports.MouseHandler = MouseHandler;
 
 });
 
-ace.define("ace/mouse/fold_handler",["require","exports","module","ace/lib/dom"], function(require, exports$1, module){var dom = require("../lib/dom");
+ace.define("ace/mouse/fold_handler",["require","exports","module","ace/lib/dom"], function(require, exports, module){var dom = require("../lib/dom");
 var FoldHandler = /** @class */ (function () {
     function FoldHandler(editor) {
         editor.on("click", function (e) {
@@ -57212,11 +57212,11 @@ var FoldHandler = /** @class */ (function () {
     }
     return FoldHandler;
 }());
-exports$1.FoldHandler = FoldHandler;
+exports.FoldHandler = FoldHandler;
 
 });
 
-ace.define("ace/keyboard/keybinding",["require","exports","module","ace/lib/keys","ace/lib/event"], function(require, exports$1, module){var keyUtil = require("../lib/keys");
+ace.define("ace/keyboard/keybinding",["require","exports","module","ace/lib/keys","ace/lib/event"], function(require, exports, module){var keyUtil = require("../lib/keys");
 var event = require("../lib/event");
 var KeyBinding = /** @class */ (function () {
     function KeyBinding(editor) {
@@ -57310,11 +57310,11 @@ var KeyBinding = /** @class */ (function () {
     };
     return KeyBinding;
 }());
-exports$1.KeyBinding = KeyBinding;
+exports.KeyBinding = KeyBinding;
 
 });
 
-ace.define("ace/lib/bidiutil",["require","exports","module"], function(require, exports$1, module){var dir = 0, hiLevel = 0;
+ace.define("ace/lib/bidiutil",["require","exports","module"], function(require, exports, module){var dir = 0, hiLevel = 0;
 var lastArabic = false, hasUBAT_B = false, hasUBAT_S = false;
 var impTab_LTR = [ [0, 3, 0, 1, 0, 0, 0], [0, 3, 0, 1, 2, 2, 0], [0, 3, 0, 0x11, 2, 0, 1], [0, 3, 5, 5, 4, 1, 0], [0, 3, 0x15, 0x15, 4, 0, 1], [0, 3, 5, 5, 4, 2, 0]
 ];
@@ -57561,16 +57561,16 @@ function _getCharacterType(ch) {
     }
     return ON;
 }
-exports$1.L = L;
-exports$1.R = R;
-exports$1.EN = EN;
-exports$1.ON_R = 3;
-exports$1.AN = 4;
-exports$1.R_H = 5;
-exports$1.B = 6;
-exports$1.RLE = 7;
-exports$1.DOT = "\xB7";
-exports$1.doBidiReorder = function (text, textCharTypes, isRtl) {
+exports.L = L;
+exports.R = R;
+exports.EN = EN;
+exports.ON_R = 3;
+exports.AN = 4;
+exports.R_H = 5;
+exports.B = 6;
+exports.RLE = 7;
+exports.DOT = "\xB7";
+exports.doBidiReorder = function (text, textCharTypes, isRtl) {
     if (text.length < 2)
         return {};
     var chars = text.split(""), logicalFromVisual = new Array(chars.length), bidiLevels = new Array(chars.length), levels = [];
@@ -57582,27 +57582,27 @@ exports$1.doBidiReorder = function (text, textCharTypes, isRtl) {
     _invertLevel(1, levels, logicalFromVisual);
     for (var i = 0; i < logicalFromVisual.length - 1; i++) { //fix levels to reflect character width
         if (textCharTypes[i] === AN) {
-            levels[i] = exports$1.AN;
+            levels[i] = exports.AN;
         }
         else if (levels[i] === R && ((textCharTypes[i] > AL && textCharTypes[i] < LRE)
             || textCharTypes[i] === ON || textCharTypes[i] === BN)) {
-            levels[i] = exports$1.ON_R;
+            levels[i] = exports.ON_R;
         }
         else if ((i > 0 && chars[i - 1] === '\u0644') && /\u0622|\u0623|\u0625|\u0627/.test(chars[i])) {
-            levels[i - 1] = levels[i] = exports$1.R_H;
+            levels[i - 1] = levels[i] = exports.R_H;
             i++;
         }
     }
-    if (chars[chars.length - 1] === exports$1.DOT)
-        levels[chars.length - 1] = exports$1.B;
+    if (chars[chars.length - 1] === exports.DOT)
+        levels[chars.length - 1] = exports.B;
     if (chars[0] === '\u202B')
-        levels[0] = exports$1.RLE;
+        levels[0] = exports.RLE;
     for (var i = 0; i < logicalFromVisual.length; i++) {
         bidiLevels[i] = levels[logicalFromVisual[i]];
     }
     return { 'logicalFromVisual': logicalFromVisual, 'bidiLevels': bidiLevels };
 };
-exports$1.hasBidiCharacters = function (text, textCharTypes) {
+exports.hasBidiCharacters = function (text, textCharTypes) {
     var ret = false;
     for (var i = 0; i < text.length; i++) {
         textCharTypes[i] = _getCharacterType(text.charAt(i));
@@ -57611,7 +57611,7 @@ exports$1.hasBidiCharacters = function (text, textCharTypes) {
     }
     return ret;
 };
-exports$1.getVisualFromLogicalIdx = function (logIdx, rowMap) {
+exports.getVisualFromLogicalIdx = function (logIdx, rowMap) {
     for (var i = 0; i < rowMap.logicalFromVisual.length; i++) {
         if (rowMap.logicalFromVisual[i] == logIdx)
             return i;
@@ -57621,7 +57621,7 @@ exports$1.getVisualFromLogicalIdx = function (logIdx, rowMap) {
 
 });
 
-ace.define("ace/bidihandler",["require","exports","module","ace/lib/bidiutil","ace/lib/lang"], function(require, exports$1, module){var bidiUtil = require("./lib/bidiutil");
+ace.define("ace/bidihandler",["require","exports","module","ace/lib/bidiutil","ace/lib/lang"], function(require, exports, module){var bidiUtil = require("./lib/bidiutil");
 var lang = require("./lib/lang");
 var bidiRE = /[\u0590-\u05f4\u0600-\u06ff\u0700-\u08ac\u202B]/;
 var BidiHandler = /** @class */ (function () {
@@ -57873,11 +57873,11 @@ var BidiHandler = /** @class */ (function () {
     };
     return BidiHandler;
 }());
-exports$1.BidiHandler = BidiHandler;
+exports.BidiHandler = BidiHandler;
 
 });
 
-ace.define("ace/selection",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/lib/event_emitter","ace/range"], function(require, exports$1, module){var oop = require("./lib/oop");
+ace.define("ace/selection",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/lib/event_emitter","ace/range"], function(require, exports, module){var oop = require("./lib/oop");
 var lang = require("./lib/lang");
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
 var Range = require("./range").Range;
@@ -58439,11 +58439,11 @@ Selection.prototype.setSelectionAnchor = Selection.prototype.setAnchor;
 Selection.prototype.getSelectionAnchor = Selection.prototype.getAnchor;
 Selection.prototype.setSelectionRange = Selection.prototype.setRange;
 oop.implement(Selection.prototype, EventEmitter);
-exports$1.Selection = Selection;
+exports.Selection = Selection;
 
 });
 
-ace.define("ace/tokenizer",["require","exports","module","ace/lib/report_error"], function(require, exports$1, module){var reportError = require("./lib/report_error").reportError;
+ace.define("ace/tokenizer",["require","exports","module","ace/lib/report_error"], function(require, exports, module){var reportError = require("./lib/report_error").reportError;
 var MAX_TOKEN_COUNT = 2000;
 var Tokenizer = /** @class */ (function () {
     function Tokenizer(rules) {
@@ -58726,11 +58726,11 @@ var Tokenizer = /** @class */ (function () {
     return Tokenizer;
 }());
 Tokenizer.prototype.reportError = reportError;
-exports$1.Tokenizer = Tokenizer;
+exports.Tokenizer = Tokenizer;
 
 });
 
-ace.define("ace/mode/text_highlight_rules",["require","exports","module","ace/lib/deep_copy"], function(require, exports$1, module){var deepCopy = require("../lib/deep_copy").deepCopy;
+ace.define("ace/mode/text_highlight_rules",["require","exports","module","ace/lib/deep_copy"], function(require, exports, module){var deepCopy = require("../lib/deep_copy").deepCopy;
 var TextHighlightRules;
 TextHighlightRules = function () {
     this.$rules = {
@@ -58910,11 +58910,11 @@ TextHighlightRules = function () {
         return this.$keywords;
     };
 }).call(TextHighlightRules.prototype);
-exports$1.TextHighlightRules = TextHighlightRules;
+exports.TextHighlightRules = TextHighlightRules;
 
 });
 
-ace.define("ace/mode/behaviour",["require","exports","module"], function(require, exports$1, module){var Behaviour;
+ace.define("ace/mode/behaviour",["require","exports","module"], function(require, exports, module){var Behaviour;
 Behaviour = function () {
     this.$behaviours = {};
 };
@@ -58964,11 +58964,11 @@ Behaviour = function () {
         }
     };
 }).call(Behaviour.prototype);
-exports$1.Behaviour = Behaviour;
+exports.Behaviour = Behaviour;
 
 });
 
-ace.define("ace/token_iterator",["require","exports","module","ace/range"], function(require, exports$1, module){var Range = require("./range").Range;
+ace.define("ace/token_iterator",["require","exports","module","ace/range"], function(require, exports, module){var Range = require("./range").Range;
 var TokenIterator = /** @class */ (function () {
     function TokenIterator(session, initialRow, initialColumn) {
         this.$session = session;
@@ -59035,11 +59035,11 @@ var TokenIterator = /** @class */ (function () {
     };
     return TokenIterator;
 }());
-exports$1.TokenIterator = TokenIterator;
+exports.TokenIterator = TokenIterator;
 
 });
 
-ace.define("ace/mode/behaviour/cstyle",["require","exports","module","ace/lib/oop","ace/mode/behaviour","ace/token_iterator","ace/lib/lang"], function(require, exports$1, module){var oop = require("../../lib/oop");
+ace.define("ace/mode/behaviour/cstyle",["require","exports","module","ace/lib/oop","ace/mode/behaviour","ace/token_iterator","ace/lib/lang"], function(require, exports, module){var oop = require("../../lib/oop");
 var Behaviour = require("../behaviour").Behaviour;
 var TokenIterator = require("../../token_iterator").TokenIterator;
 var lang = require("../../lib/lang");
@@ -59466,11 +59466,11 @@ CstyleBehaviour["clearMaybeInsertedClosing"] = function () {
     }
 };
 oop.inherits(CstyleBehaviour, Behaviour);
-exports$1.CstyleBehaviour = CstyleBehaviour;
+exports.CstyleBehaviour = CstyleBehaviour;
 
 });
 
-ace.define("ace/unicode",["require","exports","module"], function(require, exports$1, module){var wordChars = [48, 9, 8, 25, 5, 0, 2, 25, 48, 0, 11, 0, 5, 0, 6, 22, 2, 30, 2, 457, 5, 11, 15, 4, 8, 0, 2, 0, 18, 116, 2, 1, 3, 3, 9, 0, 2, 2, 2, 0, 2, 19, 2, 82, 2, 138, 2, 4, 3, 155, 12, 37, 3, 0, 8, 38, 10, 44, 2, 0, 2, 1, 2, 1, 2, 0, 9, 26, 6, 2, 30, 10, 7, 61, 2, 9, 5, 101, 2, 7, 3, 9, 2, 18, 3, 0, 17, 58, 3, 100, 15, 53, 5, 0, 6, 45, 211, 57, 3, 18, 2, 5, 3, 11, 3, 9, 2, 1, 7, 6, 2, 2, 2, 7, 3, 1, 3, 21, 2, 6, 2, 0, 4, 3, 3, 8, 3, 1, 3, 3, 9, 0, 5, 1, 2, 4, 3, 11, 16, 2, 2, 5, 5, 1, 3, 21, 2, 6, 2, 1, 2, 1, 2, 1, 3, 0, 2, 4, 5, 1, 3, 2, 4, 0, 8, 3, 2, 0, 8, 15, 12, 2, 2, 8, 2, 2, 2, 21, 2, 6, 2, 1, 2, 4, 3, 9, 2, 2, 2, 2, 3, 0, 16, 3, 3, 9, 18, 2, 2, 7, 3, 1, 3, 21, 2, 6, 2, 1, 2, 4, 3, 8, 3, 1, 3, 2, 9, 1, 5, 1, 2, 4, 3, 9, 2, 0, 17, 1, 2, 5, 4, 2, 2, 3, 4, 1, 2, 0, 2, 1, 4, 1, 4, 2, 4, 11, 5, 4, 4, 2, 2, 3, 3, 0, 7, 0, 15, 9, 18, 2, 2, 7, 2, 2, 2, 22, 2, 9, 2, 4, 4, 7, 2, 2, 2, 3, 8, 1, 2, 1, 7, 3, 3, 9, 19, 1, 2, 7, 2, 2, 2, 22, 2, 9, 2, 4, 3, 8, 2, 2, 2, 3, 8, 1, 8, 0, 2, 3, 3, 9, 19, 1, 2, 7, 2, 2, 2, 22, 2, 15, 4, 7, 2, 2, 2, 3, 10, 0, 9, 3, 3, 9, 11, 5, 3, 1, 2, 17, 4, 23, 2, 8, 2, 0, 3, 6, 4, 0, 5, 5, 2, 0, 2, 7, 19, 1, 14, 57, 6, 14, 2, 9, 40, 1, 2, 0, 3, 1, 2, 0, 3, 0, 7, 3, 2, 6, 2, 2, 2, 0, 2, 0, 3, 1, 2, 12, 2, 2, 3, 4, 2, 0, 2, 5, 3, 9, 3, 1, 35, 0, 24, 1, 7, 9, 12, 0, 2, 0, 2, 0, 5, 9, 2, 35, 5, 19, 2, 5, 5, 7, 2, 35, 10, 0, 58, 73, 7, 77, 3, 37, 11, 42, 2, 0, 4, 328, 2, 3, 3, 6, 2, 0, 2, 3, 3, 40, 2, 3, 3, 32, 2, 3, 3, 6, 2, 0, 2, 3, 3, 14, 2, 56, 2, 3, 3, 66, 5, 0, 33, 15, 17, 84, 13, 619, 3, 16, 2, 25, 6, 74, 22, 12, 2, 6, 12, 20, 12, 19, 13, 12, 2, 2, 2, 1, 13, 51, 3, 29, 4, 0, 5, 1, 3, 9, 34, 2, 3, 9, 7, 87, 9, 42, 6, 69, 11, 28, 4, 11, 5, 11, 11, 39, 3, 4, 12, 43, 5, 25, 7, 10, 38, 27, 5, 62, 2, 28, 3, 10, 7, 9, 14, 0, 89, 75, 5, 9, 18, 8, 13, 42, 4, 11, 71, 55, 9, 9, 4, 48, 83, 2, 2, 30, 14, 230, 23, 280, 3, 5, 3, 37, 3, 5, 3, 7, 2, 0, 2, 0, 2, 0, 2, 30, 3, 52, 2, 6, 2, 0, 4, 2, 2, 6, 4, 3, 3, 5, 5, 12, 6, 2, 2, 6, 67, 1, 20, 0, 29, 0, 14, 0, 17, 4, 60, 12, 5, 0, 4, 11, 18, 0, 5, 0, 3, 9, 2, 0, 4, 4, 7, 0, 2, 0, 2, 0, 2, 3, 2, 10, 3, 3, 6, 4, 5, 0, 53, 1, 2684, 46, 2, 46, 2, 132, 7, 6, 15, 37, 11, 53, 10, 0, 17, 22, 10, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 31, 48, 0, 470, 1, 36, 5, 2, 4, 6, 1, 5, 85, 3, 1, 3, 2, 2, 89, 2, 3, 6, 40, 4, 93, 18, 23, 57, 15, 513, 6581, 75, 20939, 53, 1164, 68, 45, 3, 268, 4, 27, 21, 31, 3, 13, 13, 1, 2, 24, 9, 69, 11, 1, 38, 8, 3, 102, 3, 1, 111, 44, 25, 51, 13, 68, 12, 9, 7, 23, 4, 0, 5, 45, 3, 35, 13, 28, 4, 64, 15, 10, 39, 54, 10, 13, 3, 9, 7, 22, 4, 1, 5, 66, 25, 2, 227, 42, 2, 1, 3, 9, 7, 11171, 13, 22, 5, 48, 8453, 301, 3, 61, 3, 105, 39, 6, 13, 4, 6, 11, 2, 12, 2, 4, 2, 0, 2, 1, 2, 1, 2, 107, 34, 362, 19, 63, 3, 53, 41, 11, 5, 15, 17, 6, 13, 1, 25, 2, 33, 4, 2, 134, 20, 9, 8, 25, 5, 0, 2, 25, 12, 88, 4, 5, 3, 5, 3, 5, 3, 2];
+ace.define("ace/unicode",["require","exports","module"], function(require, exports, module){var wordChars = [48, 9, 8, 25, 5, 0, 2, 25, 48, 0, 11, 0, 5, 0, 6, 22, 2, 30, 2, 457, 5, 11, 15, 4, 8, 0, 2, 0, 18, 116, 2, 1, 3, 3, 9, 0, 2, 2, 2, 0, 2, 19, 2, 82, 2, 138, 2, 4, 3, 155, 12, 37, 3, 0, 8, 38, 10, 44, 2, 0, 2, 1, 2, 1, 2, 0, 9, 26, 6, 2, 30, 10, 7, 61, 2, 9, 5, 101, 2, 7, 3, 9, 2, 18, 3, 0, 17, 58, 3, 100, 15, 53, 5, 0, 6, 45, 211, 57, 3, 18, 2, 5, 3, 11, 3, 9, 2, 1, 7, 6, 2, 2, 2, 7, 3, 1, 3, 21, 2, 6, 2, 0, 4, 3, 3, 8, 3, 1, 3, 3, 9, 0, 5, 1, 2, 4, 3, 11, 16, 2, 2, 5, 5, 1, 3, 21, 2, 6, 2, 1, 2, 1, 2, 1, 3, 0, 2, 4, 5, 1, 3, 2, 4, 0, 8, 3, 2, 0, 8, 15, 12, 2, 2, 8, 2, 2, 2, 21, 2, 6, 2, 1, 2, 4, 3, 9, 2, 2, 2, 2, 3, 0, 16, 3, 3, 9, 18, 2, 2, 7, 3, 1, 3, 21, 2, 6, 2, 1, 2, 4, 3, 8, 3, 1, 3, 2, 9, 1, 5, 1, 2, 4, 3, 9, 2, 0, 17, 1, 2, 5, 4, 2, 2, 3, 4, 1, 2, 0, 2, 1, 4, 1, 4, 2, 4, 11, 5, 4, 4, 2, 2, 3, 3, 0, 7, 0, 15, 9, 18, 2, 2, 7, 2, 2, 2, 22, 2, 9, 2, 4, 4, 7, 2, 2, 2, 3, 8, 1, 2, 1, 7, 3, 3, 9, 19, 1, 2, 7, 2, 2, 2, 22, 2, 9, 2, 4, 3, 8, 2, 2, 2, 3, 8, 1, 8, 0, 2, 3, 3, 9, 19, 1, 2, 7, 2, 2, 2, 22, 2, 15, 4, 7, 2, 2, 2, 3, 10, 0, 9, 3, 3, 9, 11, 5, 3, 1, 2, 17, 4, 23, 2, 8, 2, 0, 3, 6, 4, 0, 5, 5, 2, 0, 2, 7, 19, 1, 14, 57, 6, 14, 2, 9, 40, 1, 2, 0, 3, 1, 2, 0, 3, 0, 7, 3, 2, 6, 2, 2, 2, 0, 2, 0, 3, 1, 2, 12, 2, 2, 3, 4, 2, 0, 2, 5, 3, 9, 3, 1, 35, 0, 24, 1, 7, 9, 12, 0, 2, 0, 2, 0, 5, 9, 2, 35, 5, 19, 2, 5, 5, 7, 2, 35, 10, 0, 58, 73, 7, 77, 3, 37, 11, 42, 2, 0, 4, 328, 2, 3, 3, 6, 2, 0, 2, 3, 3, 40, 2, 3, 3, 32, 2, 3, 3, 6, 2, 0, 2, 3, 3, 14, 2, 56, 2, 3, 3, 66, 5, 0, 33, 15, 17, 84, 13, 619, 3, 16, 2, 25, 6, 74, 22, 12, 2, 6, 12, 20, 12, 19, 13, 12, 2, 2, 2, 1, 13, 51, 3, 29, 4, 0, 5, 1, 3, 9, 34, 2, 3, 9, 7, 87, 9, 42, 6, 69, 11, 28, 4, 11, 5, 11, 11, 39, 3, 4, 12, 43, 5, 25, 7, 10, 38, 27, 5, 62, 2, 28, 3, 10, 7, 9, 14, 0, 89, 75, 5, 9, 18, 8, 13, 42, 4, 11, 71, 55, 9, 9, 4, 48, 83, 2, 2, 30, 14, 230, 23, 280, 3, 5, 3, 37, 3, 5, 3, 7, 2, 0, 2, 0, 2, 0, 2, 30, 3, 52, 2, 6, 2, 0, 4, 2, 2, 6, 4, 3, 3, 5, 5, 12, 6, 2, 2, 6, 67, 1, 20, 0, 29, 0, 14, 0, 17, 4, 60, 12, 5, 0, 4, 11, 18, 0, 5, 0, 3, 9, 2, 0, 4, 4, 7, 0, 2, 0, 2, 0, 2, 3, 2, 10, 3, 3, 6, 4, 5, 0, 53, 1, 2684, 46, 2, 46, 2, 132, 7, 6, 15, 37, 11, 53, 10, 0, 17, 22, 10, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 6, 2, 31, 48, 0, 470, 1, 36, 5, 2, 4, 6, 1, 5, 85, 3, 1, 3, 2, 2, 89, 2, 3, 6, 40, 4, 93, 18, 23, 57, 15, 513, 6581, 75, 20939, 53, 1164, 68, 45, 3, 268, 4, 27, 21, 31, 3, 13, 13, 1, 2, 24, 9, 69, 11, 1, 38, 8, 3, 102, 3, 1, 111, 44, 25, 51, 13, 68, 12, 9, 7, 23, 4, 0, 5, 45, 3, 35, 13, 28, 4, 64, 15, 10, 39, 54, 10, 13, 3, 9, 7, 22, 4, 1, 5, 66, 25, 2, 227, 42, 2, 1, 3, 9, 7, 11171, 13, 22, 5, 48, 8453, 301, 3, 61, 3, 105, 39, 6, 13, 4, 6, 11, 2, 12, 2, 4, 2, 0, 2, 1, 2, 1, 2, 107, 34, 362, 19, 63, 3, 53, 41, 11, 5, 15, 17, 6, 13, 1, 25, 2, 33, 4, 2, 134, 20, 9, 8, 25, 5, 0, 2, 25, 12, 88, 4, 5, 3, 5, 3, 5, 3, 2];
 var code = 0;
 var str = [];
 for (var i = 0; i < wordChars.length; i += 2) {
@@ -59478,11 +59478,11 @@ for (var i = 0; i < wordChars.length; i += 2) {
     if (wordChars[i + 1])
         str.push(45, code += wordChars[i + 1]);
 }
-exports$1.wordChars = String.fromCharCode.apply(null, str);
+exports.wordChars = String.fromCharCode.apply(null, str);
 
 });
 
-ace.define("ace/mode/text",["require","exports","module","ace/config","ace/tokenizer","ace/mode/text_highlight_rules","ace/mode/behaviour/cstyle","ace/unicode","ace/lib/lang","ace/token_iterator","ace/range"], function(require, exports$1, module){var config = require("../config");
+ace.define("ace/mode/text",["require","exports","module","ace/config","ace/tokenizer","ace/mode/text_highlight_rules","ace/mode/behaviour/cstyle","ace/unicode","ace/lib/lang","ace/token_iterator","ace/range"], function(require, exports, module){var config = require("../config");
 var Tokenizer = require("../tokenizer").Tokenizer;
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var CstyleBehaviour = require("./behaviour/cstyle").CstyleBehaviour;
@@ -59803,11 +59803,11 @@ Mode = function () {
     };
     this.$id = "ace/mode/text";
 }).call(Mode.prototype);
-exports$1.Mode = Mode;
+exports.Mode = Mode;
 
 });
 
-ace.define("ace/line_widgets",["require","exports","module","ace/lib/dom"], function(require, exports$1, module){var dom = require("./lib/dom");
+ace.define("ace/line_widgets",["require","exports","module","ace/lib/dom"], function(require, exports, module){var dom = require("./lib/dom");
 var LineWidgets = /** @class */ (function () {
     function LineWidgets(session) {
         this.session = session;
@@ -60140,11 +60140,11 @@ var LineWidgets = /** @class */ (function () {
     };
     return LineWidgets;
 }());
-exports$1.LineWidgets = LineWidgets;
+exports.LineWidgets = LineWidgets;
 
 });
 
-ace.define("ace/apply_delta",["require","exports","module"], function(require, exports$1, module){exports$1.applyDelta = function (docLines, delta, doNotValidate) {
+ace.define("ace/apply_delta",["require","exports","module"], function(require, exports, module){exports.applyDelta = function (docLines, delta, doNotValidate) {
     var row = delta.start.row;
     var startColumn = delta.start.column;
     var line = docLines[row] || "";
@@ -60176,7 +60176,7 @@ ace.define("ace/apply_delta",["require","exports","module"], function(require, e
 
 });
 
-ace.define("ace/anchor",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports$1, module){var oop = require("./lib/oop");
+ace.define("ace/anchor",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports, module){var oop = require("./lib/oop");
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
 var Anchor = /** @class */ (function () {
     function Anchor(doc, row, column) {
@@ -60281,11 +60281,11 @@ function $getTransformedPoint(delta, point, moveIfEqual) {
         column: deltaStart.column
     };
 }
-exports$1.Anchor = Anchor;
+exports.Anchor = Anchor;
 
 });
 
-ace.define("ace/document",["require","exports","module","ace/lib/oop","ace/apply_delta","ace/lib/event_emitter","ace/range","ace/anchor"], function(require, exports$1, module){var oop = require("./lib/oop");
+ace.define("ace/document",["require","exports","module","ace/lib/oop","ace/apply_delta","ace/lib/event_emitter","ace/range","ace/anchor"], function(require, exports, module){var oop = require("./lib/oop");
 var applyDelta = require("./apply_delta").applyDelta;
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
 var Range = require("./range").Range;
@@ -60617,11 +60617,11 @@ var Document = /** @class */ (function () {
 Document.prototype.$autoNewLine = "";
 Document.prototype.$newLineMode = "auto";
 oop.implement(Document.prototype, EventEmitter);
-exports$1.Document = Document;
+exports.Document = Document;
 
 });
 
-ace.define("ace/background_tokenizer",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports$1, module){var oop = require("./lib/oop");
+ace.define("ace/background_tokenizer",["require","exports","module","ace/lib/oop","ace/lib/event_emitter"], function(require, exports, module){var oop = require("./lib/oop");
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
 var BackgroundTokenizer = /** @class */ (function () {
     function BackgroundTokenizer(tokenizer, session) {
@@ -60751,11 +60751,11 @@ var BackgroundTokenizer = /** @class */ (function () {
     return BackgroundTokenizer;
 }());
 oop.implement(BackgroundTokenizer.prototype, EventEmitter);
-exports$1.BackgroundTokenizer = BackgroundTokenizer;
+exports.BackgroundTokenizer = BackgroundTokenizer;
 
 });
 
-ace.define("ace/search_highlight",["require","exports","module","ace/lib/lang","ace/range"], function(require, exports$1, module){var lang = require("./lib/lang");
+ace.define("ace/search_highlight",["require","exports","module","ace/lib/lang","ace/range"], function(require, exports, module){var lang = require("./lib/lang");
 var Range = require("./range").Range;
 var SearchHighlight = /** @class */ (function () {
     function SearchHighlight(regExp, clazz, type) {
@@ -60820,11 +60820,11 @@ var SearchHighlight = /** @class */ (function () {
     return SearchHighlight;
 }());
 SearchHighlight.prototype.MAX_RANGES = 500;
-exports$1.SearchHighlight = SearchHighlight;
+exports.SearchHighlight = SearchHighlight;
 
 });
 
-ace.define("ace/undomanager",["require","exports","module","ace/range"], function(require, exports$1, module){var UndoManager = /** @class */ (function () {
+ace.define("ace/undomanager",["require","exports","module","ace/range"], function(require, exports, module){var UndoManager = /** @class */ (function () {
     function UndoManager() {
         this.$keepRedoStack;
         this.$maxRev = 0;
@@ -61261,11 +61261,11 @@ function rebaseRedoStack(redoStack, deltaSets) {
         }
     }
 }
-exports$1.UndoManager = UndoManager;
+exports.UndoManager = UndoManager;
 
 });
 
-ace.define("ace/edit_session/fold_line",["require","exports","module","ace/range"], function(require, exports$1, module){var Range = require("../range").Range;
+ace.define("ace/edit_session/fold_line",["require","exports","module","ace/range"], function(require, exports, module){var Range = require("../range").Range;
 var FoldLine = /** @class */ (function () {
     function FoldLine(foldData, folds) {
         this.foldData = foldData;
@@ -61453,11 +61453,11 @@ var FoldLine = /** @class */ (function () {
     };
     return FoldLine;
 }());
-exports$1.FoldLine = FoldLine;
+exports.FoldLine = FoldLine;
 
 });
 
-ace.define("ace/range_list",["require","exports","module","ace/range"], function(require, exports$1, module){var Range = require("./range").Range;
+ace.define("ace/range_list",["require","exports","module","ace/range"], function(require, exports, module){var Range = require("./range").Range;
 var comparePoints = Range.comparePoints;
 var RangeList = /** @class */ (function () {
     function RangeList() {
@@ -61674,11 +61674,11 @@ var RangeList = /** @class */ (function () {
     return RangeList;
 }());
 RangeList.prototype.comparePoints = comparePoints;
-exports$1.RangeList = RangeList;
+exports.RangeList = RangeList;
 
 });
 
-ace.define("ace/edit_session/fold",["require","exports","module","ace/range_list"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/edit_session/fold",["require","exports","module","ace/range_list"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -61782,11 +61782,11 @@ function restoreRange(range, anchor) {
     restorePoint(range.start, anchor);
     restorePoint(range.end, anchor);
 }
-exports$1.Fold = Fold;
+exports.Fold = Fold;
 
 });
 
-ace.define("ace/edit_session/folding",["require","exports","module","ace/range","ace/edit_session/fold_line","ace/edit_session/fold","ace/token_iterator","ace/mouse/mouse_event"], function(require, exports$1, module){// @ts-nocheck
+ace.define("ace/edit_session/folding",["require","exports","module","ace/range","ace/edit_session/fold_line","ace/edit_session/fold","ace/token_iterator","ace/mouse/mouse_event"], function(require, exports, module){// @ts-nocheck
 var Range = require("../range").Range;
 var FoldLine = require("./fold_line").FoldLine;
 var Fold = require("./fold").Fold;
@@ -62508,11 +62508,11 @@ function Folding() {
         }
     };
 }
-exports$1.Folding = Folding;
+exports.Folding = Folding;
 
 });
 
-ace.define("ace/edit_session/bracket_match",["require","exports","module","ace/token_iterator","ace/range"], function(require, exports$1, module){var TokenIterator = require("../token_iterator").TokenIterator;
+ace.define("ace/edit_session/bracket_match",["require","exports","module","ace/token_iterator","ace/range"], function(require, exports, module){var TokenIterator = require("../token_iterator").TokenIterator;
 var Range = require("../range").Range;
 function BracketMatch() {
     this.findMatchingBracket = function (position, chr) {
@@ -62860,11 +62860,11 @@ function BracketMatch() {
         }
     };
 }
-exports$1.BracketMatch = BracketMatch;
+exports.BracketMatch = BracketMatch;
 
 });
 
-ace.define("ace/edit_session",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/bidihandler","ace/config","ace/lib/event_emitter","ace/selection","ace/mode/text","ace/range","ace/line_widgets","ace/document","ace/background_tokenizer","ace/search_highlight","ace/undomanager","ace/edit_session/folding","ace/edit_session/bracket_match"], function(require, exports$1, module){var oop = require("./lib/oop");
+ace.define("ace/edit_session",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/bidihandler","ace/config","ace/lib/event_emitter","ace/selection","ace/mode/text","ace/range","ace/line_widgets","ace/document","ace/background_tokenizer","ace/search_highlight","ace/undomanager","ace/edit_session/folding","ace/edit_session/bracket_match"], function(require, exports, module){var oop = require("./lib/oop");
 var lang = require("./lib/lang");
 var BidiHandler = require("./bidihandler").BidiHandler;
 var config = require("./config");
@@ -64606,11 +64606,11 @@ config.defineOptions(EditSession.prototype, "session", {
         handlesSet: true
     }
 });
-exports$1.EditSession = EditSession;
+exports.EditSession = EditSession;
 
 });
 
-ace.define("ace/search",["require","exports","module","ace/lib/lang","ace/lib/oop","ace/range"], function(require, exports$1, module){var lang = require("./lib/lang");
+ace.define("ace/search",["require","exports","module","ace/lib/lang","ace/lib/oop","ace/range"], function(require, exports, module){var lang = require("./lib/lang");
 var oop = require("./lib/oop");
 var Range = require("./range").Range;
 var Search = /** @class */ (function () {
@@ -65087,11 +65087,11 @@ function chunkEnd(session, start) {
     var base = 5000, startPosition = { row: start, column: 0 }, startIndex = session.doc.positionToIndex(startPosition), targetIndex = startIndex + base, targetPosition = session.doc.indexToPosition(targetIndex), targetLine = targetPosition.row;
     return targetLine + 1;
 }
-exports$1.Search = Search;
+exports.Search = Search;
 
 });
 
-ace.define("ace/keyboard/hash_handler",["require","exports","module","ace/lib/keys","ace/lib/useragent"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/keyboard/hash_handler",["require","exports","module","ace/lib/keys","ace/lib/useragent"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -65305,12 +65305,12 @@ HashHandler.call = function (thisArg, config, platform) {
 MultiHashHandler.call = function (thisArg, config, platform) {
     MultiHashHandler.prototype.$init.call(thisArg, config, platform, false);
 };
-exports$1.HashHandler = HashHandler;
-exports$1.MultiHashHandler = MultiHashHandler;
+exports.HashHandler = HashHandler;
+exports.MultiHashHandler = MultiHashHandler;
 
 });
 
-ace.define("ace/commands/command_manager",["require","exports","module","ace/lib/oop","ace/keyboard/hash_handler","ace/lib/event_emitter"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/commands/command_manager",["require","exports","module","ace/lib/oop","ace/keyboard/hash_handler","ace/lib/event_emitter"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -65422,17 +65422,17 @@ var CommandManager = /** @class */ (function (_super) {
     return CommandManager;
 }(MultiHashHandler));
 oop.implement(CommandManager.prototype, EventEmitter);
-exports$1.CommandManager = CommandManager;
+exports.CommandManager = CommandManager;
 
 });
 
-ace.define("ace/commands/default_commands",["require","exports","module","ace/lib/lang","ace/config","ace/range"], function(require, exports$1, module){var lang = require("../lib/lang");
+ace.define("ace/commands/default_commands",["require","exports","module","ace/lib/lang","ace/config","ace/range"], function(require, exports, module){var lang = require("../lib/lang");
 var config = require("../config");
 var Range = require("../range").Range;
 function bindKey(win, mac) {
     return { win: win, mac: mac };
 }
-exports$1.commands = [{
+exports.commands = [{
         name: "showSettingsMenu",
         description: "Show settings menu",
         bindKey: bindKey("Ctrl-,", "Command-,"),
@@ -66277,7 +66277,7 @@ exports$1.commands = [{
         readOnly: true
     }];
 for (var i = 1; i < 9; i++) {
-    exports$1.commands.push({
+    exports.commands.push({
         name: "foldToLevel" + i,
         description: "Fold To Level " + i,
         level: i,
@@ -66289,7 +66289,7 @@ for (var i = 1; i < 9; i++) {
 
 });
 
-ace.define("ace/keyboard/gutter_handler",["require","exports","module","ace/lib/keys"], function(require, exports$1, module){var keys = require('../lib/keys');
+ace.define("ace/keyboard/gutter_handler",["require","exports","module","ace/lib/keys"], function(require, exports, module){var keys = require('../lib/keys');
 var GutterKeyboardHandler = /** @class */ (function () {
     function GutterKeyboardHandler(editor) {
         this.editor = editor;
@@ -66682,7 +66682,7 @@ var GutterKeyboardHandler = /** @class */ (function () {
     };
     return GutterKeyboardHandler;
 }());
-exports$1.GutterKeyboardHandler = GutterKeyboardHandler;
+exports.GutterKeyboardHandler = GutterKeyboardHandler;
 var GutterKeyboardEvent = /** @class */ (function () {
     function GutterKeyboardEvent(domEvent, gutterKeyboardHandler) {
         this.gutterKeyboardHandler = gutterKeyboardHandler;
@@ -66702,11 +66702,11 @@ var GutterKeyboardEvent = /** @class */ (function () {
     };
     return GutterKeyboardEvent;
 }());
-exports$1.GutterKeyboardEvent = GutterKeyboardEvent;
+exports.GutterKeyboardEvent = GutterKeyboardEvent;
 
 });
 
-ace.define("ace/editor",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/lib/useragent","ace/keyboard/textinput","ace/mouse/mouse_handler","ace/mouse/fold_handler","ace/keyboard/keybinding","ace/edit_session","ace/search","ace/range","ace/lib/event_emitter","ace/commands/command_manager","ace/commands/default_commands","ace/config","ace/token_iterator","ace/keyboard/gutter_handler","ace/config","ace/clipboard","ace/lib/keys","ace/lib/event","ace/tooltip"], function(require, exports$1, module){var __values = (this && this.__values) || function(o) {
+ace.define("ace/editor",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/lib/useragent","ace/keyboard/textinput","ace/mouse/mouse_handler","ace/mouse/fold_handler","ace/keyboard/keybinding","ace/edit_session","ace/search","ace/range","ace/lib/event_emitter","ace/commands/command_manager","ace/commands/default_commands","ace/config","ace/token_iterator","ace/keyboard/gutter_handler","ace/config","ace/clipboard","ace/lib/keys","ace/lib/event","ace/tooltip"], function(require, exports, module){var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
     if (m) return m.call(o);
     if (o && typeof o.length === "number") return {
@@ -68777,11 +68777,11 @@ var relativeNumberRenderer = {
         this.update(null, editor);
     }
 };
-exports$1.Editor = Editor;
+exports.Editor = Editor;
 
 });
 
-ace.define("ace/layer/lines",["require","exports","module","ace/lib/dom"], function(require, exports$1, module){var dom = require("../lib/dom");
+ace.define("ace/layer/lines",["require","exports","module","ace/lib/dom"], function(require, exports, module){var dom = require("../lib/dom");
 var Lines = /** @class */ (function () {
     function Lines(element, canvasHeight) {
         this.element = element;
@@ -68880,11 +68880,11 @@ var Lines = /** @class */ (function () {
     };
     return Lines;
 }());
-exports$1.Lines = Lines;
+exports.Lines = Lines;
 
 });
 
-ace.define("ace/layer/gutter",["require","exports","module","ace/lib/dom","ace/lib/oop","ace/lib/lang","ace/lib/event_emitter","ace/layer/lines","ace/config"], function(require, exports$1, module){var dom = require("../lib/dom");
+ace.define("ace/layer/gutter",["require","exports","module","ace/lib/dom","ace/lib/oop","ace/lib/lang","ace/lib/event_emitter","ace/layer/lines","ace/config"], function(require, exports, module){var dom = require("../lib/dom");
 var oop = require("../lib/oop");
 var lang = require("../lib/lang");
 var EventEmitter = require("../lib/event_emitter").EventEmitter;
@@ -69474,11 +69474,11 @@ function onCreateCell(element) {
     annotationNode.appendChild(annotationIconNode);
     return element;
 }
-exports$1.Gutter = Gutter;
+exports.Gutter = Gutter;
 
 });
 
-ace.define("ace/layer/marker",["require","exports","module","ace/range","ace/lib/dom"], function(require, exports$1, module){var Range = require("../range").Range;
+ace.define("ace/layer/marker",["require","exports","module","ace/range","ace/lib/dom"], function(require, exports, module){var Range = require("../range").Range;
 var dom = require("../lib/dom");
 var Marker = /** @class */ (function () {
     function Marker(parentEl) {
@@ -69656,19 +69656,19 @@ Marker.prototype.$padding = 0;
 function getBorderClass(tl, tr, br, bl) {
     return (tl ? 1 : 0) | (tr ? 2 : 0) | (br ? 4 : 0) | (bl ? 8 : 0);
 }
-exports$1.Marker = Marker;
+exports.Marker = Marker;
 
 });
 
-ace.define("ace/layer/text_util",["require","exports","module"], function(require, exports$1, module){// Tokens for which Ace just uses a simple TextNode and does not add any special className.
+ace.define("ace/layer/text_util",["require","exports","module"], function(require, exports, module){// Tokens for which Ace just uses a simple TextNode and does not add any special className.
 var textTokens = new Set(["text", "rparen", "lparen"]);
-exports$1.isTextToken = function (tokenType) {
+exports.isTextToken = function (tokenType) {
     return textTokens.has(tokenType);
 };
 
 });
 
-ace.define("ace/layer/text",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/layer/lines","ace/lib/event_emitter","ace/config","ace/layer/text_util"], function(require, exports$1, module){var oop = require("../lib/oop");
+ace.define("ace/layer/text",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/layer/lines","ace/lib/event_emitter","ace/config","ace/layer/text_util"], function(require, exports, module){var oop = require("../lib/oop");
 var dom = require("../lib/dom");
 var lang = require("../lib/lang");
 var Lines = require("./lines").Lines;
@@ -70301,11 +70301,11 @@ Text.prototype.$tabStrings = [];
 Text.prototype.destroy = {};
 Text.prototype.onChangeTabSize = Text.prototype.$computeTabString;
 oop.implement(Text.prototype, EventEmitter);
-exports$1.Text = Text;
+exports.Text = Text;
 
 });
 
-ace.define("ace/layer/cursor",["require","exports","module","ace/lib/dom"], function(require, exports$1, module){var dom = require("../lib/dom");
+ace.define("ace/layer/cursor",["require","exports","module","ace/lib/dom"], function(require, exports, module){var dom = require("../lib/dom");
 var Cursor = /** @class */ (function () {
     function Cursor(parentEl) {
         this.element = dom.createElement("div");
@@ -70498,11 +70498,11 @@ var Cursor = /** @class */ (function () {
 }());
 Cursor.prototype.$padding = 0;
 Cursor.prototype.drawCursor = null;
-exports$1.Cursor = Cursor;
+exports.Cursor = Cursor;
 
 });
 
-ace.define("ace/scrollbar",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/event","ace/lib/event_emitter"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/scrollbar",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/event","ace/lib/event_emitter"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -70632,15 +70632,15 @@ var HScrollBar = /** @class */ (function (_super) {
     };
     return HScrollBar;
 }(Scrollbar));
-exports$1.ScrollBar = VScrollBar; // backward compatibility
-exports$1.ScrollBarV = VScrollBar; // backward compatibility
-exports$1.ScrollBarH = HScrollBar; // backward compatibility
-exports$1.VScrollBar = VScrollBar;
-exports$1.HScrollBar = HScrollBar;
+exports.ScrollBar = VScrollBar; // backward compatibility
+exports.ScrollBarV = VScrollBar; // backward compatibility
+exports.ScrollBarH = HScrollBar; // backward compatibility
+exports.VScrollBar = VScrollBar;
+exports.HScrollBar = HScrollBar;
 
 });
 
-ace.define("ace/scrollbar_custom",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/event","ace/lib/event_emitter"], function(require, exports$1, module){var __extends = (this && this.__extends) || (function () {
+ace.define("ace/scrollbar_custom",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/event","ace/lib/event_emitter"], function(require, exports, module){var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -70870,15 +70870,15 @@ var HScrollBar = /** @class */ (function (_super) {
     return HScrollBar;
 }(ScrollBar));
 HScrollBar.prototype.setInnerWidth = HScrollBar.prototype.setScrollWidth;
-exports$1.ScrollBar = VScrollBar; // backward compatibility
-exports$1.ScrollBarV = VScrollBar; // backward compatibility
-exports$1.ScrollBarH = HScrollBar; // backward compatibility
-exports$1.VScrollBar = VScrollBar;
-exports$1.HScrollBar = HScrollBar;
+exports.ScrollBar = VScrollBar; // backward compatibility
+exports.ScrollBarV = VScrollBar; // backward compatibility
+exports.ScrollBarH = HScrollBar; // backward compatibility
+exports.VScrollBar = VScrollBar;
+exports.HScrollBar = HScrollBar;
 
 });
 
-ace.define("ace/renderloop",["require","exports","module","ace/lib/event"], function(require, exports$1, module){var event = require("./lib/event");
+ace.define("ace/renderloop",["require","exports","module","ace/lib/event"], function(require, exports, module){var event = require("./lib/event");
 var RenderLoop = /** @class */ (function () {
     function RenderLoop(onRender, win) {
         this.onRender = onRender;
@@ -70919,11 +70919,11 @@ var RenderLoop = /** @class */ (function () {
     };
     return RenderLoop;
 }());
-exports$1.RenderLoop = RenderLoop;
+exports.RenderLoop = RenderLoop;
 
 });
 
-ace.define("ace/layer/font_metrics",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/lib/event","ace/lib/useragent","ace/lib/event_emitter"], function(require, exports$1, module){var oop = require("../lib/oop");
+ace.define("ace/layer/font_metrics",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/lib/event","ace/lib/useragent","ace/lib/event_emitter"], function(require, exports, module){var oop = require("../lib/oop");
 var dom = require("../lib/dom");
 var lang = require("../lib/lang");
 var event = require("../lib/event");
@@ -71085,11 +71085,11 @@ var FontMetrics = /** @class */ (function () {
 }());
 FontMetrics.prototype.$characterSize = { width: 0, height: 0 };
 oop.implement(FontMetrics.prototype, EventEmitter);
-exports$1.FontMetrics = FontMetrics;
+exports.FontMetrics = FontMetrics;
 
 });
 
-ace.define("ace/css/editor-css",["require","exports","module"], function(require, exports$1, module){/*
+ace.define("ace/css/editor-css",["require","exports","module"], function(require, exports, module){/*
 styles = []
 for (var i = 1; i < 16; i++) {
     styles.push(".ace_br" + i + "{" + (
@@ -71104,7 +71104,7 @@ module.exports = "\n.ace_br1 {border-top-left-radius    : 3px;}\n.ace_br2 {borde
 
 });
 
-ace.define("ace/layer/decorators",["require","exports","module","ace/lib/dom","ace/lib/oop","ace/lib/event_emitter"], function(require, exports$1, module){var dom = require("../lib/dom");
+ace.define("ace/layer/decorators",["require","exports","module","ace/lib/dom","ace/lib/oop","ace/lib/event_emitter"], function(require, exports, module){var dom = require("../lib/dom");
 var oop = require("../lib/oop");
 var EventEmitter = require("../lib/event_emitter").EventEmitter;
 var Decorator = /** @class */ (function () {
@@ -71228,11 +71228,11 @@ var Decorator = /** @class */ (function () {
     return Decorator;
 }());
 oop.implement(Decorator.prototype, EventEmitter);
-exports$1.Decorator = Decorator;
+exports.Decorator = Decorator;
 
 });
 
-ace.define("ace/virtual_renderer",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/config","ace/layer/gutter","ace/layer/marker","ace/layer/text","ace/layer/cursor","ace/scrollbar","ace/scrollbar","ace/scrollbar_custom","ace/scrollbar_custom","ace/renderloop","ace/layer/font_metrics","ace/lib/event_emitter","ace/css/editor-css","ace/layer/decorators","ace/lib/useragent","ace/layer/text_util"], function(require, exports$1, module){var oop = require("./lib/oop");
+ace.define("ace/virtual_renderer",["require","exports","module","ace/lib/oop","ace/lib/dom","ace/lib/lang","ace/config","ace/layer/gutter","ace/layer/marker","ace/layer/text","ace/layer/cursor","ace/scrollbar","ace/scrollbar","ace/scrollbar_custom","ace/scrollbar_custom","ace/renderloop","ace/layer/font_metrics","ace/lib/event_emitter","ace/css/editor-css","ace/layer/decorators","ace/lib/useragent","ace/layer/text_util"], function(require, exports, module){var oop = require("./lib/oop");
 var dom = require("./lib/dom");
 var lang = require("./lib/lang");
 var config = require("./config");
@@ -72774,11 +72774,11 @@ config.defineOptions(VirtualRenderer.prototype, "renderer", {
         initialValue: !useragent.isMobile && !useragent.isIE
     }
 });
-exports$1.VirtualRenderer = VirtualRenderer;
+exports.VirtualRenderer = VirtualRenderer;
 
 });
 
-ace.define("ace/worker/worker_client",["require","exports","module","ace/lib/oop","ace/lib/net","ace/lib/event_emitter","ace/config"], function(require, exports$1, module) {
+ace.define("ace/worker/worker_client",["require","exports","module","ace/lib/oop","ace/lib/net","ace/lib/event_emitter","ace/config"], function(require, exports, module) {
 
 var oop = require("../lib/oop");
 var net = require("../lib/net");
@@ -73005,14 +73005,14 @@ var UIWorkerClient = function(topLevelNamespaces, mod, classname) {
     return workerClient;
 };
 
-exports$1.UIWorkerClient = UIWorkerClient;
-exports$1.WorkerClient = WorkerClient;
-exports$1.createWorker = createWorker;
+exports.UIWorkerClient = UIWorkerClient;
+exports.WorkerClient = WorkerClient;
+exports.createWorker = createWorker;
 
 
 });
 
-ace.define("ace/placeholder",["require","exports","module","ace/range","ace/lib/event_emitter","ace/lib/oop"], function(require, exports$1, module){var Range = require("./range").Range;
+ace.define("ace/placeholder",["require","exports","module","ace/range","ace/lib/event_emitter","ace/lib/oop"], function(require, exports, module){var Range = require("./range").Range;
 var EventEmitter = require("./lib/event_emitter").EventEmitter;
 var oop = require("./lib/oop");
 var PlaceHolder = /** @class */ (function () {
@@ -73164,11 +73164,11 @@ var PlaceHolder = /** @class */ (function () {
     return PlaceHolder;
 }());
 oop.implement(PlaceHolder.prototype, EventEmitter);
-exports$1.PlaceHolder = PlaceHolder;
+exports.PlaceHolder = PlaceHolder;
 
 });
 
-ace.define("ace/mouse/multi_select_handler",["require","exports","module","ace/lib/event","ace/lib/useragent"], function(require, exports$1, module){var event = require("../lib/event");
+ace.define("ace/mouse/multi_select_handler",["require","exports","module","ace/lib/event","ace/lib/useragent"], function(require, exports, module){var event = require("../lib/event");
 var useragent = require("../lib/useragent");
 function isSamePoint(p1, p2) {
     return p1.row == p2.row && p1.column == p2.column;
@@ -73311,15 +73311,15 @@ function onMouseDown(e) {
         return e.preventDefault();
     }
 }
-exports$1.onMouseDown = onMouseDown;
+exports.onMouseDown = onMouseDown;
 
 });
 
-ace.define("ace/commands/multi_select_commands",["require","exports","module","ace/keyboard/hash_handler"], function(require, exports$1, module){/**
+ace.define("ace/commands/multi_select_commands",["require","exports","module","ace/keyboard/hash_handler"], function(require, exports, module){/**
  * commands to enter multiselect mode
  * @type {import("../../ace-internal").Ace.Command[]}
  */
-exports$1.defaultCommands = [{
+exports.defaultCommands = [{
         name: "addCursorAbove",
         description: "Add cursor above",
         exec: function (editor) { editor.selectMoreLines(-1); },
@@ -73405,7 +73405,7 @@ exports$1.defaultCommands = [{
         scrollIntoView: "cursor",
         readOnly: true
     }];
-exports$1.multiSelectCommands = [{
+exports.multiSelectCommands = [{
         name: "singleSelection",
         description: "Single selection",
         bindKey: "esc",
@@ -73415,11 +73415,11 @@ exports$1.multiSelectCommands = [{
         isAvailable: function (editor) { return editor && editor.inMultiSelectMode; }
     }];
 var HashHandler = require("../keyboard/hash_handler").HashHandler;
-exports$1.keyboardHandler = new HashHandler(exports$1.multiSelectCommands);
+exports.keyboardHandler = new HashHandler(exports.multiSelectCommands);
 
 });
 
-ace.define("ace/multi_select",["require","exports","module","ace/range_list","ace/range","ace/selection","ace/mouse/multi_select_handler","ace/lib/event","ace/lib/lang","ace/commands/multi_select_commands","ace/search","ace/edit_session","ace/editor","ace/config"], function(require, exports$1, module){/**
+ace.define("ace/multi_select",["require","exports","module","ace/range_list","ace/range","ace/selection","ace/mouse/multi_select_handler","ace/lib/event","ace/lib/lang","ace/commands/multi_select_commands","ace/search","ace/edit_session","ace/editor","ace/config"], function(require, exports, module){/**
  * @typedef {import("./anchor").Anchor} Anchor
  * @typedef {import("../ace-internal").Ace.Point} Point
  * @typedef {import("../ace-internal").Ace.ScreenCoordinates} ScreenCoordinates
@@ -73431,7 +73431,7 @@ var onMouseDown = require("./mouse/multi_select_handler").onMouseDown;
 var event = require("./lib/event");
 var lang = require("./lib/lang");
 var commands = require("./commands/multi_select_commands");
-exports$1.commands = commands.defaultCommands.concat(commands.multiSelectCommands);
+exports.commands = commands.defaultCommands.concat(commands.multiSelectCommands);
 var Search = require("./search").Search;
 var search = new Search();
 function find(session, needle, dir) {
@@ -74045,7 +74045,7 @@ var Editor = require("./editor").Editor;
 function isSamePoint(p1, p2) {
     return p1.row == p2.row && p1.column == p2.column;
 }
-exports$1.onSessionChange = function (e) {
+exports.onSessionChange = function (e) {
     var session = e.session;
     if (session && !session.multiSelect) {
         session.$selectionMarkers = [];
@@ -74084,7 +74084,7 @@ function MultiSelect(editor) {
     editor.$onRemoveRange = editor.$onRemoveRange.bind(editor);
     editor.$onMultiSelect = editor.$onMultiSelect.bind(editor);
     editor.$onSingleSelect = editor.$onSingleSelect.bind(editor);
-    editor.$multiselectOnSessionChange = exports$1.onSessionChange.bind(editor);
+    editor.$multiselectOnSessionChange = exports.onSessionChange.bind(editor);
     editor.$checkMultiselectChange = editor.$checkMultiselectChange.bind(editor);
     editor.$multiselectOnSessionChange(editor);
     editor.on("changeSession", editor.$multiselectOnSessionChange);
@@ -74118,7 +74118,7 @@ function addAltCursorListeners(editor) {
         }
     }
 }
-exports$1.MultiSelect = MultiSelect;
+exports.MultiSelect = MultiSelect;
 require("./config").defineOptions(Editor.prototype, "editor", {
     enableMultiselect: {
         set: function (val) {
@@ -74142,8 +74142,8 @@ require("./config").defineOptions(Editor.prototype, "editor", {
 
 });
 
-ace.define("ace/mode/folding/fold_mode",["require","exports","module","ace/range"], function(require, exports$1, module){var Range = require("../../range").Range;
-var FoldMode = exports$1.FoldMode = function () { };
+ace.define("ace/mode/folding/fold_mode",["require","exports","module","ace/range"], function(require, exports, module){var Range = require("../../range").Range;
+var FoldMode = exports.FoldMode = function () { };
 (function () {
     this.foldingStartMarker = null;
     this.foldingStopMarker = null;
@@ -74213,7 +74213,7 @@ var FoldMode = exports$1.FoldMode = function () { };
 
 });
 
-ace.define("ace/ext/error_marker",["require","exports","module","ace/lib/dom","ace/range","ace/config"], function(require, exports$1, module){/**
+ace.define("ace/ext/error_marker",["require","exports","module","ace/lib/dom","ace/range","ace/config"], function(require, exports, module){/**
  * ## Error Marker extension
  *
  * Provides inline error display functionality for Ace editor. Creates visual error markers that appear as tooltips
@@ -74269,7 +74269,7 @@ function findAnnotations(session, row, dir) {
     } while (annotation && annotation.row == row);
     return matched.length && matched;
 }
-exports$1.showErrorMarker = function (editor, dir) {
+exports.showErrorMarker = function (editor, dir) {
     var session = editor.session;
     var pos = editor.getCursorPosition();
     var row = pos.row;
@@ -74354,12 +74354,12 @@ dom.importCssString("\n    .error_widget_wrapper {\n        background: inherit;
 
 });
 
-ace.define("ace/ace",["require","exports","module","ace/lib/dom","ace/range","ace/editor","ace/edit_session","ace/undomanager","ace/virtual_renderer","ace/worker/worker_client","ace/keyboard/hash_handler","ace/placeholder","ace/multi_select","ace/mode/folding/fold_mode","ace/theme/textmate","ace/ext/error_marker","ace/config","ace/loader_build"], function(require, exports$1, module){/**
+ace.define("ace/ace",["require","exports","module","ace/lib/dom","ace/range","ace/editor","ace/edit_session","ace/undomanager","ace/virtual_renderer","ace/worker/worker_client","ace/keyboard/hash_handler","ace/placeholder","ace/multi_select","ace/mode/folding/fold_mode","ace/theme/textmate","ace/ext/error_marker","ace/config","ace/loader_build"], function(require, exports, module){/**
  * The main class required to set up an Ace instance in the browser.
  *
  * @namespace Ace
  **/
-require("./loader_build")(exports$1);
+require("./loader_build")(exports);
 var dom = require("./lib/dom");
 var Range = require("./range").Range;
 var Editor = require("./editor").Editor;
@@ -74373,8 +74373,8 @@ require("./multi_select");
 require("./mode/folding/fold_mode");
 require("./theme/textmate");
 require("./ext/error_marker");
-exports$1.config = require("./config");
-exports$1.edit = function (el, options) {
+exports.config = require("./config");
+exports.edit = function (el, options) {
     if (typeof el == "string") {
         var _id = el;
         el = document.getElementById(_id);
@@ -74394,7 +74394,7 @@ exports$1.edit = function (el, options) {
         value = el.textContent;
         el.innerHTML = "";
     }
-    var doc = exports$1.createEditSession(value);
+    var doc = exports.createEditSession(value);
     var editor = new Editor(new Renderer(el), doc, options);
     var env = {
         document: doc,
@@ -74409,18 +74409,18 @@ exports$1.edit = function (el, options) {
     editor.container.env = editor.env = env;
     return editor;
 };
-exports$1.createEditSession = function (text, mode) {
+exports.createEditSession = function (text, mode) {
     var doc = new EditSession(text, mode);
     doc.setUndoManager(new UndoManager());
     return doc;
 };
-exports$1.Range = Range;
-exports$1.Editor = Editor;
-exports$1.EditSession = EditSession;
-exports$1.UndoManager = UndoManager;
-exports$1.VirtualRenderer = Renderer;
-var version = exports$1.config.version;
-exports$1.version = version;
+exports.Range = Range;
+exports.Editor = Editor;
+exports.EditSession = EditSession;
+exports.UndoManager = UndoManager;
+exports.VirtualRenderer = Renderer;
+var version = exports.config.version;
+exports.version = version;
 
 });            (function() {
                 ace.require(["ace/ace"], function(a) {
@@ -74445,15 +74445,15 @@ exports$1.version = version;
                 });
             })();
 
-ace.define("ace/theme/sqlserver-css",["require","exports","module"], function(require, exports$1, module){module.exports = ".ace-sqlserver .ace_gutter {\n    background: #ebebeb;\n    color: #333;\n    overflow: hidden;\n}\n\n.ace-sqlserver .ace_print-margin {\n    width: 1px;\n    background: #e8e8e8;\n}\n\n.ace-sqlserver {\n    background-color: #FFFFFF;\n    color: black;\n}\n\n.ace-sqlserver .ace_identifier {\n    color: black;\n}\n\n.ace-sqlserver .ace_keyword {\n    color: #0000FF;\n}\n\n.ace-sqlserver .ace_numeric {\n    color: black;\n}\n\n.ace-sqlserver .ace_storage {\n    color: #11B7BE;\n}\n\n.ace-sqlserver .ace_keyword.ace_operator,\n.ace-sqlserver .ace_lparen,\n.ace-sqlserver .ace_rparen,\n.ace-sqlserver .ace_punctuation {\n    color: #808080;\n}\n\n.ace-sqlserver .ace_set.ace_statement {\n    color: #0000FF;\n    text-decoration: underline;\n}\n\n.ace-sqlserver .ace_cursor {\n    color: black;\n}\n\n.ace-sqlserver .ace_invisible {\n    color: rgb(191, 191, 191);\n}\n\n.ace-sqlserver .ace_constant.ace_buildin {\n    color: rgb(88, 72, 246);\n}\n\n.ace-sqlserver .ace_constant.ace_language {\n    color: #979797;\n}\n\n.ace-sqlserver .ace_constant.ace_library {\n    color: rgb(6, 150, 14);\n}\n\n.ace-sqlserver .ace_invalid {\n    background-color: rgb(153, 0, 0);\n    color: white;\n}\n\n.ace-sqlserver .ace_support.ace_function {\n    color: #FF00FF;\n}\n\n.ace-sqlserver .ace_support.ace_constant {\n    color: rgb(6, 150, 14);\n}\n\n.ace-sqlserver .ace_class {\n    color: #008080;\n}\n\n.ace-sqlserver .ace_support.ace_other {\n    color: #6D79DE;\n}\n\n.ace-sqlserver .ace_variable.ace_parameter {\n    font-style: italic;\n    color: #FD971F;\n}\n\n.ace-sqlserver .ace_comment {\n    color: #008000;\n}\n\n.ace-sqlserver .ace_constant.ace_numeric {\n    color: black;\n}\n\n.ace-sqlserver .ace_variable {\n    color: rgb(49, 132, 149);\n}\n\n.ace-sqlserver .ace_xml-pe {\n    color: rgb(104, 104, 91);\n}\n\n.ace-sqlserver .ace_support.ace_storedprocedure {\n    color: #800000;\n}\n\n.ace-sqlserver .ace_heading {\n    color: rgb(12, 7, 255);\n}\n\n.ace-sqlserver .ace_list {\n    color: rgb(185, 6, 144);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_selection {\n    background: rgb(181, 213, 255);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_step {\n    background: rgb(252, 255, 0);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_stack {\n    background: rgb(164, 229, 101);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_bracket {\n    margin: -1px 0 0 -1px;\n    border: 1px solid rgb(192, 192, 192);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_active-line {\n    background: rgba(0, 0, 0, 0.07);\n}\n\n.ace-sqlserver .ace_gutter-active-line {\n    background-color: #dcdcdc;\n}\n\n.ace-sqlserver .ace_marker-layer .ace_selected-word {\n    background: rgb(250, 250, 255);\n    border: 1px solid rgb(200, 200, 250);\n}\n\n.ace-sqlserver .ace_meta.ace_tag {\n    color: #0000FF;\n}\n\n.ace-sqlserver .ace_string.ace_regex {\n    color: #FF0000;\n}\n\n.ace-sqlserver .ace_string {\n    color: #FF0000;\n}\n\n.ace-sqlserver .ace_entity.ace_other.ace_attribute-name {\n    color: #994409;\n}\n\n.ace-sqlserver .ace_indent-guide {\n    background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y;\n}\n\n.ace-sqlserver .ace_indent-guide-active {\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC\") right repeat-y;\n} \n";
+ace.define("ace/theme/sqlserver-css",["require","exports","module"], function(require, exports, module){module.exports = ".ace-sqlserver .ace_gutter {\n    background: #ebebeb;\n    color: #333;\n    overflow: hidden;\n}\n\n.ace-sqlserver .ace_print-margin {\n    width: 1px;\n    background: #e8e8e8;\n}\n\n.ace-sqlserver {\n    background-color: #FFFFFF;\n    color: black;\n}\n\n.ace-sqlserver .ace_identifier {\n    color: black;\n}\n\n.ace-sqlserver .ace_keyword {\n    color: #0000FF;\n}\n\n.ace-sqlserver .ace_numeric {\n    color: black;\n}\n\n.ace-sqlserver .ace_storage {\n    color: #11B7BE;\n}\n\n.ace-sqlserver .ace_keyword.ace_operator,\n.ace-sqlserver .ace_lparen,\n.ace-sqlserver .ace_rparen,\n.ace-sqlserver .ace_punctuation {\n    color: #808080;\n}\n\n.ace-sqlserver .ace_set.ace_statement {\n    color: #0000FF;\n    text-decoration: underline;\n}\n\n.ace-sqlserver .ace_cursor {\n    color: black;\n}\n\n.ace-sqlserver .ace_invisible {\n    color: rgb(191, 191, 191);\n}\n\n.ace-sqlserver .ace_constant.ace_buildin {\n    color: rgb(88, 72, 246);\n}\n\n.ace-sqlserver .ace_constant.ace_language {\n    color: #979797;\n}\n\n.ace-sqlserver .ace_constant.ace_library {\n    color: rgb(6, 150, 14);\n}\n\n.ace-sqlserver .ace_invalid {\n    background-color: rgb(153, 0, 0);\n    color: white;\n}\n\n.ace-sqlserver .ace_support.ace_function {\n    color: #FF00FF;\n}\n\n.ace-sqlserver .ace_support.ace_constant {\n    color: rgb(6, 150, 14);\n}\n\n.ace-sqlserver .ace_class {\n    color: #008080;\n}\n\n.ace-sqlserver .ace_support.ace_other {\n    color: #6D79DE;\n}\n\n.ace-sqlserver .ace_variable.ace_parameter {\n    font-style: italic;\n    color: #FD971F;\n}\n\n.ace-sqlserver .ace_comment {\n    color: #008000;\n}\n\n.ace-sqlserver .ace_constant.ace_numeric {\n    color: black;\n}\n\n.ace-sqlserver .ace_variable {\n    color: rgb(49, 132, 149);\n}\n\n.ace-sqlserver .ace_xml-pe {\n    color: rgb(104, 104, 91);\n}\n\n.ace-sqlserver .ace_support.ace_storedprocedure {\n    color: #800000;\n}\n\n.ace-sqlserver .ace_heading {\n    color: rgb(12, 7, 255);\n}\n\n.ace-sqlserver .ace_list {\n    color: rgb(185, 6, 144);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_selection {\n    background: rgb(181, 213, 255);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_step {\n    background: rgb(252, 255, 0);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_stack {\n    background: rgb(164, 229, 101);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_bracket {\n    margin: -1px 0 0 -1px;\n    border: 1px solid rgb(192, 192, 192);\n}\n\n.ace-sqlserver .ace_marker-layer .ace_active-line {\n    background: rgba(0, 0, 0, 0.07);\n}\n\n.ace-sqlserver .ace_gutter-active-line {\n    background-color: #dcdcdc;\n}\n\n.ace-sqlserver .ace_marker-layer .ace_selected-word {\n    background: rgb(250, 250, 255);\n    border: 1px solid rgb(200, 200, 250);\n}\n\n.ace-sqlserver .ace_meta.ace_tag {\n    color: #0000FF;\n}\n\n.ace-sqlserver .ace_string.ace_regex {\n    color: #FF0000;\n}\n\n.ace-sqlserver .ace_string {\n    color: #FF0000;\n}\n\n.ace-sqlserver .ace_entity.ace_other.ace_attribute-name {\n    color: #994409;\n}\n\n.ace-sqlserver .ace_indent-guide {\n    background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAAE0lEQVQImWP4////f4bLly//BwAmVgd1/w11/gAAAABJRU5ErkJggg==\") right repeat-y;\n}\n\n.ace-sqlserver .ace_indent-guide-active {\n  background: url(\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAACCAYAAACZgbYnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAAZSURBVHjaYvj///9/hivKyv8BAAAA//8DACLqBhbvk+/eAAAAAElFTkSuQmCC\") right repeat-y;\n} \n";
 
 });
 
-ace.define("ace/theme/sqlserver",["require","exports","module","ace/theme/sqlserver-css","ace/lib/dom"], function(require, exports$1, module){exports$1.isDark = false;
-exports$1.cssClass = "ace-sqlserver";
-exports$1.cssText = require("./sqlserver-css");
+ace.define("ace/theme/sqlserver",["require","exports","module","ace/theme/sqlserver-css","ace/lib/dom"], function(require, exports, module){exports.isDark = false;
+exports.cssClass = "ace-sqlserver";
+exports.cssText = require("./sqlserver-css");
 var dom = require("../lib/dom");
-dom.importCssString(exports$1.cssText, exports$1.cssClass, false);
+dom.importCssString(exports.cssText, exports.cssClass, false);
 
 });                (function() {
                     ace.require(["ace/theme/sqlserver"], function(m) {
@@ -74463,7 +74463,7 @@ dom.importCssString(exports$1.cssText, exports$1.cssClass, false);
                     });
                 })();
 
-ace.define("ace/mode/xml_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(require, exports$1, module){var oop = require("../lib/oop");
+ace.define("ace/mode/xml_highlight_rules",["require","exports","module","ace/lib/oop","ace/mode/text_highlight_rules"], function(require, exports, module){var oop = require("../lib/oop");
 var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 var XmlHighlightRules = function (normalize) {
     var tagRegex = "[_:a-zA-Z\xc0-\uffff][-_:.a-zA-Z0-9\xc0-\uffff]*";
@@ -74638,11 +74638,11 @@ var XmlHighlightRules = function (normalize) {
     };
 }).call(TextHighlightRules.prototype);
 oop.inherits(XmlHighlightRules, TextHighlightRules);
-exports$1.XmlHighlightRules = XmlHighlightRules;
+exports.XmlHighlightRules = XmlHighlightRules;
 
 });
 
-ace.define("ace/mode/behaviour/xml",["require","exports","module","ace/lib/oop","ace/mode/behaviour","ace/token_iterator"], function(require, exports$1, module){var oop = require("../../lib/oop");
+ace.define("ace/mode/behaviour/xml",["require","exports","module","ace/lib/oop","ace/mode/behaviour","ace/token_iterator"], function(require, exports, module){var oop = require("../../lib/oop");
 var Behaviour = require("../behaviour").Behaviour;
 var TokenIterator = require("../../token_iterator").TokenIterator;
 function is(token, type) {
@@ -74784,14 +74784,14 @@ var XmlBehaviour = function () {
     });
 };
 oop.inherits(XmlBehaviour, Behaviour);
-exports$1.XmlBehaviour = XmlBehaviour;
+exports.XmlBehaviour = XmlBehaviour;
 
 });
 
-ace.define("ace/mode/folding/xml",["require","exports","module","ace/lib/oop","ace/range","ace/mode/folding/fold_mode"], function(require, exports$1, module){var oop = require("../../lib/oop");
+ace.define("ace/mode/folding/xml",["require","exports","module","ace/lib/oop","ace/range","ace/mode/folding/fold_mode"], function(require, exports, module){var oop = require("../../lib/oop");
 var Range = require("../../range").Range;
 var BaseFoldMode = require("./fold_mode").FoldMode;
-var FoldMode = exports$1.FoldMode = function (voidElements, optionalEndTags) {
+var FoldMode = exports.FoldMode = function (voidElements, optionalEndTags) {
     BaseFoldMode.call(this);
     this.voidElements = voidElements || {};
     this.optionalEndTags = oop.mixin({}, this.voidElements);
@@ -74897,7 +74897,7 @@ function is(token, type) {
 
 });
 
-ace.define("ace/mode/xml",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/mode/text","ace/mode/xml_highlight_rules","ace/mode/behaviour/xml","ace/mode/folding/xml","ace/worker/worker_client"], function(require, exports$1, module){var oop = require("../lib/oop");
+ace.define("ace/mode/xml",["require","exports","module","ace/lib/oop","ace/lib/lang","ace/mode/text","ace/mode/xml_highlight_rules","ace/mode/behaviour/xml","ace/mode/folding/xml","ace/worker/worker_client"], function(require, exports, module){var oop = require("../lib/oop");
 var lang = require("../lib/lang");
 var TextMode = require("./text").Mode;
 var XmlHighlightRules = require("./xml_highlight_rules").XmlHighlightRules;
@@ -74926,7 +74926,7 @@ oop.inherits(Mode, TextMode);
     };
     this.$id = "ace/mode/xml";
 }).call(Mode.prototype);
-exports$1.Mode = Mode;
+exports.Mode = Mode;
 
 });                (function() {
                     ace.require(["ace/mode/xml"], function(m) {
@@ -74936,11 +74936,11 @@ exports$1.Mode = Mode;
                     });
                 })();
 
-ace.define("ace/ext/searchbox-css",["require","exports","module"], function(require, exports$1, module){module.exports = "\n\n/* ------------------------------------------------------------------------------------------\n * Editor Search Form\n * --------------------------------------------------------------------------------------- */\n.ace_search {\n    background-color: #ddd;\n    color: #666;\n    border: 1px solid #cbcbcb;\n    border-top: 0 none;\n    overflow: hidden;\n    margin: 0;\n    padding: 4px 6px 0 4px;\n    position: absolute;\n    top: 0;\n    z-index: 99;\n    white-space: normal;\n}\n.ace_search.left {\n    border-left: 0 none;\n    border-radius: 0px 0px 5px 0px;\n    left: 0;\n}\n.ace_search.right {\n    border-radius: 0px 0px 0px 5px;\n    border-right: 0 none;\n    right: 0;\n}\n\n.ace_search_form, .ace_replace_form {\n    margin: 0 20px 4px 0;\n    overflow: hidden;\n    line-height: 1.9;\n}\n.ace_replace_form {\n    margin-right: 0;\n}\n.ace_search_form.ace_nomatch {\n    outline: 1px solid red;\n}\n\n.ace_search_field {\n    border-radius: 3px 0 0 3px;\n    background-color: white;\n    color: black;\n    border: 1px solid #cbcbcb;\n    border-right: 0 none;\n    outline: 0;\n    padding: 0;\n    font-size: inherit;\n    margin: 0;\n    line-height: inherit;\n    padding: 0 6px;\n    min-width: 17em;\n    vertical-align: top;\n    min-height: 1.8em;\n    box-sizing: content-box;\n}\n.ace_searchbtn {\n    border: 1px solid #cbcbcb;\n    line-height: inherit;\n    display: inline-block;\n    padding: 0 6px;\n    background: #fff;\n    border-right: 0 none;\n    border-left: 1px solid #dcdcdc;\n    cursor: pointer;\n    margin: 0;\n    position: relative;\n    color: #666;\n}\n.ace_searchbtn:last-child {\n    border-radius: 0 3px 3px 0;\n    border-right: 1px solid #cbcbcb;\n}\n.ace_searchbtn:disabled {\n    background: none;\n    cursor: default;\n}\n.ace_searchbtn:hover {\n    background-color: #eef1f6;\n}\n.ace_searchbtn.prev, .ace_searchbtn.next {\n     padding: 0px 0.7em\n}\n.ace_searchbtn.prev:after, .ace_searchbtn.next:after {\n     content: \"\";\n     border: solid 2px #888;\n     width: 0.5em;\n     height: 0.5em;\n     border-width:  2px 0 0 2px;\n     display:inline-block;\n     transform: rotate(-45deg);\n}\n.ace_searchbtn.next:after {\n     border-width: 0 2px 2px 0 ;\n}\n.ace_searchbtn_close {\n    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAcCAYAAABRVo5BAAAAZ0lEQVR42u2SUQrAMAhDvazn8OjZBilCkYVVxiis8H4CT0VrAJb4WHT3C5xU2a2IQZXJjiQIRMdkEoJ5Q2yMqpfDIo+XY4k6h+YXOyKqTIj5REaxloNAd0xiKmAtsTHqW8sR2W5f7gCu5nWFUpVjZwAAAABJRU5ErkJggg==) no-repeat 50% 0;\n    border-radius: 50%;\n    border: 0 none;\n    color: #656565;\n    cursor: pointer;\n    font: 16px/16px Arial;\n    padding: 0;\n    height: 14px;\n    width: 14px;\n    top: 9px;\n    right: 7px;\n    position: absolute;\n}\n.ace_searchbtn_close:hover {\n    background-color: #656565;\n    background-position: 50% 100%;\n    color: white;\n}\n\n.ace_button {\n    margin-left: 2px;\n    cursor: pointer;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    overflow: hidden;\n    opacity: 0.7;\n    border: 1px solid rgba(100,100,100,0.23);\n    padding: 1px;\n    box-sizing:    border-box!important;\n    color: black;\n}\n\n.ace_button:hover {\n    background-color: #eee;\n    opacity:1;\n}\n.ace_button:active {\n    background-color: #ddd;\n}\n\n.ace_button.checked {\n    border-color: #3399ff;\n    opacity:1;\n}\n\n.ace_search_options{\n    margin-bottom: 3px;\n    text-align: right;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    clear: both;\n}\n\n.ace_search_counter {\n    float: left;\n    font-family: arial;\n    padding: 0 8px;\n}";
+ace.define("ace/ext/searchbox-css",["require","exports","module"], function(require, exports, module){module.exports = "\n\n/* ------------------------------------------------------------------------------------------\n * Editor Search Form\n * --------------------------------------------------------------------------------------- */\n.ace_search {\n    background-color: #ddd;\n    color: #666;\n    border: 1px solid #cbcbcb;\n    border-top: 0 none;\n    overflow: hidden;\n    margin: 0;\n    padding: 4px 6px 0 4px;\n    position: absolute;\n    top: 0;\n    z-index: 99;\n    white-space: normal;\n}\n.ace_search.left {\n    border-left: 0 none;\n    border-radius: 0px 0px 5px 0px;\n    left: 0;\n}\n.ace_search.right {\n    border-radius: 0px 0px 0px 5px;\n    border-right: 0 none;\n    right: 0;\n}\n\n.ace_search_form, .ace_replace_form {\n    margin: 0 20px 4px 0;\n    overflow: hidden;\n    line-height: 1.9;\n}\n.ace_replace_form {\n    margin-right: 0;\n}\n.ace_search_form.ace_nomatch {\n    outline: 1px solid red;\n}\n\n.ace_search_field {\n    border-radius: 3px 0 0 3px;\n    background-color: white;\n    color: black;\n    border: 1px solid #cbcbcb;\n    border-right: 0 none;\n    outline: 0;\n    padding: 0;\n    font-size: inherit;\n    margin: 0;\n    line-height: inherit;\n    padding: 0 6px;\n    min-width: 17em;\n    vertical-align: top;\n    min-height: 1.8em;\n    box-sizing: content-box;\n}\n.ace_searchbtn {\n    border: 1px solid #cbcbcb;\n    line-height: inherit;\n    display: inline-block;\n    padding: 0 6px;\n    background: #fff;\n    border-right: 0 none;\n    border-left: 1px solid #dcdcdc;\n    cursor: pointer;\n    margin: 0;\n    position: relative;\n    color: #666;\n}\n.ace_searchbtn:last-child {\n    border-radius: 0 3px 3px 0;\n    border-right: 1px solid #cbcbcb;\n}\n.ace_searchbtn:disabled {\n    background: none;\n    cursor: default;\n}\n.ace_searchbtn:hover {\n    background-color: #eef1f6;\n}\n.ace_searchbtn.prev, .ace_searchbtn.next {\n     padding: 0px 0.7em\n}\n.ace_searchbtn.prev:after, .ace_searchbtn.next:after {\n     content: \"\";\n     border: solid 2px #888;\n     width: 0.5em;\n     height: 0.5em;\n     border-width:  2px 0 0 2px;\n     display:inline-block;\n     transform: rotate(-45deg);\n}\n.ace_searchbtn.next:after {\n     border-width: 0 2px 2px 0 ;\n}\n.ace_searchbtn_close {\n    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAcCAYAAABRVo5BAAAAZ0lEQVR42u2SUQrAMAhDvazn8OjZBilCkYVVxiis8H4CT0VrAJb4WHT3C5xU2a2IQZXJjiQIRMdkEoJ5Q2yMqpfDIo+XY4k6h+YXOyKqTIj5REaxloNAd0xiKmAtsTHqW8sR2W5f7gCu5nWFUpVjZwAAAABJRU5ErkJggg==) no-repeat 50% 0;\n    border-radius: 50%;\n    border: 0 none;\n    color: #656565;\n    cursor: pointer;\n    font: 16px/16px Arial;\n    padding: 0;\n    height: 14px;\n    width: 14px;\n    top: 9px;\n    right: 7px;\n    position: absolute;\n}\n.ace_searchbtn_close:hover {\n    background-color: #656565;\n    background-position: 50% 100%;\n    color: white;\n}\n\n.ace_button {\n    margin-left: 2px;\n    cursor: pointer;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    overflow: hidden;\n    opacity: 0.7;\n    border: 1px solid rgba(100,100,100,0.23);\n    padding: 1px;\n    box-sizing:    border-box!important;\n    color: black;\n}\n\n.ace_button:hover {\n    background-color: #eee;\n    opacity:1;\n}\n.ace_button:active {\n    background-color: #ddd;\n}\n\n.ace_button.checked {\n    border-color: #3399ff;\n    opacity:1;\n}\n\n.ace_search_options{\n    margin-bottom: 3px;\n    text-align: right;\n    -webkit-user-select: none;\n    -moz-user-select: none;\n    -o-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    clear: both;\n}\n\n.ace_search_counter {\n    float: left;\n    font-family: arial;\n    padding: 0 8px;\n}";
 
 });
 
-ace.define("ace/ext/searchbox",["require","exports","module","ace/ext/searchbox","ace/ext/searchbox","ace/lib/dom","ace/lib/lang","ace/lib/event","ace/ext/searchbox-css","ace/keyboard/hash_handler","ace/lib/keys","ace/config"], function(require, exports$1, module){/**
+ace.define("ace/ext/searchbox",["require","exports","module","ace/ext/searchbox","ace/ext/searchbox","ace/lib/dom","ace/lib/lang","ace/lib/event","ace/ext/searchbox-css","ace/keyboard/hash_handler","ace/lib/keys","ace/config"], function(require, exports, module){/**
  * ## Interactive search and replace UI extension for text editing
  *
  * Provides a floating search box interface with find/replace functionality including live search results, regex
@@ -75304,8 +75304,8 @@ var $closeSearchBarKb = new HashHandler([{
     }]);
 SearchBox.prototype.$searchBarKb = $searchBarKb;
 SearchBox.prototype.$closeSearchBarKb = $closeSearchBarKb;
-exports$1.SearchBox = SearchBox;
-exports$1.Search = function (editor, isReplace) {
+exports.SearchBox = SearchBox;
+exports.Search = function (editor, isReplace) {
     var sb = editor.searchBox || new SearchBox(editor);
     var range = editor.session.selection.getRange();
     var value = range.isMultiLine() ? "" : editor.session.getTextRange(range);

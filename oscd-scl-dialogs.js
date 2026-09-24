@@ -1,5 +1,5 @@
 import OscdSclDialogs from './OscdSclDialogs.js';
-import './OscdTextEditor-GO-eVLjT.js';
+import './OscdTextEditor-BttQVixB.js';
 import './foundation.js';
 
 customElements.define('oscd-scl-dialogs', OscdSclDialogs);
