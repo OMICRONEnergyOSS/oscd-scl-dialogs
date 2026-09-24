@@ -12,7 +12,7 @@ Currently supported Tag matrix
 | Association | ❌ | ❌ |
 | Authentication | ❌ | ❌ |
 | Bay | ✅ | ✅ |
-| BDA | ❌ | ✅ |
+| BDA | ✅ | ✅ |
 | BitRate | ❌ | ❌ |
 | ClientLN | ❌ | ❌ |
 | ClientServices | ❌ | ❌ |
@@ -28,7 +28,7 @@ Currently supported Tag matrix
 | ConfSigRef | ❌ | ❌ |
 | ConnectedAP | ✅ | ✅ |
 | DA | ✅ | ✅ |
-| DAType | ❌ | ❌ |
+| DAType | ✅ | ❌ |
 | DO | ✅ | ✅ |
 | DOI | ❌ | ❌ |
 | DOType | ✅ | ❌ |
